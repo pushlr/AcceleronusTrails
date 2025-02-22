@@ -1,0 +1,209 @@
+/* 
+  Localizable.strings
+  Acceleronus
+
+  Created by Françoise d'Aubigné on 10.12.2023.
+  
+*/
+"Start Recording" = "Почати запис";
+"Navigator" = "Навігатор";
+"Account" = "Обліковий запис";
+"Sign Out" = "Вийти";
+"Trails in area: %lld" = "Маршрути в області: %lld";
+"Active Tracking: %lld" = "Активне відстеження: %lld";
+"Joined from %@" = "Приєднався з %@";
+"Last activity %@" = "Остання активність %@";
+"Change profile photo" = "Змінити фото профілю";
+"Change display name" = "Змінити відображуване ім'я";
+"My Trails" = "Мої маршрути";
+"Favorites" = "Вибране";
+"Friends" = "Друзі";
+"Storage" = "Зберігання";
+"Are you sure?" = "Ви впевнені?";
+"Cancel" = "Скасувати";
+"Add WayPoint" = "Додати точку маршруту";
+"Pause" = "Пауза";
+"Resume" = "Продовжити";
+"Stop" = "Зупинити";
+"Yes" = "Так";
+"Hello" = "Привіт";
+"Password" = "Пароль";
+"Sign In" = "Увійти";
+"or" = "або";
+"Create an account" = "Створити обліковий запис";
+"No trails recorded" = "Немає записаних маршрутів";
+"Found %lld trails" = "Знайдено %lld маршрутів";
+"My Trails (%lld)" = "Мої маршрути (%lld)";
+"Distance" = "Відстань";
+"Total Time" = "Загальний час";
+"Details" = "Деталі";
+"Edit" = "Редагувати";
+"Done" = "Готово";
+"Remove" = "Видалити";
+"Remove Trail" = "Видалити маршрут";
+"empty" = "порожньо";
+"Found %lld users" = "Знайдено %lld користувачів";
+"Friends (%lld)" = "Друзі (%lld)";
+"Recording trail" = "Запис маршруту";
+"Add to Friends" = "Додати до друзів";
+"No friends added" = "Немає доданих друзів";
+"User details" = "Деталі користувача";
+"Remove from Friends list" = "Видалити зі списку друзів";
+"Unsend request" = "Скасувати запит";
+"Accept Friend Request" = "Прийняти запит на дружбу";
+"Memory Usage" = "Використання пам'яті";
+"Images Cache" = "Кеш зображень";
+"Clear cache" = "Очистити кеш";
+"Moving Time" = "Час руху";
+"Max Altitude" = "Макс. висота";
+"Max Speed" = "Макс. швидкість";
+"Altitude" = "Висота";
+"Speed" = "Швидкість";
+"Mileage:" = "Пробіг:";
+"Latitude:" = "Широта:";
+"Longitude:" = "Довгота:";
+"Altitude:" = "Висота:";
+"no WayPoints added" = "немає доданих точок маршруту";
+"Start Point" = "Початкова точка";
+"End Point" = "Кінцева точка";
+"with" = "з";
+"Difficulty:" = "Складність:";
+"From:" = "Від:";
+"Control" = "Управління";
+"Map Preview" = "Попередній перегляд карти";
+"Save Trail" = "Зберегти маршрут";
+"Trail Name" = "Назва маршруту";
+"Description" = "Опис";
+"Activity:" = "Діяльність:";
+"Confidentiality:" = "Конфіденційність:";
+"Difficulty" = "Складність";
+"Public trail will be visible by other members, including WayPoint and photos." = "Публічний маршрут буде видимим для інших учасників, включаючи точки маршруту та фотографії.";
+"Private trail will be unaivable for other members, also you cannot share it." = "Приватний маршрут буде недоступним для інших учасників, ви також не зможете поділитися ним.";
+"Recorded trail will be lost and cannot be restored!" = "Записаний маршрут буде втрачений і не може бути відновлений!";
+"Edit WayPoint" = "Редагувати точку маршруту";
+"Add new WayPoint" = "Додати нову точку маршруту";
+"Name" = "Назва";
+"Description" = "Опис";
+"Save" = "Зберегти";
+"Add" = "Додати";
+"Easy" = "Легко";
+"Standard" = "Стандартно";
+"Hard" = "Складно";
+"Master" = "Майстер";
+"Public" = "Публічний";
+"Private" = "Приватний";
+"Gallery (%lld)" = "Галерея (%lld)";
+"Today" = "Сьогодні";
+"Excellent" = "Відмінно";
+"Good" = "Добре";
+"Poor" = "Погано";
+"Bad" = "Погано";
+"lost" = "Втрачено";
+"day" = "день";
+"days" = "днів";
+"hour" = "година";
+"hours" = "годин";
+"minute" = "хвилина";
+"minutes" = "хвилин";
+"second" = "секунда";
+"seconds" = "секунд";
+"Waypoint" = "Точка маршруту";
+"Waypoints" = "Точки маршруту";
+"WayPoint" = "Точка маршруту";
+"WayPoints" = "Точки маршруту";
+"No description" = "Без опису";
+
+// walk
+"Hiking" = "Похід";
+"Walking" = "Ходьба";
+"Running" = "Біг";
+"Mushroom Hunting" = "Збір грибів";
+
+// bike
+"Mount Bike" = "Гірський велосипед";
+"Road Bike" = "Дорожній велосипед";
+"City Bike" = "Міський велосипед";
+"BMX Bike" = "Велосипед BMX";
+"Electric Bike" = "Електричний велосипед";
+
+// drive
+"Car" = "Автомобіль";
+"Offroad Vehicle" = "Позашляховик";
+"ATV" = "Квадроцикл";
+"Buggy" = "Баггі";
+"Enduro Motorcycle" = "Ендуро мотоцикл";
+"DualSport Motorcycle" = "Мотоцикл DualSport";
+"Scooter" = "Скутер";
+"City Motorcycle" = "Міський мотоцикл";
+"Touring Motorcycle" = "Туринговий мотоцикл";
+"Sport Motorcycle" = "Спортивний мотоцикл";
+
+// winter
+"Ski" = "Лижі";
+"Freeride ski" = "Скі фрірайд";
+"Cross-Country ski" = "Крос-кантрі лижі";
+"Alpinism ski" = "Альпінізм на лижах";
+"Snowboard" = "Сноуборд";
+"Sleigh" = "Сані";
+"Snowmobile" = "Снігохід";
+
+// water
+"Kayak" = "Каяк";
+"Rafting" = "Рафтинг";
+"Dinghy" = "Надувний човен";
+"Jet ski" = "Гідроцикл";
+
+"Walk" = "Прогулянка";
+"Bike" = "Велосипед";
+"Drive" = "Водіння";
+"Winter" = "Зима";
+"Water" = "Вода";
+
+"Trail Recording" = "Запис маршруту";
+"Active Tracking" = "Активне відстеження";
+"Allow my friends to track me" = "Дозволити друзям відстежувати мене";
+"Line Color" = "Колір лінії";
+"Settings" = "Налаштування";
+
+"User Disabled" = "Користувач відключений";
+"Invalid Email" = "Недійсна електронна пошта";
+"Missing Email" = "Відсутня електронна пошта";
+"Wrong password!" = "Невірний пароль!";
+"Invalid Credentials" = "Недійсні облікові дані";
+"Email already in use" = "Електронна пошта вже використовується";
+"Weak password" = "Слабкий пароль";
+"Signing in request.." = "Запит на вхід..";
+"Creating user request.." = "Запит на створення користувача..";
+"Success" = "Успішно";
+"Signing in.." = "Вхід..";
+"Unknown Error" = "Невідома помилка";
+"Error!" = "Помилка!";
+"Kindly review your email for the activation link!" = "Будь ласка, перевірте вашу пошту для отримання посилання на активацію!";
+"The selected map area is too large for the trails search!" = "Обрана на карті область занадто велика для пошуку маршрутів!";
+
+"Contact" = "Контакт";
+"Contact Us" = "Зв'яжіться з нами";
+"Trails" = "Маршрути";
+"Open in Navigator" = "Відкрити в навігаторі";
+"ago" = "тому" ;
+"Yesterday" = "Вчора";
+
+"Solo for now, friend-filled trails ahead." = "Наразі сам, перед вами траси, наповнені друзями.";
+"Step into your adventures – captured trails will be here." =  "Крокуй у свої пригоди – записані стежки будуть тут.";
+"Empty for now, but not for long!" = "Поки порожньо, але не надовго!";
+
+"Close" = "Закрити";
+"Delete" = "Видалити";
+"Delete Account" = "Видалити обліковий запис";
+"Are you sure you want to delete your account? This action is irreversible and will permanently delete all your data." = "Ви впевнені, що хочете видалити свій обліковий запис? Ця дія є необоротною і назавжди видалить всі ваші дані.";
+"All recorded trails will be permanently deleted. This action cannot be undone." = "Всі записані маршрути будуть назавжди видалені. Цю дію неможливо скасувати.";
+"Enter your password" = "Введіть ваш пароль";
+"Invalid Password" = "Невірний пароль";
+"Initializing account deletion" = "Ініціалізація видалення облікового запису";
+"Getting trails list" = "Отримання списку маршрутів";
+"Removing" = "Видаляється";
+"Deleting Account Info" = "Видаляється інформація про обліковий запис";
+"Waiting for server response" = "Очікування відповіді сервера";
+"Unregistering" = "Скасування реєстрації";
+"Account successfully deleted!" = "Обліковий запис успішно видалено!";
+

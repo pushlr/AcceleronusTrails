@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DATABASE_URL</key>
+	<string>https://acceleronus-c4f6d-default-rtdb.europe-west1.firebasedatabase.app/</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBHvh4oSWXP6RY2qvZim6OVY45b7o8osD0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>125545689298</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.AcceleronusTools.AcceleronusTrails</string>
+	<key>PROJECT_ID</key>
+	<string>acceleronus-c4f6d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>acceleronus-c4f6d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:125545689298:ios:e550a2d4f754d49dd27d0b</string>
+</dict>
+</plist>

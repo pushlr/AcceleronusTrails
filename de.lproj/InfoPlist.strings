@@ -1,0 +1,17 @@
+/* 
+  InfoPlist.strings
+  Acceleronus
+
+  Created by Françoise d'Aubigné on 29.12.2023.
+  
+*/
+"CFBundleDisplayName" = "Pfade";
+
+"NSLocationAlwaysUsageDescription" = "Wir nutzen Ihre Standortdaten, um Ihre Routen präzise aufzuzeichnen und Details wie Entfernung, Höhenänderungen und Wegpunkte zu erfassen.";
+"NSLocationUsageDescription" = "Wir nutzen Ihre Standortdaten, um Ihre Routen präzise aufzuzeichnen und Details wie Entfernung, Höhenänderungen und Wegpunkte zu erfassen.";
+"NSLocationWhenInUseUsageDescription" = "Wir nutzen Ihre Standortdaten, um Ihre Routen präzise aufzuzeichnen und Details wie Entfernung, Höhenänderungen und Wegpunkte zu erfassen.";
+
+"NSPhotoLibraryUsageDescription" = "Teilen Sie Ihre Erlebnisse, indem Sie Fotos an Ihre aufgezeichneten Routen anhängen.";
+"NSPhotoLibraryAddUsageDescription" = "Teilen Sie Ihre Erlebnisse, indem Sie Fotos an Ihre aufgezeichneten Routen anhängen.";
+
+"NSCameraUsageDescription" = "Erfassen Sie Echtzeitbilder und Momente während Ihrer Outdoor-Abenteuer. Fügen Sie Fotos direkt zu Ihren Routenaufnahmen hinzu, um Ihre Erlebnisse zu dokumentieren und Ihre Routengeschichte zu bereichern.";

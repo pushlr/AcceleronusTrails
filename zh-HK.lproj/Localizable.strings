@@ -1,0 +1,207 @@
+/*
+  Localizable.strings
+  Acceleronus
+
+  由Françoise d'Aubigné于2023年12月10日创建。
+  
+*/
+"Start Recording" = "開始錄製";
+"Navigator" = "導航器";
+"Account" = "帳戶";
+"Sign Out" = "登出";
+"Trails in area: %lld" = "區域內的路徑：%lld";
+"Active Tracking: %lld" = "活動追踪：%lld";
+"Joined from %@" = "加入自 %@";
+"Last activity %@" = "上次活動 %@";
+"Change profile photo" = "更改個人資料照片";
+"Change display name" = "更改顯示名稱";
+"My Trails" = "我的路徑";
+"Favorites" = "收藏";
+"Friends" = "朋友";
+"Storage" = "存儲";
+"Are you sure?" = "您確定嗎？";
+"Cancel" = "取消";
+"Add WayPoint" = "添加路徑點";
+"Pause" = "暫停";
+"Resume" = "恢復";
+"Stop" = "停止";
+"Yes" = "是";
+"Hello" = "你好";
+"Password" = "密碼";
+"Sign In" = "登錄";
+"or" = "或";
+"Create an account" = "創建帳戶";
+"No trails recorded" = "未記錄任何路徑";
+"Found %lld trails" = "找到 %lld 條路徑";
+"My Trails (%lld)" = "我的路徑（%lld）";
+"Distance" = "距離";
+"Total Time" = "總時間";
+"Details" = "詳細資料";
+"Edit" = "編輯";
+"Done" = "完成";
+"Remove" = "移除";
+"Remove Trail" = "刪除路徑";
+"empty" = "空";
+"Found %lld users" = "找到 %lld 用戶";
+"Friends (%lld)" = "朋友（%lld）";
+"Recording trail" = "錄製路徑";
+"Add to Friends" = "添加到朋友";
+"No friends added" = "未添加朋友";
+"User details" = "用戶詳細資料";
+"Remove from Friends list" = "從朋友列表中刪除";
+"Unsend request" = "取消發送請求";
+"Accept Friend Request" = "接受朋友請求";
+"Memory Usage" = "記憶體使用情況";
+"Images Cache" = "圖片緩存";
+"Clear cache" = "清除緩存";
+"Moving Time" = "移動時間";
+"Max Altitude" = "最大海拔";
+"Max Speed" = "最大速度";
+"Altitude" = "海拔";
+"Speed" = "速度";
+"Mileage:" = "里程：";
+"Latitude:" = "緯度：";
+"Longitude:" = "經度：";
+"Altitude:" = "海拔：";
+"no WayPoints added" = "未添加路徑點";
+"Start Point" = "起點";
+"End Point" = "終點";
+"with" = "與";
+"Difficulty:" = "難度：";
+"From:" = "來自：";
+"Control" = "控制";
+"Map Preview" = "地圖預覽";
+"Save Trail" = "保存路徑";
+"Trail Name" = "路徑名稱";
+"Description" = "描述";
+"Activity:" = "活動：";
+"Confidentiality:" = "保密性：";
+"Difficulty" = "難度";
+"Public trail will be visible by other members, including WayPoint and photos." = "公共路徑將對其他成員可見，包括路徑點和照片。";
+"Private trail will be unaivable for other members, also you cannot share it." = "私人路徑對其他成員不可用，您也無法分享。";
+"Recorded trail will be lost and cannot be restored!" = "記錄的路徑將丟失，無法恢復！";
+"Edit WayPoint" = "編輯路徑點";
+"Add new WayPoint" = "添加新的路徑點";
+"Name" = "名稱";
+"Description" = "描述";
+"Save" = "保存";
+"Add" = "添加";
+"Easy" = "簡單";
+"Standard" = "標準";
+"Hard" = "困難";
+"Master" = "高手";
+"Public" = "公共";
+"Private" = "私人";
+"Gallery (%lld)" = "圖庫（%lld）";
+"Today" = "今天";
+"Excellent" = "優秀";
+"Good" = "好";
+"Poor" = "差";
+"Bad" = "糟糕";
+"lost" = "丟失";
+"day" = "天";
+"days" = "天";
+"hour" = "小時";
+"hours" = "小時";
+"minute" = "分鐘";
+"minutes" = "分鐘";
+"second" = "秒";
+"seconds" = "秒";
+"Waypoint" = "路徑點";
+"Waypoints" = "路徑點";
+"WayPoint" = "路徑點";
+"WayPoints" = "路徑點";
+"No description" = "無描述";
+
+
+// 步行
+"Hiking" = "徒步旅行";
+"Walking" = "步行";
+"Running" = "跑步";
+"Mushroom Hunting" = "尋找蘑菇";
+// 自行車
+"Mount Bike" = "山地車";
+"Road Bike" = "公路車";
+"City Bike" = "城市單車";
+"BMX Bike" = "BMX單車";
+"Electric Bike" = "電動單車";
+
+// 駕駛
+"Car" = "汽車";
+"Offroad Vehicle" = "越野車";
+"ATV" = "全地形車";
+"Buggy" = "越野車";
+"Enduro Motorcycle" = "越野摩托車";
+"DualSport Motorcycle" = "雙用摩托車";
+"Scooter" = "滑板車";
+"City Motorcycle" = "城市摩托車";
+"Touring Motorcycle" = "旅遊摩托車";
+"Sport Motorcycle" = "運動摩托車";
+
+// 冬季
+"Ski" = "滑雪";
+"Freeride ski" = "自由式滑雪";
+"Cross-Country ski" = "越野滑雪";
+"Alpinism ski" = "登山滑雪";
+"Snowboard" = "滑雪板";
+"Sleigh" = "雪橇";
+"Snowmobile" = "雪地摩托";
+
+// 水上
+"Kayak" = "皮划艇";
+"Rafting" = "泛舟";
+"Dinghy" = "小船";
+"Jet ski" = "水上摩托";
+
+"Walk" = "步行";
+"Bike" = "單車";
+"Drive" = "開車";
+"Winter" = "冬季";
+"Water" = "水";
+
+"Trail Recording" = "路徑記錄";
+"Active Tracking" = "主動追蹤";
+"Allow my friends to track me" = "允許我的朋友追蹤我";
+"Line Color" = "線條顏色";
+"Settings" = "設置";
+
+"User Disabled" = "用戶已停用";
+"Invalid Email" = "無效的電子郵件";
+"Missing Email" = "缺少電子郵件";
+"Wrong password!" = "密碼錯誤！";
+"Invalid Credentials" = "無效的憑證";
+"Email already in use" = "電子郵件已在使用中";
+"Weak password" = "弱密碼";
+"Signing in request.." = "登錄請求..";
+"Creating user request.." = "創建用戶請求..";
+"Success" = "成功";
+"Signing in.." = "登錄中..";
+"Unknown Error" = "未知錯誤";
+"Error!" = "錯誤！";
+"Kindly review your email for the activation link!" = "請查看您的電子郵件以獲取啟動鏈接！";
+"The selected map area is too large for the trails search!" = "所選地圖區域對於路徑搜索太大！";
+"Contact" = "聯繫";
+"Contact Us" = "聯繫我們";
+"Trails" = "我的路徑";
+"Open in Navigator" = "在導航器中打開";
+"ago" = "之前";
+"Yesterday" = "昨天";
+
+"Solo for now, friend-filled trails ahead." = "目前獨自一人，前方有充滿朋友的小徑。";
+"Step into your adventures – captured trails will be here." = "踏入你的冒險 – 捕捉的小徑將會在這裡。";
+"Empty for now, but not for long!" =  "暫時空白，但不會久！";
+
+"Close" = "關閉";
+"Delete" = "刪除";
+"Delete Account" = "刪除帳戶";
+"Are you sure you want to delete your account? This action is irreversible and will permanently delete all your data." = "您確定要刪除您的帳戶嗎？此操作無法撤銷並將永久刪除所有數據。";
+"All recorded trails will be permanently deleted. This action cannot be undone." = "所有記錄的行蹤將永久刪除。此操作無法撤銷。";
+"Enter your password" = "輸入您的密碼";
+"Invalid Password" = "無效密碼";
+"Initializing account deletion" = "正在初始化帳戶刪除";
+"Getting trails list" = "獲取行蹤列表";
+"Removing" = "正在刪除";
+"Deleting Account Info" = "刪除帳戶信息";
+"Waiting for server response" = "等待伺服器響應";
+"Unregistering" = "正在注銷";
+"Account successfully deleted!" = "帳戶已成功刪除！";

@@ -1,0 +1,17 @@
+/* 
+  InfoPlist.strings
+  Acceleronus
+
+  Created by Françoise d'Aubigné on 29.12.2023.
+  
+*/
+"CFBundleDisplayName" = "Poteci";
+
+"NSLocationAlwaysUsageDescription" = "Solicităm acces la datele de locație pentru a înregistra cu precizie traseele tale, capturând detalii precum distanța parcursă, modificările de altitudine și punctele de referință (waypoints).";
+"NSLocationUsageDescription" = "Solicităm acces la datele de locație pentru a înregistra cu precizie traseele tale, capturând detalii precum distanța parcursă, modificările de altitudine și punctele de referință (waypoints).";
+"NSLocationWhenInUseUsageDescription" = "Solicităm acces la datele de locație pentru a înregistra cu precizie traseele tale, capturând detalii precum distanța parcursă, modificările de altitudine și punctele de referință (waypoints).";
+
+"NSPhotoLibraryUsageDescription" = "Împărtășește-ți experiențele atașând fotografii la traseele înregistrate.";
+"NSPhotoLibraryAddUsageDescription" = "Împărtășește-ți experiențele atașând fotografii la traseele înregistrate.";
+
+"NSCameraUsageDescription" = "Capturați imagini și momente în timp real în timpul aventurilor dvs. în aer liber. Adăugați fotografii direct la înregistrările traseului pentru a documenta experiențele și a îmbogăți istoricul traseului.";

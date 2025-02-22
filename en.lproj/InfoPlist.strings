@@ -1,0 +1,17 @@
+/* 
+  InfoPlist.strings
+  Acceleronus
+
+  Created by Françoise d'Aubigné on 29.12.2023.
+  
+*/
+"CFBundleDisplayName" = "Trails";
+
+"NSLocationAlwaysUsageDescription" = "We utilize your Location data to accurately record your trails, capturing details like distance, elevation changes, and waypoints.";
+"NSLocationUsageDescription" = "We utilize your Location data to accurately record your trails, capturing details like distance, elevation changes, and waypoints.";
+"NSLocationWhenInUseUsageDescription" = "We utilize your Location data to accurately record your trails, capturing details like distance, elevation changes, and waypoints.";
+
+"NSPhotoLibraryUsageDescription" = "Share your experiences by attaching photos to your recorded trails.";
+"NSPhotoLibraryAddUsageDescription" = "Share your experiences by attaching photos to your recorded trails.";
+
+"NSCameraUsageDescription" =  "Capture real-time images and moments during your outdoor adventures. Add photos directly to your trail recordings to document your experiences and enrich your trail history.";

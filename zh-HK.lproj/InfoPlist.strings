@@ -1,0 +1,17 @@
+/* 
+  InfoPlist.strings
+  Acceleronus
+
+  Created by Françoise d'Aubigné on 29.12.2023.
+  
+*/
+"CFBundleDisplayName" = "路径";
+
+"NSLocationAlwaysUsageDescription" = "我們使用您的位置數據來準確記錄您的路徑，捕捉詳細信息，如距離、海拔變化和航點。";
+"NSLocationUsageDescription" = "我們使用您的位置數據來準確記錄您的路徑，捕捉詳細信息，如距離、海拔變化和航點。";
+"NSLocationWhenInUseUsageDescription" = "我們使用您的位置數據來準確記錄您的路徑，捕捉詳細信息，如距離、海拔變化和航點。";
+
+"NSPhotoLibraryUsageDescription" = "透過將照片附加到您的記錄路徑來分享您的經歷。";
+"NSPhotoLibraryAddUsageDescription" = "透過將照片附加到您的記錄路徑來分享您的經歷。";
+
+"NSCameraUsageDescription" =  "在您的戶外冒險中即時捕捉影像和時刻。將照片直接添加到您的路徑記錄中，以記錄您的經歷並豐富您的路徑歷史。";

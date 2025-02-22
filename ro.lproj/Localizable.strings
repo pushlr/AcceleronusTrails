@@ -1,0 +1,213 @@
+/* 
+  Localizable.strings
+  Acceleronus
+
+  Created by Françoise d'Aubigné on 10.12.2023.
+  
+*/
+"Start Recording" = "Începeți înregistrarea";
+"Navigator" = "Navigator";
+"Account"         = "Cont";
+"Sign Out" = "Deconectare";
+"Trails in area: %lld"  = "Trasee în zonă: %lld";
+"Active Tracking: %lld"  = "Urmărire activă: %lld";
+"Joined from %@" = "Alăturat din %@";
+"Last activity %@" = "Ultima activitate %@";
+"Change profile photo" = "Schimbați fotografia de profil";
+"Change display name" = "Schimbați numele afișat";
+"My Trails" = "Traseele mele";
+"Favorites" = "Favorite";
+"Friends" = "Prieteni";
+"Storage" = "Depozitare";
+"Are you sure?" = "Esti sigur?";
+"Cancel" = "Anulare";
+"Add WayPoint" = "Adăugați Punc De Traseu";
+"Pause" = "Pauză";
+"Resume" = "Continuare";
+"Stop" = "Stop";
+"Yes" = "Da";
+"Hello" = "Salut";
+"Password" = "Parola";
+"Sign In" = "Conectați-vă";
+"or" = "s-au";
+"Create an account" = "Creați un cont";
+"No trails recorded" = "Nici un traseu inregistrat";
+"Found %lld trails" = "S-au găsit %lld trasee";
+"My Trails (%lld)" = "Traseele mele (%lld)";
+"Distance" = "Distanţă";
+"Total Time" = "Timpul total";
+"Details" = "Detalii";
+"Edit" = "Editați";
+"Done" = "Terminat";
+"Remove" = "Elimină";
+"Remove Trail" = "Eliminați traseul";
+"empty" = "gol";
+"Found %lld users" = "S-au găsit %lld utilizatori";
+"Friends (%lld)" = "Prieteni (%lld)";
+"Recording trail" = "Inregistreaza un traseu";
+"Add to Friends" = "Adaugă la Prieteni";
+"No friends added" = "Nici un prieten adăugat";
+"User details" = "Detalii utilizator";
+"Remove from Friends list" = "Eliminați din lista de prieteni";
+"Unsend request" = "Anulați cererea";
+"Accept Friend Request" = "Acceptă cererea de prietenie";
+"Memory Usage" = "Folosirea memoriei";
+"Images Cache" = "Cache de imagini";
+"Clear cache" = "Goliți memoria cache";
+"Moving Time" = "Timpul de mișcare";
+"Max Altitude" = "Altitudine maximă";
+"Max Speed" = "Viteza maxima";
+"Altitude" = "Altitudine";
+"Speed" = "Viteză";
+"Mileage:" = "Kilometraj:";
+"Latitude:" = "Latitudine:";
+"Longitude:" = "Longitudine:";
+"Altitude:" = "Altitudine:";
+"no WayPoints added" = "nu au fost adăugate Puncte De Traseu";
+"Start Point" = "Punctul de inceput";
+"End Point" = "Punctul final";
+"with" = "cu";
+"Difficulty:" = "Dificultate:";
+"From:" = "De la:";
+"Control" = "Control";
+"Map Preview" = "Previzualizarea hărții";
+"Save Trail" = "Salvați traseul";
+"Trail Name" = "Nume traseu";
+"Description" = "Descriere";
+"Activity:" = "Activitate:";
+"Confidentiality:" = "Confidențialitate:";
+"Difficulty" = "Dificultate";
+"Public trail will be visible by other members, including WayPoint and photos." = "Traseul public va fi vizibil de alți membri, inclusiv Punctele De Traseu și fotografii.";
+"Private trail will be unaivable for other members, also you cannot share it." = "Traseul privat nu va fi disponibil pentru alți membri, de asemenea, nu îl puteți partaja.";
+"Recorded trail will be lost and cannot be restored!" = "Traseul înregistrat se va pierde și nu poate fi restaurat!";
+"Edit WayPoint" = "Editați Punct De traseu";
+"Add new WayPoint" = "Adăugați un nou Punct De Traseu";
+"Name" = "Nume";
+"Description" = "Descriere";
+"Save" = "Salvați";
+"Add" = "Adăuga";
+"Easy" = "Uşor";
+"Standard" = "Standard";
+"Hard" = "Greu";
+"Master" = "Maestru";
+"Public" = "Public";
+"Private" = "Privat";
+"Gallery (%lld)" = "Galerie (%lld)";
+"Today" = "Astăzi";
+"Excellent" = "Excelent";
+"Good" = "Bun";
+"Poor" = "Slab";
+"Bad" = "Rău";
+"lost" = "Pierdut";
+"day" = "zi";
+"days" = "zile";
+"hour" = "ora";
+"hours" = "ore";
+"minute" = "minut";
+"minutes" = "minute";
+"second" = "secundă";
+"seconds" = "secunde";
+"Waypoint" = "Punct de Traseu";
+"Waypoints" = "Puncte de Traseu";
+"WayPoint" = "Punct de Traseu";
+"WayPoints" = "Puncte de Traseu";
+"No description" = "Fără descriere";
+
+
+// walk
+"Hiking" = "Drumeție";
+"Walking" = "Mers pe jos";
+"Running" = "Alergare";
+"Mushroom Hunting" = "La ciuperci";
+// bike
+"Mount Bike" = "Bicicletă de munte";
+"Road Bike" = "Bicicletă de șosea";
+"City Bike" = "Bicicletă de oraș";
+"BMX Bike" = "Bicicletă BMX";
+"Electric Bike" = "Bicicletă electrică";
+
+// drive
+"Car" = "Mașină";
+"Offroad Vehicle" = "Mașină off-road";
+"ATV" = "ATV";
+"Buggy" = "Buggy";
+"Enduro Motorcycle" = "Motocicletă enduro";
+"DualSport Motorcycle" = "Motocicletă dualsport";
+"Scooter" = "Scuter";
+"City Motorcycle" = "Motocicletă de oraș";
+"Touring Motorcycle" = "Motocicletă de turism";
+"Sport Motorcycle" = "Motocicletă sportivă";
+
+// winter
+"Ski" = "Schi";
+"Freeride ski" = "Schi freeride";
+"Cross-Country ski" = "Schi fond";
+"Alpinism ski" = "Schi alpinism";
+"Snowboard" = "Snowboard";
+"Sleigh" = "Sanie";
+"Snowmobile" = "Snowmobile";
+
+// water
+"Kayak" = "Caiac";
+"Rafting" = "Rafting";
+"Dinghy" = "Barcă gonflabilă";
+"Jet ski" = "Jet ski";
+
+"Walk" = "Pe jos";
+"Bike" = "Bicicletă";
+"Drive" = "Conducere";
+"Winter" = "Iarnă";
+"Water" = "Apă";
+
+
+
+"Trail Recording" = "Înregistrarea traseului";
+"Active Tracking" = "Urmărire activă";
+"Allow my friends to track me" = "Permiteți prietenilor să mă urmărească";
+"Line Color" = "Culoare linie";
+"Settings" = "Setări";
+
+
+
+"User Disabled" = "Utilizator dezactivat";
+"Invalid Email" = "Email invalid";
+"Missing Email" = "Lipsește adresa de email";
+"Wrong password!" = "Parolă incorectă!";
+"Invalid Credentials" = "Date de autentificare invalide";
+"Email already in use" = "Email deja în uz";
+"Weak password" = "Parolă slabă";
+"Signing in request.." = "Cerere de autentificare..";
+"Creating user request.." = "Cerere de creare a utilizatorului..";
+"Success" = "Succes";
+"Signing in.." = "Autentificare..";
+"Unknown Error" = "Eroare necunoscută";
+"Error!" = "Eroare!";
+"Kindly review your email for the activation link!" = "Vă rugăm să verificați emailul pentru link-ul de activare!";
+
+"The selected map area is too large for the trails search!" = "Zona de hartă selectată este prea mare pentru căutarea traseelor!";
+"Contact" = "Contact";
+"Contact Us" = "Contactează-ne";
+"Trails" = "Trasee";
+"Open in Navigator" = "Deschide în Navigator";
+"ago" = "în urma" ;
+"Yesterday" = "Ieri";
+"Solo for now, friend-filled trails ahead." = "Solo pentru moment, trasee pline de prieteni înainte.";
+"Step into your adventures – captured trails will be here." = "Intră în aventurile tale – traseele capturate vor fi aici.";
+"Empty for now, but not for long!" = "Gol pentru moment, dar nu pentru mult timp!";
+
+"Close" = "Închide";
+"Delete" = "Șterge";
+"Delete Account" = "Șterge Cont";
+"Are you sure you want to delete your account? This action is irreversible and will permanently delete all your data." = "Sunteți sigur că doriți să ștergeți contul? Această acțiune este ireversibilă și va șterge permanent toate datele dumneavoastră.";
+"All recorded trails will be permanently deleted. This action cannot be undone." = "Toate traseele înregistrate vor fi șterse permanent. Această acțiune nu poate fi anulată.";
+"Enter your password" = "Introduceți parola";
+"Invalid Password" = "Parolă incorectă";
+"Initializing account deletion" = "Inițializează ștergerea contului";
+"Getting trails list" = "Obține lista de trasee";
+"Removing" = "Se șterge";
+"Deleting Account Info" = "Se șterge informația contului";
+"Waiting for server response" = "Se așteaptă răspunsul serverului";
+"Unregistering" = "Se anulează înregistrarea";
+"Account successfully deleted!" = "Contul a fost șters cu succes!";
+
+

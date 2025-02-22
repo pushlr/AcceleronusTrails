@@ -1,0 +1,207 @@
+/*
+  Localizable.strings
+  Acceleronus
+
+  Erstellt von Françoise d'Aubigné am 10.12.2023.
+  
+*/
+"Start Recording" = "Aufnahme starten";
+"Navigator" = "Navigator";
+"Account" = "Konto";
+"Sign Out" = "Abmelden";
+"Trails in area: %lld" = "Wege in der Gegend: %lld";
+"Active Tracking: %lld" = "Aktive Verfolgung: %lld";
+"Joined from %@" = "Beigetreten von %@";
+"Last activity %@" = "Letzte Aktivität %@";
+"Change profile photo" = "Profilfoto ändern";
+"Change display name" = "Anzeigenamen ändern";
+"My Trails" = "Meine Wege";
+"Favorites" = "Favoriten";
+"Friends" = "Freunde";
+"Storage" = "Speicher";
+"Are you sure?" = "Bist du sicher?";
+"Cancel" = "Abbrechen";
+"Add WayPoint" = "Wegpunkt hinzufügen";
+"Pause" = "Pause";
+"Resume" = "Fortsetzen";
+"Stop" = "Stoppen";
+"Yes" = "Ja";
+"Hello" = "Hallo";
+"Password" = "Passwort";
+"Sign In" = "Anmelden";
+"or" = "oder";
+"Create an account" = "Konto erstellen";
+"No trails recorded" = "Keine Wege aufgezeichnet";
+"Found %lld trails" = "%lld Wege gefunden";
+"My Trails (%lld)" = "Meine Wege (%lld)";
+"Distance" = "Entfernung";
+"Total Time" = "Gesamtzeit";
+"Details" = "Details";
+"Edit" = "Bearbeiten";
+"Done" = "Fertig";
+"Remove" = "Entfernen";
+"Remove Trail" = "Weg entfernen";
+"empty" = "leer";
+"Found %lld users" = "%lld Benutzer gefunden";
+"Friends (%lld)" = "Freunde (%lld)";
+"Recording trail" = "Aufzeichnung des Weges";
+"Add to Friends" = "Zu Freunden hinzufügen";
+"No friends added" = "Keine Freunde hinzugefügt";
+"User details" = "Benutzerdetails";
+"Remove from Friends list" = "Aus der Freundesliste entfernen";
+"Unsend request" = "Anfrage zurückziehen";
+"Accept Friend Request" = "Freundschaftsanfrage annehmen";
+"Memory Usage" = "Speichernutzung";
+"Images Cache" = "Bildercache";
+"Clear cache" = "Cache leeren";
+"Moving Time" = "Bewegungszeit";
+"Max Altitude" = "Maximale Höhe";
+"Max Speed" = "Maximale Geschwindigkeit";
+"Altitude" = "Höhe";
+"Speed" = "Geschwindigkeit";
+"Mileage:" = "Kilometerstand:";
+"Latitude:" = "Breitengrad:";
+"Longitude:" = "Längengrad:";
+"Altitude:" = "Höhe:";
+"no WayPoints added" = "Keine Wegpunkte hinzugefügt";
+"Start Point" = "Startpunkt";
+"End Point" = "Endpunkt";
+"with" = "mit";
+"Difficulty:" = "Schwierigkeit:";
+"From:" = "Von:";
+"Control" = "Steuerung";
+"Map Preview" = "Kartenansicht";
+"Save Trail" = "Weg speichern";
+"Trail Name" = "Wegname";
+"Description" = "Beschreibung";
+"Activity:" = "Aktivität:";
+"Confidentiality:" = "Vertraulichkeit:";
+"Difficulty" = "Schwierigkeit";
+"Public trail will be visible by other members, including WayPoint and photos." = "Öffentlicher Weg wird von anderen Mitgliedern einschließlich Wegpunkten und Fotos sichtbar sein.";
+"Private trail will be unaivable for other members, also you cannot share it." = "Privater Weg wird für andere Mitglieder nicht verfügbar sein, du kannst ihn auch nicht teilen.";
+"Recorded trail will be lost and cannot be restored!" = "Aufgezeichneter Weg geht verloren und kann nicht wiederhergestellt werden!";
+"Edit WayPoint" = "Wegpunkt bearbeiten";
+"Add new WayPoint" = "Neuen Wegpunkt hinzufügen";
+"Name" = "Name";
+"Description" = "Beschreibung";
+"Save" = "Speichern";
+"Add" = "Hinzufügen";
+"Easy" = "Einfach";
+"Standard" = "Standard";
+"Hard" = "Schwer";
+"Master" = "Meister";
+"Public" = "Öffentlich";
+"Private" = "Privat";
+"Gallery (%lld)" = "Galerie (%lld)";
+"Today" = "Heute";
+"Excellent" = "Ausgezeichnet";
+"Good" = "Gut";
+"Poor" = "Schlecht";
+"Bad" = "Schlecht";
+"lost" = "verloren";
+"day" = "Tag";
+"days" = "Tage";
+"hour" = "Stunde";
+"hours" = "Stunden";
+"minute" = "Minute";
+"minutes" = "Minuten";
+"second" = "Sekunde";
+"seconds" = "Sekunden";
+"Waypoint" = "Wegpunkt";
+"Waypoints" = "Wegpunkte";
+"WayPoint" = "Wegpunkt";
+"WayPoints" = "Wegpunkte";
+"No description" = "Keine Beschreibung";
+
+
+// Wandern
+"Hiking" = "Wandern";
+"Walking" = "Spazieren";
+"Running" = "Laufen";
+"Mushroom Hunting" = "Pilze sammeln";
+// Fahrrad
+"Mount Bike" = "Mountainbike";
+"Road Bike" = "Rennrad";
+"City Bike" = "Stadtfahrrad";
+"BMX Bike" = "BMX Rad";
+"Electric Bike" = "Elektrofahrrad";
+
+// Autofahren
+"Car" = "Auto";
+"Offroad Vehicle" = "Geländefahrzeug";
+"ATV" = "ATV";
+"Buggy" = "Buggy";
+"Enduro Motorcycle" = "Enduro-Motorrad";
+"DualSport Motorcycle" = "DualSport-Motorrad";
+"Scooter" = "Roller";
+"City Motorcycle" = "Stadtmotorrad";
+"Touring Motorcycle" = "Touring-Motorrad";
+"Sport Motorcycle" = "Sportmotorrad";
+
+// Winter
+"Ski" = "Ski";
+"Freeride ski" = "Freeride-Ski";
+"Cross-Country ski" = "Langlaufski";
+"Alpinism ski" = "Alpinski";
+"Snowboard" = "Snowboard";
+"Sleigh" = "Schlitten";
+"Snowmobile" = "Schneemobil";
+
+// Wasser
+"Kayak" = "Kajak";
+"Rafting" = "Rafting";
+"Dinghy" = "Schlauchboot";
+"Jet ski" = "Jetski";
+
+"Walk" = "Gehen";
+"Bike" = "Fahrrad";
+"Drive" = "Fahren";
+"Winter" = "Winter";
+"Water" = "Wasser";
+
+"Trail Recording" = "Weg aufzeichnen";
+"Active Tracking" = "Aktives Verfolgen";
+"Allow my friends to track me" = "Erlaube meinen Freunden, mich zu verfolgen";
+"Line Color" = "Linienfarbe";
+"Settings" = "Einstellungen";
+
+"User Disabled" = "Benutzer deaktiviert";
+"Invalid Email" = "Ungültige E-Mail";
+"Missing Email" = "E-Mail fehlt";
+"Wrong password!" = "Falsches Passwort!";
+"Invalid Credentials" = "Ungültige Anmeldeinformationen";
+"Email already in use" = "E-Mail wird bereits verwendet";
+"Weak password" = "Schwaches Passwort";
+"Signing in request.." = "Anmeldeanfrage..";
+"Creating user request.." = "Benutzererstellungsanfrage..";
+"Success" = "Erfolg";
+"Signing in.." = "Anmelden..";
+"Unknown Error" = "Unbekannter Fehler";
+"Error!" = "Fehler!";
+"Kindly review your email for the activation link!" = "Bitte überprüfen Sie Ihre E-Mail auf den Aktivierungslink!";
+"The selected map area is too large for the trails search!" = "Das ausgewählte Kartengebiet ist für die Wegsuche zu groß!";
+"Contact" = "Kontakt";
+"Contact Us" = "Kontaktieren Sie uns";
+"Trails" = "Wege";
+"Open in Navigator" = "Im Navigator öffnen";
+"ago" = "vor";
+"Yesterday" = "Gestern";
+
+"Solo for now, friend-filled trails ahead." =  "Aktuell allein unterwegs, aber voller Freundestrails voraus.";
+"Step into your adventures – captured trails will be here." = "Betrete deine Abenteuer – aufgezeichnete Wege werden hier sein.";
+"Empty for now, but not for long!" = "Im Moment leer, aber nicht mehr lange!";
+
+"Close" = "Schließen";
+"Delete" = "Löschen";
+"Delete Account" = "Konto löschen";
+"Are you sure you want to delete your account? This action is irreversible and will permanently delete all your data." = "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Diese Aktion ist nicht rückgängig zu machen und wird alle Ihre Daten dauerhaft löschen.";
+"All recorded trails will be permanently deleted. This action cannot be undone." = "Alle aufgezeichneten Trails werden dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.";
+"Enter your password" = "Geben Sie Ihr Passwort ein";
+"Invalid Password" = "Ungültiges Passwort";
+"Initializing account deletion" = "Konto-Löschung wird initialisiert";
+"Getting trails list" = "Abrufen der Liste von Trails";
+"Removing" = "Entfernen";
+"Deleting Account Info" = "Löschen der Kontoinformationen";
+"Waiting for server response" = "Warten auf die Antwort des Servers";
+"Unregistering" = "Abmelden";
+"Account successfully deleted!" = "Konto erfolgreich gelöscht!";

@@ -1,0 +1,17 @@
+/* 
+  InfoPlist.strings
+  Acceleronus
+
+  Created by Françoise d'Aubigné on 29.12.2023.
+  
+*/
+"CFBundleDisplayName" = "Sentiers";
+
+"NSLocationAlwaysUsageDescription" = "Nous utilisons vos données de localisation pour enregistrer avec précision vos parcours, en capturant des détails tels que la distance, les changements d'élévation et les waypoints.";
+"NSLocationUsageDescription" = "Nous utilisons vos données de localisation pour enregistrer avec précision vos parcours, en capturant des détails tels que la distance, les changements d'élévation et les waypoints.";
+"NSLocationWhenInUseUsageDescription" = "Nous utilisons vos données de localisation pour enregistrer avec précision vos parcours, en capturant des détails tels que la distance, les changements d'élévation et les waypoints.";
+
+"NSPhotoLibraryUsageDescription" = "Partagez vos expériences en attachant des photos à vos parcours enregistrés.";
+"NSPhotoLibraryAddUsageDescription" = "Partagez vos expériences en attachant des photos à vos parcours enregistrés.";
+
+"NSCameraUsageDescription" = "Capturez des images et des moments en temps réel lors de vos aventures en plein air. Ajoutez des photos directement à vos enregistrements de sentiers pour documenter vos expériences et enrichir l'histoire de vos sentiers.";

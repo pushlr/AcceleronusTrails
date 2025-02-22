@@ -1,0 +1,211 @@
+/* 
+  Localizable.strings
+  Acceleronus
+
+  Created by Françoise d'Aubigné on 10.12.2023.
+  
+*/
+"Start Recording" = "Начать запись";
+"Navigator" = "Навигатор";
+"Account" = "Аккаунт";
+"Sign Out" = "Выйти";
+"Trails in area: %lld" = "Маршруты в районе: %lld";
+"Active Tracking: %lld" = "Активное отслеживание: %lld";
+"Joined from %@" = "Присоединился с %@";
+"Last activity %@" = "Последняя активность %@";
+"Change profile photo" = "Изменить фотографию профиля";
+"Change display name" = "Изменить отображаемое имя";
+"My Trails" = "Мои маршруты";
+"Favorites" = "Избранное";
+"Friends" = "Друзья";
+"Storage" = "Хранилище";
+"Are you sure?" = "Вы уверены?";
+"Cancel" = "Отмена";
+"Add WayPoint" = "Добавить точку маршрута";
+"Pause" = "Пауза";
+"Resume" = "Продолжить";
+"Stop" = "Стоп";
+"Yes" = "Да";
+"Hello" = "Привет";
+"Password" = "Пароль";
+"Sign In" = "Войти";
+"or" = "или";
+"Create an account" = "Создать аккаунт";
+"No trails recorded" = "Маршруты не записаны";
+"Found %lld trails" = "Найдено %lld маршрутов";
+"My Trails (%lld)" = "Мои маршруты (%lld)";
+"Distance" = "Расстояние";
+"Total Time" = "Общее время";
+"Details" = "Детали";
+"Edit" = "Изменить";
+"Done" = "Готово";
+"Remove" = "Удалить";
+"Remove Trail" = "Удалить маршрут";
+"empty" = "пусто";
+"Found %lld users" = "Найдено %lld пользователей";
+"Friends (%lld)" = "Друзья (%lld)";
+"Recording trail" = "Запись маршрута";
+"Add to Friends" = "Добавить в друзья";
+"No friends added" = "Друзья не добавлены";
+"User details" = "Данные пользователя";
+"Remove from Friends list" = "Удалить из списка друзей";
+"Unsend request" = "Отменить запрос";
+"Accept Friend Request" = "Принять запрос на дружбу";
+"Memory Usage" = "Использование памяти";
+"Images Cache" = "Кэш изображений";
+"Clear cache" = "Очистить кэш";
+"Moving Time" = "Время движения";
+"Max Altitude" = "Макс. высота";
+"Max Speed" = "Макс. скорость";
+"Altitude" = "Высота";
+"Speed" = "Скорость";
+"Mileage:" = "Пробег:";
+"Latitude:" = "Широта:";
+"Longitude:" = "Долгота:";
+"Altitude:" = "Высота:";
+"no WayPoints added" = "нет добавленных точек маршрута";
+"Start Point" = "Начальная точка";
+"End Point" = "Конечная точка";
+"with" = "с";
+"Difficulty:" = "Сложность:";
+"From:" = "От:";
+"Control" = "Управление";
+"Map Preview" = "Предпросмотр карты";
+"Save Trail" = "Сохранить маршрут";
+"Trail Name" = "Название маршрута";
+"Description" = "Описание";
+"Activity:" = "Активность:";
+"Confidentiality:" = "Конфиденциальность:";
+"Difficulty" = "Сложность";
+"Public trail will be visible by other members, including WayPoint and photos." = "Публичный маршрут будет виден другим участникам, включая точки маршрута и фотографии.";
+"Private trail will be unaivable for other members, also you cannot share it." = "Приватный маршрут будет недоступен для других участников, вы также не можете его поделиться.";
+"Recorded trail will be lost and cannot be restored!" = "Записанный маршрут будет потерян и не может быть восстановлен!";
+"Edit WayPoint" = "Изменить точку маршрута";
+"Add new WayPoint" = "Добавить новую точку маршрута";
+"Name" = "Имя";
+"Description" = "Описание";
+"Save" = "Сохранить";
+"Add" = "Добавить";
+"Easy" = "Легко";
+"Standard" = "Стандартно";
+"Hard" = "Трудно";
+"Master" = "Мастер";
+"Public" = "Публичный";
+"Private" = "Приватный";
+"Gallery (%lld)" = "Галерея (%lld)";
+"Today" = "Сегодня";
+"Excellent" = "Отлично";
+"Good" = "Хорошо";
+"Poor" = "Плохо";
+"Bad" = "Плохо";
+"lost" = "потерян";
+"day" = "день";
+"days" = "дни";
+"hour" = "час";
+"hours" = "часы";
+"minute" = "минута";
+"minutes" = "минуты";
+"second" = "секунда";
+"seconds" = "секунды";
+"Waypoint" = "Точка маршрута";
+"Waypoints" = "Точки маршрута";
+"WayPoint" = "Точка маршрута";
+"WayPoints" = "Точки маршрута";
+"No description" = "Без описания";
+
+// walk
+"Hiking" = "Пеший туризм";
+"Walking" = "Ходьба";
+"Running" = "Бег";
+"Mushroom Hunting" = "Сбор грибов";
+
+// bike
+"Mount Bike" = "Горный велосипед";
+"Road Bike" = "Шоссейный велосипед";
+"City Bike" = "Городской велосипед";
+"BMX Bike" = "Велосипед BMX";
+"Electric Bike" = "Электрический велосипед";
+
+// drive
+"Car" = "Автомобиль";
+"Offroad Vehicle" = "Внедорожник";
+"ATV" = "Квадроцикл";
+"Buggy" = "Багги";
+"Enduro Motorcycle" = "Эндуро мотоцикл";
+"DualSport Motorcycle" = "Мотоцикл двойного назначения";
+"Scooter" = "Скутер";
+"City Motorcycle" = "Городской мотоцикл";
+"Touring Motorcycle" = "Туринговый мотоцикл";
+"Sport Motorcycle" = "Спортивный мотоцикл";
+
+// winter
+"Ski" = "Лыжи";
+"Freeride ski" = "Лыжи фрирайд";
+"Cross-Country ski" = "Лыжи беговые";
+"Alpinism ski" = "Лыжи альпинистские";
+"Snowboard" = "Сноуборд";
+"Sleigh" = "Сани";
+"Snowmobile" = "Снегоход";
+
+// water
+"Kayak" = "Каяк";
+"Rafting" = "Рафтинг";
+"Dinghy" = "Лодка";
+"Jet ski" = "Гидроцикл";
+
+"Walk" = "Пешком";
+"Bike" = "Велик";
+"Drive" = "Вождение";
+"Winter" = "Зима";
+"Water" = "Вода";
+
+"Trail Recording" = "Запись маршрута";
+"Active Tracking" = "Активное отслеживание";
+"Allow my friends to track me" = "Разрешить друзьям отслеживать меня";
+"Line Color" = "Цвет линии";
+"Settings" = "Настройки";
+
+
+"User Disabled" = "Пользователь отключен";
+"Invalid Email" = "Неверный адрес электронной почты";
+"Missing Email" = "Отсутствует адрес электронной почты";
+"Wrong password!" = "Неправильный пароль!";
+"Invalid Credentials" = "Недействительные учетные данные";
+"Email already in use" = "Email уже используется";
+"Weak password" = "Слабый пароль";
+"Signing in request.." = "Запрос на вход..";
+"Creating user request.." = "Запрос на создание пользователя..";
+"Success" = "Успешно";
+"Signing in.." = "Вход..";
+"Unknown Error" = "Неизвестная ошибка";
+"Error!" = "Ошибка!";
+"Kindly review your email for the activation link!" = "Пожалуйста, проверьте вашу почту для получения ссылки активации!";
+
+"The selected map area is too large for the trails search!" = "Выбранная область карты слишком велика для поиска маршрутов!";
+
+"Contact" = "Контакт";
+"Contact Us" = "Свяжитесь с нами";
+"Trails" = "Маршруты";
+"Open in Navigator" = "Открыть в навигаторе";
+"ago" = "назад" ;
+"Yesterday" = "Вчера";
+
+"Solo for now, friend-filled trails ahead." = "На данный момент один, впереди тропы, полные друзей.";
+"Step into your adventures – captured trails will be here." = "Вступай в свои приключения – записанные тропы будут здесь.";
+"Empty for now, but not for long!" = "Пока пусто, но не надолго!";
+
+"Close" = "Закрыть";
+"Delete" = "Удалить";
+"Delete Account" = "Удалить аккаунт";
+"Are you sure you want to delete your account? This action is irreversible and will permanently delete all your data." = "Вы уверены, что хотите удалить свой аккаунт? Это действие необратимо и окончательно удалит все ваши данные.";
+"All recorded trails will be permanently deleted. This action cannot be undone." = "Все записанные маршруты будут удалены навсегда. Это действие нельзя отменить.";
+"Enter your password" = "Введите пароль";
+"Invalid Password" = "Неверный пароль";
+"Initializing account deletion" = "Инициализация удаления аккаунта";
+"Getting trails list" = "Получение списка треков";
+"Removing" = "Удаление";
+"Deleting Account Info" = "Удаление информации об аккаунте";
+"Waiting for server response" = "Ожидание ответа сервера";
+"Unregistering" = "Отмена регистрации";
+"Account successfully deleted!" = "Аккаунт успешно удален!";
+
