@@ -217,9 +217,9 @@ class DataStorageItem: ObservableObject,Identifiable {
     }
     
     func addItem(_ item: DataItem, downloadAllowed : Bool = true) {
-        print("addItem \(item.name) in \(workingDirectory.absoluteString)")
+        //print("addItem \(item.name) in \(workingDirectory.absoluteString)")
         if item.name.isEmpty {print("Empty name"); return}
-        if getItem(item.name) != nil {print("Aready Exist"); return}
+        if getItem(item.name) != nil {return;print("Aready Exist"); }
         
         let localPath = workingDirectory.appending(path: item.name)
         var tempItem = DataItem(name: item.name, url: localPath)
@@ -227,7 +227,7 @@ class DataStorageItem: ObservableObject,Identifiable {
         
         
         if(FileManager.default.fileExists(atPath: localPath.path)){
-            print("File already downloaded")
+            //print("File already downloaded")
             tempItem.downloaded = true
             self.willUpdateData()
             items.append(tempItem)

@@ -14,7 +14,7 @@ class CustomPolylineRenderer: MKOverlayRenderer {
         
             let zoom = Double.minimum((8 / zoomScale), 200)
         
-            print("zoom \(zoom)")
+            //print("zoom \(zoom)")
             context.setLineWidth(8 / zoomScale)
             context.setLineJoin(.round)
             context.setLineCap(.round)

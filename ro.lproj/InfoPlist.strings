@@ -5,7 +5,7 @@
   Created by Françoise d'Aubigné on 29.12.2023.
   
 */
-"CFBundleDisplayName" = "Poteci";
+"CFBundleDisplayName" = "Trails";
 
 "NSLocationAlwaysUsageDescription" = "Solicităm acces la datele de locație pentru a înregistra cu precizie traseele tale, capturând detalii precum distanța parcursă, modificările de altitudine și punctele de referință (waypoints).";
 "NSLocationUsageDescription" = "Solicităm acces la datele de locație pentru a înregistra cu precizie traseele tale, capturând detalii precum distanța parcursă, modificările de altitudine și punctele de referință (waypoints).";

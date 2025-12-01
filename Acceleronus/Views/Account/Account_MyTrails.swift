@@ -40,31 +40,52 @@ struct Account_MyTrails: View {
 //            }
                 ScrollView {
                     
-                    if(searchText.isEmpty && userData.myTrailsCount==0 && searchResults.count==0){
-                        ContentUnavailableView(label: {Label("No trails recorded",systemImage: "tray.fill").font(.callout)},
-                                               description: {Text("Step into your adventures – captured trails will be here.").font(.footnote)}
-                        )//.frame(maxHeight: .infinity, alignment: .top)
-                        .padding(.top,UIScreen.main.bounds.height / 4)
-                    }
-                    
-                    HStack{
-                        if (userData.myTrailsSearchIsLoading || showLoadingAnimation ){
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: Color.black))
-                                .padding(.leading,5)
-                        }else{
-                            if(!searchText.isEmpty){
+                    ZStack {
+                        
+                        // MARK: - Content when no trails
+                        if(searchText.isEmpty && userData.myTrailsCount==0 && searchResults.count==0){
+                                     ContentUnavailableView(label: {Label("No trails recorded",systemImage: "tray.fill").font(.callout)},
+                                                            description: {Text("Step into your adventures – captured trails will be here.").font(.footnote)}
+                                     )//.frame(maxHeight: .infinity, alignment: .top)
+                                     .padding(.top,UIScreen.main.bounds.height / 4)
+                                 }
+                        
+                        // MARK: - Loading Indicator
+                       
+                        HStack {
+                            if userData.myTrailsSearchIsLoading || showLoadingAnimation {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle(tint: Color.black))
+                                    .scaleEffect(1.0)      // Make it bigger
+                                    .rotationEffect(.degrees(showLoadingAnimation ? 360 : 0))
+                                    .animation(.linear(duration: 1.2).repeatForever(autoreverses: false), value: showLoadingAnimation)
+                            }
+                           
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .edgesIgnoringSafeArea(.all)
+                        .transition(.opacity)
+                        
+                        // MARK: - Search Result Count
+                        if !searchText.isEmpty && !(userData.myTrailsSearchIsLoading || showLoadingAnimation) {
+                            HStack {
                                 Text("Found \(userData.myTrailsSearchCount) trails")
                                     .font(.caption)
+                                    .foregroundColor(.secondary)
+                                Spacer()
                             }
-                            
+                            .padding(.horizontal, 15)
+                            .padding(.top, 10)
+                            .transition(.move(edge: .top).combined(with: .opacity))
                         }
-                    }.frame(maxWidth: .infinity,alignment: .leading)
-                        .padding(5)
+                    }
+
                     
                     
                     LazyVStack{
                         ForEach(searchResults) { item in
+       
+                            
                             TrailCard(item: item)
                                 .frame(maxWidth: .infinity)
                                 .padding()
@@ -90,17 +111,18 @@ struct Account_MyTrails: View {
                         }
                         
                         if(searchText.isEmpty){
+                            //lazy load progress animation
                             if searchResults.count < userData.myTrailsCount{
                                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).padding(25)}
                         }else{
-                            if searchResults.count < userData.myTrailsSearchCount{
-                                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).padding(25)}
+//                            if searchResults.count < userData.myTrailsSearchCount{
+//                                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).padding(25)}
                         }
                     }
                     
                 }
                 .listStyle(.plain)
-                .searchable(text: $searchText,isPresented: $searchisPresented, placement: .navigationBarDrawer(displayMode: .always))
+                .searchable(text: $searchText,isPresented: $searchisPresented, placement: .navigationBarDrawer(displayMode: .always),   prompt: Text("Search") )
                 
                 .onAppear{
                     //load first trails
@@ -178,7 +200,7 @@ struct TrailCard: View {
                     HStack{
                         
                         ZStack(alignment: .leading){
-                            Text(GetActivity(item.activityType).name.localized)
+                            Text(GetActivity(item.activityType).name)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.footnote)
                         }
@@ -241,6 +263,7 @@ struct TrailCard: View {
                                                  detent: .constant(.large),
                                                  isPinned: .constant(false),
                                                  sheetPresent: .constant(false),
+                                                 trailColorChanged: .constant(false),
                                                  withTopControlButtons: false,
                                                  withBackground: false,
                                                  withMap: true,

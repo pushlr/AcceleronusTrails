@@ -5,7 +5,7 @@
   Created by Françoise d'Aubigné on 29.12.2023.
   
 */
-"CFBundleDisplayName" = "路径";
+"CFBundleDisplayName" = "Trails";
 
 "NSLocationAlwaysUsageDescription" = "我們使用您的位置數據來準確記錄您的路徑，捕捉詳細信息，如距離、海拔變化和航點。";
 "NSLocationUsageDescription" = "我們使用您的位置數據來準確記錄您的路徑，捕捉詳細信息，如距離、海拔變化和航點。";

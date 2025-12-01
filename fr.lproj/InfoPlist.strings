@@ -5,7 +5,7 @@
   Created by Françoise d'Aubigné on 29.12.2023.
   
 */
-"CFBundleDisplayName" = "Sentiers";
+"CFBundleDisplayName" = "Trails";
 
 "NSLocationAlwaysUsageDescription" = "Nous utilisons vos données de localisation pour enregistrer avec précision vos parcours, en capturant des détails tels que la distance, les changements d'élévation et les waypoints.";
 "NSLocationUsageDescription" = "Nous utilisons vos données de localisation pour enregistrer avec précision vos parcours, en capturant des détails tels que la distance, les changements d'élévation et les waypoints.";

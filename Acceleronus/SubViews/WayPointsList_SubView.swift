@@ -21,7 +21,7 @@ struct WayPointsList_SubView: View {
     @State private var wp_DelConfirm = false
     
     init(wayPoints: Binding<[WayPoint]>, editMode: Bool = false) {
-        print("WayPointsList_SubView initing")
+//        print("WayPointsList_SubView initing")
       //  self.trailID = trailID
         self._wayPoints = wayPoints
         self.editMode = editMode
@@ -133,7 +133,7 @@ struct WayPointsList_SubView: View {
             .sheet(isPresented: $wp_ViewSheet,onDismiss: {print("dismiss sheet \(wp_ViewSheet)");selectedWPIdx_forView = -1},
                    content: {
                                     
-                                    Waypoint_ViewView(
+                                    Waypoint_ViewView(                                       
                                         wayPoint: wayPoints[selectedWPIdx_forView]//selectedWaypoint!
                                     )
                                     .presentationDetents([.large])

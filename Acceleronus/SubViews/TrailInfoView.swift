@@ -12,6 +12,7 @@ struct TrailInfoView: View {
  
     var body: some View {
         VStack{
+            
             HStack{
                 
                 VStack(alignment: .center){

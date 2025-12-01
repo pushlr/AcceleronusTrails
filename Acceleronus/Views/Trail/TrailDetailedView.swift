@@ -19,6 +19,9 @@ struct TrailDetailedView: View {
   @Binding var isPinned : Bool
   @Binding var detent : PresentationDetent
   @Binding var sheetPresent : Bool
+    @Binding var trailColorChanged : Bool
+  
+    
     let withTopControlButtons : Bool
     let withBackground : Bool
     let withBottomControlButtons : Bool
@@ -26,12 +29,14 @@ struct TrailDetailedView: View {
   
   
   @State private var deviceOrientation = UIDevice.current.orientation
+  @State private var showColorSelector = false
   @State var showBigMap = false
      
     init(trail: Binding<Trail>, 
          detent: Binding<PresentationDetent>,
          isPinned: Binding<Bool>,
-         sheetPresent: Binding<Bool>, 
+         sheetPresent: Binding<Bool>,
+         trailColorChanged: Binding<Bool>,
          withTopControlButtons: Bool = true,
          withBackground: Bool = true,
          withMap: Bool = false,
@@ -40,15 +45,26 @@ struct TrailDetailedView: View {
         self._detent = detent
         self._isPinned = isPinned
         self._sheetPresent = sheetPresent
+        self._trailColorChanged = trailColorChanged
         self._trail = trail
         self.withTopControlButtons = withTopControlButtons
         self.withBackground = withBackground
         self.withMap = withMap
         self.withBottomControlButtons = withBottomControlButtons
 
+        self.showColorSelector = false
         
     }
 
+    
+    func setTrailColor(_ color: Color) {
+        if let index = userData.trailsOnMap.firstIndex(where: { $0.id == trail.id }) {
+            userData.trailsOnMap[index].color = UIColor(color)
+
+           print("set collor changed")
+           trailColorChanged = true
+        }
+    }
     
     var body: some View{
         
@@ -67,6 +83,20 @@ struct TrailDetailedView: View {
                         
                    
                     if(withTopControlButtons){
+                        //change color
+                        Button {
+                            withAnimation {
+                                showColorSelector.toggle()
+                            }
+                        } label: {
+                            Image(systemName: "paintpalette")
+                                .font(.system(size: 18))
+                        }
+                        .padding(.trailing, 5)
+                        .frame(maxWidth: 30, alignment: .trailing)
+                        
+                        
+                        //pin unpin
                         Button{withAnimation{isPinned.toggle()}}
                     label:{
                         if(!isPinned){Image(systemName: "pin").rotationEffect(.degrees(40))}
@@ -81,13 +111,30 @@ struct TrailDetailedView: View {
                         
                     }
                 }
+
+                
                 HStack{
                   //  ZStack(alignment: .leading){
                     
-                        Text(/*trail.DisplayName+" " + "with".localized + " "+*/GetActivity(trail.activityType).name.localized)
+                        Text(GetActivity(trail.activityType).name)
                             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                             .font(.footnote)
                 ///    }
+                    ///    
+                    
+                    if trail.confidentiality == .Private{
+                        HStack(spacing: 0){
+                            Image(systemName: "lock.shield")
+                            Text("Private")
+                                .font(.footnote)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(
+                            Capsule()
+                                .fill(Color.blue.opacity(0.15))
+                        )
+                    }
                     
                     Text((trail.StartTime.formatted()))
                         .font(.caption)
@@ -95,6 +142,27 @@ struct TrailDetailedView: View {
                     
                 }
                 .padding(.bottom,10)
+                
+                
+                // color selected
+                if showColorSelector {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(pastelColors, id: \.self) { color in
+                                Circle()
+                                    .fill(color)
+                                    .frame(width: 30, height: 30)
+                                    .overlay(
+                                        Circle().stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                    )
+                                    .onTapGesture {
+                                        setTrailColor(color)
+                                    }
+                            }
+                        }
+                        .padding(.vertical, 6)
+                    }
+                }
                 
                 Divider().padding(.trailing,15)//.frame(maxWidth: UIScreen.main.bounds.width * 0.8)
             }
@@ -122,7 +190,7 @@ struct TrailDetailedView: View {
             
                   
                   HStack{
-                     Text("From:").font(.caption)
+                      Text("From:").font(.caption)
                      Text(trail.DisplayName).font(.headline)
                   }
                   .frame(maxWidth: .infinity,alignment: .leading)
@@ -130,14 +198,14 @@ struct TrailDetailedView: View {
                   
                   
                    HStack{
-                      Text("Difficulty:").font(.caption)
-                       Text(trail.difficutly.rawValue.localized).font(.headline)
+                       Text("Difficulty:").font(.caption)
+                       Text(trail.difficutly.localized).font(.headline)
                    }
                    .frame(maxWidth: .infinity,alignment: .leading)
                    .padding(.bottom,5)
                   
                   
-                  TextCaptionWithDivider(text: "Description".localized).padding(.bottom,5)
+                  TextCaptionWithDivider(text: "Description").padding(.bottom,5)
                   
                   if(!trail.TrailDesc.isEmpty){
                       Text(trail.TrailDesc)
@@ -150,7 +218,7 @@ struct TrailDetailedView: View {
                   
                   
                   
-                 TextCaptionWithDivider(text: "WayPoints".localized).padding(.bottom,5)
+                 TextCaptionWithDivider(text: "WayPoints").padding(.bottom,5)
                  WayPointsList_SubView(wayPoints: $trail.WayPoints)
                  .frame(maxWidth: .infinity, alignment: .leading)
                  .padding(.bottom,5)
@@ -161,7 +229,7 @@ struct TrailDetailedView: View {
                   
                   
                   if(withMap){
-                      TextCaptionWithDivider(text: "Map Preview".localized).padding(.bottom,5)
+                      TextCaptionWithDivider(text: "Map Preview").padding(.bottom,5)
 
                       Button{  showBigMap = true}
                       label:{
@@ -182,7 +250,7 @@ struct TrailDetailedView: View {
                   }
                   
                   if(withBottomControlButtons){
-                      TextCaptionWithDivider(text: "Control".localized).padding(.bottom,5)
+                      TextCaptionWithDivider(text: "Control").padding(.bottom,5)
                       
                                     Button{
                                         userModel.centerMap_toLocation(location: trail.StartLocation)
@@ -292,12 +360,15 @@ struct TrailDetailedView_Preview : PreviewProvider {
         @State var detent = PresentationDetent.large
         @State var isPinned = false
         @State var sheetPresent = true
+        @State var showColorSelector = false
       
             TrailDetailedView(
-                trail: $userData.trailsInArea[0],
+                trail: $userData.trailsOnMap[0],
                 detent:  $detent,
                 isPinned: $isPinned,
                 sheetPresent: $sheetPresent,
+                trailColorChanged: .constant(false),
+             
                 withMap: true,
                 withBottomControlButtons : true
                 

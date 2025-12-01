@@ -42,6 +42,15 @@ struct SettingsView: View {
                        }
                 }
                 
+                Section(header: Text("Language")) {
+                    Picker(selection: $userModel.language, label: Text("App Language")) {
+                        // Provide a list of supported languages
+                        ForEach(AppLanguage.allCases, id: \.self) { lang in
+                            Text(lang.displayName).tag(lang.rawValue)
+                        }
+                    }
+         
+                }
                 
                 Section(header: Text("Memory Usage")) {
                     NavigationLink(destination: StorageView()) {
@@ -52,7 +61,7 @@ struct SettingsView: View {
                 Section(header: Text("Contact")){
                     Button{
                         let subject = "Acceleronus Trails: Question"
-                        let body = "Hello".localized + ",\n"
+                        let body = "Hello" + ",\n"
                         guard let emailURL = URL(string: "mailto:pushlr@icloud.com?subject=\(subject)&body=\(body)") else { return }
                         UIApplication.shared.open(emailURL)
                     } label:{
@@ -89,6 +98,14 @@ struct SettingsView: View {
         
             .onChange(of: userModel.trailRecordedSettings.lineColor){
                userData.saveTrailSettingsUserDefaults(trailSettings: userModel.trailRecordedSettings)}
+        
+        
+            .onChange(of: userModel.language) { oldValue, newValue in
+                print("Changing language from \(oldValue) to \(newValue)")
+                //Bundle.setLanguage(newValue)
+                userData.saveLanguageToUserDefaults(lang: newValue)
+            }
+        
     }
 }
 

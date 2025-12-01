@@ -33,15 +33,16 @@ struct Friends_List: View {
                 
                 if(searchText.isEmpty){
                     //FRIENDS LIST
-                    // TextCaptionWithDivider(text: "Friends list").padding([.leading,.trailing],5)
                     
                     if(searchResults.isEmpty){
+                        // No any friend
                         ContentUnavailableView(label: {Label("No friends added",systemImage: "person.fill.badge.plus").font(.callout)},
-                                               description: {Text("Solo for now, friend-filled trails ahead.").font(.footnote)}
+                                               description: {Text("You're just getting started, friend-filled trails ahead.").font(.footnote)}
                         )
-                        //.frame(maxHeight: .infinity, alignment: .center)
                         .padding(.top,UIScreen.main.bounds.height / 4)
                     }
+                    
+                    // show friends
                     ForEach(searchResults) { user in
                         UserCard(user: $userData.friendsList.list[userData.friendsList.list.firstIndex(where: {$0.id == user.id})!])
                     }
@@ -49,36 +50,99 @@ struct Friends_List: View {
                 }else{
                     //SEARCH LIST
                     // TextCaptionWithDivider(text: "Global Search").padding([.leading,.trailing],5)
-                    HStack{
-                        if (userData.friendsSearchIsLoading || showLoadingAnimation ){
+                    // MARK: - Loading Indicator
+                   
+                    HStack {
+                        if userData.friendsSearchIsLoading || showLoadingAnimation {
                             ProgressView()
                                 .progressViewStyle(CircularProgressViewStyle(tint: Color.black))
-                                .padding(.leading,5)
-                        }else{
-                            if(!searchText.isEmpty){
-                                Text("Found \(userData.friendsSearchCount) users")
-                                    .font(.caption)
+                                .scaleEffect(1.0)      // Make it bigger
+                                .rotationEffect(.degrees(showLoadingAnimation ? 360 : 0))
+                                .animation(.linear(duration: 1.2).repeatForever(autoreverses: false), value: showLoadingAnimation)
+                        }
+                       
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .edgesIgnoringSafeArea(.all)
+                    .transition(.opacity)
+                    
+                    
+                    
+                    // MARK: - Search Result Count
+                    if !searchText.isEmpty && !(userData.friendsSearchIsLoading || showLoadingAnimation) {
+                        HStack {
+                            Text("Found \(userData.friendsSearchCount) users")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Spacer()
+                        }
+                        .padding(.horizontal, 15)
+                       // .padding(.top, 10)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                  
+                    
+                        let friends = searchResults.filter { user in
+                            userData.friendsList.list.contains(where: { $0.id == user.id })
+                        }
+
+                        let nonFriends = searchResults.filter { user in
+                            !userData.friendsList.list.contains(where: { $0.id == user.id })
+                        }
+
+                        
+                        TextCaptionWithDivider(text: "Friends List")
+                            .padding([.leading,.trailing],5)
+                            .background(
+                            Capsule()
+                                .fill(Color.gray.opacity(0.15))
+                            )
+                        if friends.isEmpty {
+                            HStack{
+                                Text("-")
+                                    .foregroundStyle(.secondary)
+                                    .padding(.leading,5)
+                                Spacer()
+                            }
+                        } else {
+                            ForEach(friends) { user in
+                                    UserCard(user: $userData.friendsSearchList[userData.friendsSearchList.firstIndex(where: {$0.id == user.id})!])
+                                        .onAppear{
+                                            if (user.id == friends.last?.id && !userData.friendsSearchIsLoading) {
+                                                print("Loading next users")
+                                             //   userData.db_SearchUser(contain: searchText)
+                                            }
+                                        }
                             }
                         }
-                    }.frame(maxWidth: .infinity,alignment: .leading)
-                        .padding(5)
-                    
-                    //    if searchResults.isEmpty && !userData.friendsSearchIsLoading {Text("empty").font(.footnote)}
-                    
-                    
-                    ForEach(searchResults) { user in
-                        UserCard(user: $userData.friendsSearchList[userData.friendsSearchList.firstIndex(where: {$0.id == user.id})!])
-                            .onAppear{
-                                if (user.id == userData.friendsSearchList.last?.id && !userData.friendsSearchIsLoading) {
-                                    print("Loading next users")
-                                    userData.db_SearchUser(contain: searchText)
-                                }
+                        
+                        TextCaptionWithDivider(text: "Global Search").padding([.leading,.trailing],5)
+                            .background(
+                            Capsule()
+                                .fill(Color.gray.opacity(0.15))
+                        )
+                        
+                        if nonFriends.isEmpty {
+                            HStack{
+                                Text("-")
+                                    .foregroundStyle(.secondary)
+                                    .padding(.leading,5)
+                                Spacer()
                             }
+                        } else {
+                            ForEach(nonFriends) { user in
+                                UserCard(user: $userData.friendsSearchList[userData.friendsSearchList.firstIndex(where: {$0.id == user.id})!])
+                                    .onAppear{
+                                        if (user.id == nonFriends.last?.id && !userData.friendsSearchIsLoading) {
+                                            print("Loading next users")
+                                            //   userData.db_SearchUser(contain: searchText)
+                                        }
+                                    }
+                            }}
+                    
                     }
                     
                     //bottom loading animation
-                    if userData.friendsSearchList.count < userData.friendsSearchCount && userData.friendsSearchIsLoading{
-                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).padding(25)}
+                    if userData.friendsSearchList.count < userData.friendsSearchCount && userData.friendsSearchIsLoading{                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).padding(25)}
                     
                     
                     
@@ -209,49 +273,120 @@ struct UserCard: View {
                     {
                         UserPhotoView(storageID: user.userID, imageName: user.DisplayPhoto)
                             .scaledToFill()
-                            .frame(width: 55, height: 55)
+                            .frame(width: 48, height: 48)
                             .clipShape(Circle())
                             .shadow(radius: 4)
                     }}else{
                         UserPhotoView(storageID: user.userID, imageName: user.DisplayPhoto)
                             .scaledToFill()
-                            .frame(width: 55, height: 55)
+                            .frame(width: 48, height: 48)
                             .clipShape(Circle())
                             .shadow(radius: 4)
                     }
                 
 
-                HStack{
-                    
-                    if(user.friendStatus == .requestAccepted && userData.friendsList.list.firstIndex(where: {$0.userID == user.userID}) != nil){
-                        NavigationLink(destination:FriendAccountView(friendIndex: userData.friendsList.list.firstIndex(where: {$0.userID == user.userID})!))
-                        {
-                            Text(user.DisplayName)
-                                .foregroundColor(.black)
-                            
-                        }.padding(.trailing,10)
-                    }else
-                    {
-                        Text(user.DisplayName)
-                            .foregroundColor(.black)
-                    }
-                   
-                    
-                    if user.recordingStatus == .isStarted {
-                        Image(systemName: "record.circle").foregroundStyle(.pastelRed).padding(.leading,5)
-                            .symbolEffect(.variableColor.iterative.dimInactiveLayers.nonReversing)
-                        //Text("Recording trail" /*+ GetActivity(user.trailRecorded.activityType).name*/ ).font(.footnote)
-                    }
-                }.frame(maxWidth: .infinity,alignment: .leading)
+//                HStack{
+//                    
+//                    if(user.friendStatus == .requestAccepted && userData.friendsList.list.firstIndex(where: {$0.userID == user.userID}) != nil){
+//                        NavigationLink(destination:FriendAccountView(friendIndex: userData.friendsList.list.firstIndex(where: {$0.userID == user.userID})!))
+//                        {
+//                            Text(user.DisplayName)
+//                                .foregroundColor(.black)
+//                            
+//                        }.padding(.trailing,10)
+//                    }else
+//                    {
+//                        Text(user.DisplayName)
+//                            .foregroundColor(.black)
+//                    }
+//                   
+//                    
+//                    if user.recordingStatus == .isStarted {
+//                        Image(systemName: "record.circle").foregroundStyle(.pastelRed).padding(.leading,5)
+//                            .symbolEffect(.variableColor.iterative.dimInactiveLayers.nonReversing)
+//                        //Text("Recording trail" /*+ GetActivity(user.trailRecorded.activityType).name*/ ).font(.footnote)
+//                    }
+//                }.frame(maxWidth: .infinity,alignment: .leading)
+                
+                // MARK: - NAME + SUBTEXT
+                        VStack(alignment: .leading, spacing: 3) {
+
+                            // Name
+                            if user.friendStatus == .requestAccepted,
+                               let index = userData.friendsList.list.firstIndex(where: { $0.userID == user.userID }) {
+
+                                HStack{
+                                    NavigationLink(destination:
+                                                    FriendAccountView(friendIndex: index)
+                                    ) {
+                                        Text(user.DisplayName)
+                                            .font(.system(size: 17, weight: .medium))
+                                            .foregroundColor(.primary)
+                                    }
+                                    
+                                    if user.recordingStatus == .isStarted {
+                                        Image(systemName: "record.circle").foregroundStyle(.pastelRed).padding(.leading,5)
+                                            .symbolEffect(.variableColor.iterative.dimInactiveLayers.nonReversing)
+                                    }
+                                    
+                                }
+                                
+                                // SUBTEXT: Last Online + Trail count
+                                HStack(spacing: 6) {
+                                    if(user.LastActivity != nil){
+                                        Text("was \(FormatTimeLastActivity(user.LastActivity!))")
+                                            .font(.system(size: 13))
+                                            .foregroundColor(.secondary)
+                                    }
+//                                    if user.friendStatus == .requestAccepted {
+//                                        Text("· \(user.myTrailsCount) trails")
+//                                            .font(.system(size: 13))
+//                                            .foregroundColor(.secondary)
+//                                    }
+                                }
+                                
+                                
+                            } else {
+                                Text(user.DisplayName)
+                                    .font(.system(size: 17, weight: .medium))
+                                    .foregroundColor(.primary)
+                            }
+
+
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                
                 if(user.friendStatus == .requestNotSent){
-                    Button(){
-                        user.friendStatus = .requestSent
-                        // userData.friendsList.append(user)
-                        userData.db_sendFriendRequest(friend: user)
-                        
+                    
+                    
+                    Menu {
+                        //remove button
+                        Button(){
+                            user.friendStatus = .requestSent
+                            // userData.friendsList.append(user)
+                            userData.db_sendFriendRequest(friend: user)
+                            
+                        }
+                        label:{ Text("Add to Friends")
+                            .buttonStyle(ButtonDefault(ButtonColor: Color.primary,width: 220,height: 40))}
                     }
-                label:{Text("Add to Friends")}
-                        .buttonStyle(ButtonDefault(ButtonColor: Color.primary,width: 220,height: 40))
+                    label: {
+                        Text("...")
+                            .font(.title)
+                            .foregroundColor(.gray)
+                            
+                    }
+                    .padding(.trailing,5)
+                    
+                    
+//                    Button(){
+//                        user.friendStatus = .requestSent
+//                        // userData.friendsList.append(user)
+//                        userData.db_sendFriendRequest(friend: user)
+//                        
+//                    }
+//                    label:{Text("Add to Friends")}
+//                        .buttonStyle(ButtonDefault(ButtonColor: Color.primary,width: 220,height: 40))
                 }
                 
                 if(user.friendStatus == .requestAccepted){
@@ -268,7 +403,7 @@ struct UserCard: View {
                             //userData.db_deleteFriend(friend: user)
                             isShowingDeleteConfirmationDialog = true
                         }
-                    label:{Label("Remove from Friends list",systemImage: "")}
+                        label:{Label("Remove from Friends list",systemImage: "")}
                     }
                     label: {
                         Text("...")
@@ -295,20 +430,43 @@ struct UserCard: View {
                 }
                 
                 if(user.friendStatus == .requestSent){
-                    Button(){
-                        isShowingUnsendConfirmationDialog = true
-                    }
-                        label:{Text("Unsend request")}
-                        .buttonStyle(ButtonDefault(ButtonColor: Color.brown,width: 220,height: 40))
-                        .confirmationDialog("Are you sure?",
-                                            isPresented: $isShowingUnsendConfirmationDialog,
-                                            titleVisibility: .visible) {
-                            Button("Yes",role: .destructive) {
-                                userData.db_deleteFriend(friend: user)
-                                user.friendStatus = .requestNotSent
-                            }
-                            Button("Cancel", role: .cancel) {}
+                    
+                    Text("Request sent")
+                        .font(.caption)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(
+                            Capsule()
+                                .fill(Color.blue.opacity(0.15))
+                        )
+                        .foregroundColor(.blue)
+                    
+                    Menu {
+
+                        Button(){
+                            //userData.db_deleteFriend(friend: user)
+                            isShowingUnsendConfirmationDialog = true
                         }
+                        label:{Label("Unsend request",systemImage: "")}
+                    }
+                    label: {
+                        Text("...")
+                            .font(.title)
+                            .foregroundColor(.gray)
+                            
+                    }
+                    .padding(.trailing,5)
+                    .confirmationDialog("Are you sure?",
+                                        isPresented: $isShowingUnsendConfirmationDialog,
+                                        titleVisibility: .visible) {
+                        Button("Yes",role: .destructive) {
+                            userData.db_deleteFriend(friend: user)
+                            user.friendStatus = .requestNotSent
+                        }
+                        Button("Cancel", role: .cancel) {}
+                    }
+                    
+                    
                     
                 }
                 

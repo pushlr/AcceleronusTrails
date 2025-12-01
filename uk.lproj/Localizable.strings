@@ -25,6 +25,7 @@
 "Pause" = "Пауза";
 "Resume" = "Продовжити";
 "Stop" = "Зупинити";
+"Finish" = "Завершити";
 "Yes" = "Так";
 "Hello" = "Привіт";
 "Password" = "Пароль";
@@ -188,7 +189,8 @@
 "ago" = "тому" ;
 "Yesterday" = "Вчора";
 
-"Solo for now, friend-filled trails ahead." = "Наразі сам, перед вами траси, наповнені друзями.";
+"You're just getting started, friend-filled trails ahead." = "Ти лише починаєш, попереду стежки, сповнені друзів.";
+
 "Step into your adventures – captured trails will be here." =  "Крокуй у свої пригоди – записані стежки будуть тут.";
 "Empty for now, but not for long!" = "Поки порожньо, але не надовго!";
 
@@ -207,3 +209,8 @@
 "Unregistering" = "Скасування реєстрації";
 "Account successfully deleted!" = "Обліковий запис успішно видалено!";
 
+"was %@" = "Був(ла) %@";
+"Search city or place" = "Пошук міста або місця";
+"Weak GPS Signal" = "Слабкий GPS‑сигнал";
+"Friends List" = "Список друзів";
+"Global Search" = "Глобальний пошук";

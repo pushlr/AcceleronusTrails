@@ -16,7 +16,7 @@ struct MapWithTrailSubView: View {
         
         Map{
             //Start Point
-            Annotation("Start Point".localized,
+            Annotation("Start Point",
                        coordinate: trail.StartLocation,
                        content: {
                 Image(uiImage:
@@ -26,7 +26,7 @@ struct MapWithTrailSubView: View {
             })
             
             //End Point
-            Annotation("End Point".localized,
+            Annotation("End Point",
                        coordinate: trail.EndLocation,
                        content: {
                 Image(uiImage:

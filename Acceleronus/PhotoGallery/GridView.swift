@@ -38,7 +38,8 @@ struct GridView: View {
                 
                 //control buttons
                 HStack{
-                    Text("Gallery (\(dataStorage.getStorage(storageID)!.items.count))").frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+                    Text("Gallery (\(dataStorage.getStorage(storageID)!.items.count))")
+                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
                         .font(labelFont)
                     
                     if(EditingMode){
@@ -157,11 +158,20 @@ struct GridView: View {
 }
 
 struct GridView_Previews: PreviewProvider {
+    //createStorageFor(Trail(id: UUID())
+    static var storage : DataStorage{
+        var st = DataStorage()
+        st.createStorageFor(Trail(id: UUID(uuidString: "02049FFE-F575-4886-B337-4F79F0EC8CA9")!))
+        return st
+    }
+  
+    
     static var previews: some View {
-        GridView(storageID: "s", EditingMode: true)
+        GridView(storageID: "02049FFE-F575-4886-B337-4F79F0EC8CA9", EditingMode: true)
+            .environmentObject(storage)
             .previewDevice("iPad (8th generation)")
             .environmentObject(PhotoStorageModel(workDir: "/"))
-            //.environmentObject(DataStorage().createStorageFor(Trail(id: UUID())))
+           
     }
 }
  

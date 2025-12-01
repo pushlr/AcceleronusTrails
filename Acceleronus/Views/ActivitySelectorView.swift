@@ -20,7 +20,7 @@ struct ActivitySelectorView: View {
             
             Picker("Flavor", selection: $selectedFlavor) {
                 ForEach(AcitivityCategory.allCases,id: \.self) { flavor in
-                    Text(flavor.rawValue.localized.capitalized)
+                    Text(flavor.rawValue)
                   }
             }.pickerStyle(.segmented)
             
@@ -42,7 +42,7 @@ struct ActivitySelectorView: View {
                                 .frame(width: 50, height: 50)
                                
                                     .foregroundColor(.white)
-                            Text(activity.name.localized)
+                            Text(activity.name)
                                 .foregroundStyle(Color.secondary)
                         }
                         }}

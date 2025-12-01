@@ -25,6 +25,7 @@
 "Pause" = "Pause";
 "Resume" = "Fortsetzen";
 "Stop" = "Stoppen";
+"Finish" = "Fertig";
 "Yes" = "Ja";
 "Hello" = "Hallo";
 "Password" = "Passwort";
@@ -187,7 +188,8 @@
 "ago" = "vor";
 "Yesterday" = "Gestern";
 
-"Solo for now, friend-filled trails ahead." =  "Aktuell allein unterwegs, aber voller Freundestrails voraus.";
+"You're just getting started, friend-filled trails ahead." = "Du fängst gerade erst an, freundesreiche Wege liegen vor dir.";
+
 "Step into your adventures – captured trails will be here." = "Betrete deine Abenteuer – aufgezeichnete Wege werden hier sein.";
 "Empty for now, but not for long!" = "Im Moment leer, aber nicht mehr lange!";
 
@@ -205,3 +207,9 @@
 "Waiting for server response" = "Warten auf die Antwort des Servers";
 "Unregistering" = "Abmelden";
 "Account successfully deleted!" = "Konto erfolgreich gelöscht!";
+
+"was %@" = "War %@";
+"Search city or place" = "Stadt oder Ort suchen";
+"Weak GPS Signal" = "Schwaches GPS‑Signal";
+"Friends List" = "Freundesliste";
+"Global Search" = "Globale Suche";

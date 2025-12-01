@@ -14,8 +14,8 @@ import SwiftUI
 class SignInViewModel: ObservableObject {
     
     @Published var isSignedIn = false
-    @Published var errorMsg = "";
-    @Published var progressMsg = "";
+    @Published var errorMsg : LocalizedStringKey = "";
+    @Published var progressMsg : LocalizedStringKey = "";
     
     let auth = Auth.auth()
     
@@ -63,7 +63,7 @@ class SignInViewModel: ObservableObject {
     
     func SignIn(email: String, password: String){
         self.errorMsg = "";
-        self.progressMsg = "Signing in request..".localized;
+        self.progressMsg = "Signing in request..";
         auth.signIn(withEmail: email, password: password){
             result, error in
             guard result != nil, error == nil else {
@@ -71,18 +71,18 @@ class SignInViewModel: ObservableObject {
                 let err = error as! AuthErrorCode
                 
                 switch err {
-                case AuthErrorCode.userDisabled: self.errorMsg = "User Disabled".localized; break
-                case AuthErrorCode.invalidEmail: self.errorMsg = "Invalid Email".localized; break
-                case AuthErrorCode.missingEmail: self.errorMsg = "Invalid Email".localized; break
-                case AuthErrorCode.wrongPassword: self.errorMsg = "Wrong password!".localized; break
-                case AuthErrorCode.invalidCredential: self.errorMsg = "Invalid Credentials".localized; break
-                case AuthErrorCode.userMismatch: self.errorMsg = "Invalid Credentials".localized; break
-                case AuthErrorCode.userNotFound: self.errorMsg = "Invalid Credentials".localized; break
-                case AuthErrorCode.internalError: self.errorMsg = "Invalid Credentials".localized; break
+                case AuthErrorCode.userDisabled: self.errorMsg = "User Disabled"; break
+                case AuthErrorCode.invalidEmail: self.errorMsg = "Invalid Email"; break
+                case AuthErrorCode.missingEmail: self.errorMsg = "Invalid Email"; break
+                case AuthErrorCode.wrongPassword: self.errorMsg = "Wrong password!"; break
+                case AuthErrorCode.invalidCredential: self.errorMsg = "Invalid Credentials"; break
+                case AuthErrorCode.userMismatch: self.errorMsg = "Invalid Credentials"; break
+                case AuthErrorCode.userNotFound: self.errorMsg = "Invalid Credentials"; break
+                case AuthErrorCode.internalError: self.errorMsg = "Invalid Credentials"; break
                 
                 default:
                     print(err)
-                    self.errorMsg = "Unknown Error".localized
+                    self.errorMsg = "Unknown Error"
                 }
                 self.progressMsg = "";
                 return
@@ -94,7 +94,7 @@ class SignInViewModel: ObservableObject {
             if result!.user.isEmailVerified {
                 self.reloadLoginStatus();
             }else{
-                self.errorMsg = "Kindly review your email for the activation link!".localized
+                self.errorMsg = "Kindly review your email for the activation link!"
 //                result!.user.sendEmailVerification()
                 self.SignOut()
             }
@@ -109,7 +109,7 @@ class SignInViewModel: ObservableObject {
     func SignUp(email: String, password: String){
         self.errorMsg = "";
         print("creating user");
-        progressMsg = "Creating user request..".localized
+        progressMsg = "Creating user request.."
         auth.createUser(withEmail: email, password: password){ [self]
             result, error in
             guard result != nil, error == nil else {
@@ -117,15 +117,15 @@ class SignInViewModel: ObservableObject {
                 let err = error as! AuthErrorCode
                 
                 switch err {
-                case AuthErrorCode.invalidEmail: self.errorMsg = "Invalid Email".localized; break
-                case AuthErrorCode.missingEmail: self.errorMsg = "Missing Email".localized; break
-                case AuthErrorCode.emailAlreadyInUse: self.errorMsg = "Email already in use".localized; break
-                case AuthErrorCode.weakPassword: self.errorMsg = "Weak password".localized; break
+                case AuthErrorCode.invalidEmail: self.errorMsg = "Invalid Email"; break
+                case AuthErrorCode.missingEmail: self.errorMsg = "Missing Email"; break
+                case AuthErrorCode.emailAlreadyInUse: self.errorMsg = "Email already in use"; break
+                case AuthErrorCode.weakPassword: self.errorMsg = "Weak password"; break
                     
                     
                 default:
                     print(err)
-                    self.errorMsg = "Unknown Error".localized
+                    self.errorMsg = "Unknown Error"
                 }
                 
                // self.errorMsg = String(err.code) // error?.localizedDescription ?? ""
@@ -135,7 +135,7 @@ class SignInViewModel: ObservableObject {
             
             //success
             print("creating user success");
-            progressMsg = "Success".localized
+            progressMsg = "Success"
             //get display name from email
             var displayName = ""
             for i in 0..<email.count {
@@ -156,11 +156,94 @@ class SignInViewModel: ObservableObject {
          //  self.SignIn(email: email, password: password)
             print("sending email verification")
             result?.user.sendEmailVerification()
-            progressMsg = "Kindly review your email for the activation link!".localized
+            progressMsg = "Kindly review your email for the activation link!"
             
             
         }
     }
+    
+    
+    
+    
+    func SignInWithApple(userId: String,
+                         email: String?,
+                         token: String?,
+                         fullName: PersonNameComponents?,
+                         nonce: String) {
+
+        self.progressMsg = "Signing in with Apple..."
+
+        guard let token = token else {
+            self.errorMsg = "Missing Apple token"
+            self.progressMsg = ""
+            return
+        }
+
+        let credential = OAuthProvider.appleCredential(
+            withIDToken: token,
+            rawNonce: nonce,
+            fullName: fullName
+        )
+
+        Auth.auth().signIn(with: credential) { authResult, error in
+            if let error = error {
+                self.errorMsg = "Apple Sign In failed: \(error.localizedDescription)"
+                self.progressMsg = ""
+                return
+            }
+
+            guard let user = authResult?.user else { return }
+
+            print("Firebase Apple UID: \(user.uid)")
+            print("Email: \(email ?? user.email ?? "none")")
+           
+            self.progressMsg = "Signed in successfully!"
+
+
+            let isNewUser = authResult?.additionalUserInfo?.isNewUser ?? false
+            
+            if isNewUser{
+                // -----------------------
+                // 🔥 Change Display Name for new users
+                // -----------------------
+                var displayName = ""
+                // display name from apple
+                if let fullName = fullName {
+                    let formatter = PersonNameComponentsFormatter()
+                    let nameString = formatter.string(from: fullName)
+                    displayName = nameString
+                    print("displayName from Apple : \(nameString)")
+                    
+                }
+                // if not get from apple, random it
+                if displayName == "" {
+                    let randomNum = Int.random(in: 1000...9999)
+                    let usernamePart = user.email?.components(separatedBy: "@").first ?? "AppleUser"
+                    let nameString = "\(usernamePart)\(randomNum)"
+                    displayName = nameString
+                    print("displayName generated : \(nameString)")
+                }
+                
+                print("Changing display name...")
+                
+                self.ChangeDisplayName(DisplayName: displayName) {
+                    
+                    // Clear message after a short moment
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.progressMsg = ""
+                        self.reloadLoginStatus()
+                    }
+                }
+            } else{
+                self.progressMsg = ""
+                self.reloadLoginStatus()
+            }
+            
+        }
+    }
+
+
+    
     
     func unregister() {
         auth.currentUser?.delete()
@@ -168,19 +251,41 @@ class SignInViewModel: ObservableObject {
         UserDefaults.standard.set("", forKey: "password")
     }
     
-    func ChangeDisplayName(DisplayName: String){
-        //change display name
-        if let currentUser = Auth.auth().currentUser?.createProfileChangeRequest() {
-            currentUser.displayName = DisplayName
-            currentUser.commitChanges(completion: {error in
-                if let error = error {
-                    print(error)
-                } else {
-                    print("DisplayName changed")
-                }
-            })
+//    func ChangeDisplayName(DisplayName: String){
+//        //change display name
+//        if let currentUser = Auth.auth().currentUser?.createProfileChangeRequest() {
+//            currentUser.displayName = DisplayName
+//            currentUser.commitChanges(completion: {error in
+//                if let error = error {
+//                    print(error)
+//                } else {
+//                    print("DisplayName changed")
+//                }
+//            })
+//        } else {
+//            print("No current user")
+//        }
+//    }
+    
+    
+    func ChangeDisplayName(DisplayName: String, completion: (() -> Void)? = nil) {
+        guard let request = Auth.auth().currentUser?.createProfileChangeRequest() else {
+            print("No current user")
+            completion?()
+            return
+        }
+
+        request.displayName = DisplayName
+        request.commitChanges { error in
+            if let error = error {
+                print("Display name change error: \(error.localizedDescription)")
+            } else {
+                print("Display name changed successfully.")
+            }
+            completion?()   // Only called if provided
         }
     }
+    
     
     func SignOut(){
         do{

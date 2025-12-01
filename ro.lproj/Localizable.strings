@@ -25,6 +25,7 @@
 "Pause" = "Pauză";
 "Resume" = "Continuare";
 "Stop" = "Stop";
+"Finish" = "Finalizare";
 "Yes" = "Da";
 "Hello" = "Salut";
 "Password" = "Parola";
@@ -191,7 +192,8 @@
 "Open in Navigator" = "Deschide în Navigator";
 "ago" = "în urma" ;
 "Yesterday" = "Ieri";
-"Solo for now, friend-filled trails ahead." = "Solo pentru moment, trasee pline de prieteni înainte.";
+"You're just getting started, friend-filled trails ahead." = "Abia începi, drumuri pline de prieteni te așteaptă.";
+
 "Step into your adventures – captured trails will be here." = "Intră în aventurile tale – traseele capturate vor fi aici.";
 "Empty for now, but not for long!" = "Gol pentru moment, dar nu pentru mult timp!";
 
@@ -210,4 +212,11 @@
 "Unregistering" = "Se anulează înregistrarea";
 "Account successfully deleted!" = "Contul a fost șters cu succes!";
 
+
+"was %@" = "A fost %@";
+"Search city or place" = "Cauta un oras sau loc";
+
+"Weak GPS Signal" = "Semnal GPS slab";
+"Friends List" = "Lista de prieteni";
+"Global Search" = "Căutare globală";
 

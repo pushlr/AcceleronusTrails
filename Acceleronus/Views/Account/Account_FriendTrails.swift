@@ -122,7 +122,7 @@ struct FriendTrailCard: View {
                     HStack{
                         
                         ZStack(alignment: .leading){
-                            Text(GetActivity(item.activityType).name.localized)
+                            Text(GetActivity(item.activityType).name)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.footnote)
                         }
@@ -185,6 +185,7 @@ struct FriendTrailCard: View {
                                                  detent: .constant(.large),
                                                  isPinned: .constant(false),
                                                  sheetPresent: .constant(false),
+                                                 trailColorChanged: .constant(false),
                                                  withTopControlButtons: false,
                                                  withBackground: false,
                                                  withMap: true,

@@ -35,6 +35,11 @@
 		D4669C972B2A3336006EE09A /* PhotoShoter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4669C962B2A3335006EE09A /* PhotoShoter.swift */; };
 		D467D6472B0024B4000338D5 /* WayPointsList_SubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D467D6462B0024B4000338D5 /* WayPointsList_SubView.swift */; };
 		D467D6492B00A2C1000338D5 /* SignalStrengthIndicator_SubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D467D6482B00A2C0000338D5 /* SignalStrengthIndicator_SubView.swift */; };
+		D4842BED2ECBAFB1005A03DF /* SignInWithAppleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4842BEC2ECBAFB1005A03DF /* SignInWithAppleButtonView.swift */; };
+		D4842BF02ECCE59A005A03DF /* TrailAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4842BEF2ECCE59A005A03DF /* TrailAnimationView.swift */; };
+		D4842BF82ED18D06005A03DF /* GlobalConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4842BF72ED18D01005A03DF /* GlobalConst.swift */; };
+		D4842BFA2ED218BD005A03DF /* AutocompleteMapSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4842BF92ED218BD005A03DF /* AutocompleteMapSearchView.swift */; };
+		D4842BFC2ED2D162005A03DF /* MapFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4842BFB2ED2D162005A03DF /* MapFloatingButton.swift */; };
 		D48B641B2AED08E300D76648 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48B641A2AED08E300D76648 /* PreviewView.swift */; };
 		D48DDB962B17815500D6548E /* MapWithTrailSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48DDB952B17815500D6548E /* MapWithTrailSubView.swift */; };
 		D48DDB982B17867F00D6548E /* LabelTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48DDB972B17867F00D6548E /* LabelTemplates.swift */; };
@@ -56,6 +61,12 @@
 		D4A0B2382B1FA07B00883D23 /* ScrollUpHeaderBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A0B2372B1FA07A00883D23 /* ScrollUpHeaderBehavior.swift */; };
 		D4A0B23A2B1FA09B00883D23 /* nolosing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A0B2392B1FA09B00883D23 /* nolosing.swift */; };
 		D4A0B2452B265B1100883D23 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4A0B2472B265B1100883D23 /* Localizable.strings */; };
+		D4BCC79D2ED41FE400895FED /* MainNavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCC79C2ED41FE400895FED /* MainNavigatorView.swift */; };
+		D4BCC79F2ED428D700895FED /* NavigatorControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCC79E2ED428D700895FED /* NavigatorControlPanel.swift */; };
+		D4BCC7A32ED4797B00895FED /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCC7A22ED4797B00895FED /* LoadingScreen.swift */; };
+		D4BCC7AA2ED4BC0E00895FED /* AnyLanguageBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCC7A92ED4BC0E00895FED /* AnyLanguageBundle.swift */; };
+		D4BCC7AE2ED56DD900895FED /* ActiveTrackingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCC7AD2ED56DD900895FED /* ActiveTrackingButton.swift */; };
+		D4BCC7B02ED5898800895FED /* GPSSignalWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCC7AF2ED5898800895FED /* GPSSignalWarningView.swift */; };
 		D4BE14282AD2AF0C0083E3E2 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE14272AD2AF0C0083E3E2 /* SignInView.swift */; };
 		D4BE142A2AD2AF7D0083E3E2 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE14292AD2AF7D0083E3E2 /* SignInViewModel.swift */; };
 		D4BE142C2AD2B3E40083E3E2 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE142B2AD2B3E40083E3E2 /* MapViewModel.swift */; };
@@ -80,6 +91,12 @@
 		D4DF32172AF02AC300C84817 /* TrailRecordedStatus_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DF32162AF02AC300C84817 /* TrailRecordedStatus_1.swift */; };
 		D4DF32192AF02E9800C84817 /* TrailRecordedStatus_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DF32182AF02E9800C84817 /* TrailRecordedStatus_2.swift */; };
 		D4DFA3172AF1448900326FBB /* Waypoint_ViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DFA3162AF1448900326FBB /* Waypoint_ViewView.swift */; };
+		D4E599652EDAB0360054B117 /* Geohash in Frameworks */ = {isa = PBXBuildFile; productRef = D4E599642EDAB0360054B117 /* Geohash */; };
+		D4E599672EDAB1740054B117 /* GeoFire in Frameworks */ = {isa = PBXBuildFile; productRef = D4E599662EDAB1740054B117 /* GeoFire */; };
+		D4E599692EDAB1740054B117 /* GeoFireUtils in Frameworks */ = {isa = PBXBuildFile; productRef = D4E599682EDAB1740054B117 /* GeoFireUtils */; };
+		D4E5996B2EDABA170054B117 /* FirestoreMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5996A2EDABA110054B117 /* FirestoreMigration.swift */; };
+		D4E5996D2EDB4CAA0054B117 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D4E5996C2EDB4CAA0054B117 /* FirebaseAuth */; };
+		D4E5996F2EDB4CAA0054B117 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D4E5996E2EDB4CAA0054B117 /* FirebaseFirestore */; };
 		D4EC00A42B6D090400591A2D /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EC00A32B6D090400591A2D /* DeleteAccountView.swift */; };
 		D4ECA8212ACA6EC300C028E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4ECA8202ACA6EC300C028E0 /* GoogleService-Info.plist */; };
 		D4F02C3A2B1BDA740088C1D8 /* EditTrailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F02C392B1BDA740088C1D8 /* EditTrailView.swift */; };
@@ -143,6 +160,11 @@
 		D4669C962B2A3335006EE09A /* PhotoShoter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoShoter.swift; sourceTree = "<group>"; };
 		D467D6462B0024B4000338D5 /* WayPointsList_SubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WayPointsList_SubView.swift; sourceTree = "<group>"; };
 		D467D6482B00A2C0000338D5 /* SignalStrengthIndicator_SubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalStrengthIndicator_SubView.swift; sourceTree = "<group>"; };
+		D4842BEC2ECBAFB1005A03DF /* SignInWithAppleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButtonView.swift; sourceTree = "<group>"; };
+		D4842BEF2ECCE59A005A03DF /* TrailAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailAnimationView.swift; sourceTree = "<group>"; };
+		D4842BF72ED18D01005A03DF /* GlobalConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConst.swift; sourceTree = "<group>"; };
+		D4842BF92ED218BD005A03DF /* AutocompleteMapSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteMapSearchView.swift; sourceTree = "<group>"; };
+		D4842BFB2ED2D162005A03DF /* MapFloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFloatingButton.swift; sourceTree = "<group>"; };
 		D48B641A2AED08E300D76648 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		D48DDB952B17815500D6548E /* MapWithTrailSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithTrailSubView.swift; sourceTree = "<group>"; };
 		D48DDB972B17867F00D6548E /* LabelTemplates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTemplates.swift; sourceTree = "<group>"; };
@@ -167,6 +189,12 @@
 		D4A0B2492B265DF100883D23 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D4A0B24A2B28FC8600883D23 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D4A0B24B2B299AFF00883D23 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D4BCC79C2ED41FE400895FED /* MainNavigatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigatorView.swift; sourceTree = "<group>"; };
+		D4BCC79E2ED428D700895FED /* NavigatorControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorControlPanel.swift; sourceTree = "<group>"; };
+		D4BCC7A22ED4797B00895FED /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
+		D4BCC7A92ED4BC0E00895FED /* AnyLanguageBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyLanguageBundle.swift; sourceTree = "<group>"; };
+		D4BCC7AD2ED56DD900895FED /* ActiveTrackingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTrackingButton.swift; sourceTree = "<group>"; };
+		D4BCC7AF2ED5898800895FED /* GPSSignalWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSSignalWarningView.swift; sourceTree = "<group>"; };
 		D4BE14272AD2AF0C0083E3E2 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		D4BE14292AD2AF7D0083E3E2 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		D4BE142B2AD2B3E40083E3E2 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
@@ -199,6 +227,7 @@
 		D4DF32162AF02AC300C84817 /* TrailRecordedStatus_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailRecordedStatus_1.swift; sourceTree = "<group>"; };
 		D4DF32182AF02E9800C84817 /* TrailRecordedStatus_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailRecordedStatus_2.swift; sourceTree = "<group>"; };
 		D4DFA3162AF1448900326FBB /* Waypoint_ViewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Waypoint_ViewView.swift; sourceTree = "<group>"; };
+		D4E5996A2EDABA110054B117 /* FirestoreMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreMigration.swift; sourceTree = "<group>"; };
 		D4EC00A32B6D090400591A2D /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		D4ECA8202ACA6EC300C028E0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D4F02C392B1BDA740088C1D8 /* EditTrailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrailView.swift; sourceTree = "<group>"; };
@@ -215,14 +244,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4E599672EDAB1740054B117 /* GeoFire in Frameworks */,
+				D4E599652EDAB0360054B117 /* Geohash in Frameworks */,
 				D4F315592ACAB87700275EB5 /* FirebaseDatabaseSwift in Frameworks */,
 				D4F315532ACAB87700275EB5 /* FirebaseAnalytics in Frameworks */,
 				D45722A82AEA7AC400D8AA55 /* FirebaseStorage in Frameworks */,
+				D4E5996D2EDB4CAA0054B117 /* FirebaseAuth in Frameworks */,
 				D4CBE1C02ADDB3EB0081B07D /* Polyline in Frameworks */,
 				D4F315552ACAB87700275EB5 /* FirebaseAuth in Frameworks */,
+				D4E5996F2EDB4CAA0054B117 /* FirebaseFirestore in Frameworks */,
 				D4F315572ACAB87700275EB5 /* FirebaseDatabase in Frameworks */,
 				D4F3155B2ACAB87700275EB5 /* FirebaseStorage in Frameworks */,
 				D4DF32112AEF97A300C84817 /* SignalStrengthIndicator in Frameworks */,
+				D4E599692EDAB1740054B117 /* GeoFireUtils in Frameworks */,
 				D4CBE1C42ADED18A0081B07D /* FirebaseFirestore in Frameworks */,
 				D4CBE1C62ADED18A0081B07D /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -248,6 +282,11 @@
 		D40D9F932ADC604B00EF0A96 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				D4BCC7AF2ED5898800895FED /* GPSSignalWarningView.swift */,
+				D4BCC7AD2ED56DD900895FED /* ActiveTrackingButton.swift */,
+				D4BCC7A82ED4BC0400895FED /* LnaguageManager */,
+				D4842BFB2ED2D162005A03DF /* MapFloatingButton.swift */,
+				D4842BF92ED218BD005A03DF /* AutocompleteMapSearchView.swift */,
 				D4A0B2282B1F9FF500883D23 /* FancyScroll */,
 				D40D9F912ADC603100EF0A96 /* ButtonsStyle.swift */,
 				D4545A492ADC6AFC005AB4D9 /* ProportionalSizingLayout.swift */,
@@ -265,6 +304,7 @@
 		D40E8DDD2AE1CACD0066EA37 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
+				D4842BEC2ECBAFB1005A03DF /* SignInWithAppleButtonView.swift */,
 				D40E8DDB2AE1CAC90066EA37 /* TrailInfoView.swift */,
 				D4DF32162AF02AC300C84817 /* TrailRecordedStatus_1.swift */,
 				D4DF32182AF02E9800C84817 /* TrailRecordedStatus_2.swift */,
@@ -282,6 +322,8 @@
 		D40E8DE52AE303A90066EA37 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				D4E5996A2EDABA110054B117 /* FirestoreMigration.swift */,
+				D4842BF72ED18D01005A03DF /* GlobalConst.swift */,
 				D48DDBA42B19B4E700D6548E /* DataStorageItem.swift */,
 				D4FA6D962AC5624A0055CC68 /* GlobalFunctions.swift */,
 				D40E8DE02AE29A970066EA37 /* GlobalTypes.swift */,
@@ -323,6 +365,14 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		D4842BEE2ECCE57E005A03DF /* TrailAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				D4842BEF2ECCE59A005A03DF /* TrailAnimationView.swift */,
+			);
+			path = TrailAnimation;
+			sourceTree = "<group>";
+		};
 		D48DDB9C2B1942BC00D6548E /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +397,31 @@
 			path = FancyScroll;
 			sourceTree = "<group>";
 		};
+		D4BCC7992ED41F9B00895FED /* Navigator */ = {
+			isa = PBXGroup;
+			children = (
+				D4BCC79C2ED41FE400895FED /* MainNavigatorView.swift */,
+				D4BCC79E2ED428D700895FED /* NavigatorControlPanel.swift */,
+			);
+			path = Navigator;
+			sourceTree = "<group>";
+		};
+		D4BCC7A42ED47D9400895FED /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				D4BCC7A22ED4797B00895FED /* LoadingScreen.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
+		D4BCC7A82ED4BC0400895FED /* LnaguageManager */ = {
+			isa = PBXGroup;
+			children = (
+				D4BCC7A92ED4BC0E00895FED /* AnyLanguageBundle.swift */,
+			);
+			path = LnaguageManager;
+			sourceTree = "<group>";
+		};
 		D4D28BE92AC2A4F5000A5FBC = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +431,7 @@
 				D4D28BF42AC2A4F5000A5FBC /* Acceleronus */,
 				D4D28C052AC2A4F7000A5FBC /* AcceleronusTests */,
 				D4D28C0F2AC2A4F7000A5FBC /* AcceleronusUITests */,
+				D4E599702EDB4D040054B117 /* Frameworks */,
 				D4D28BF32AC2A4F5000A5FBC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -409,6 +485,9 @@
 		D4D28C212AC2BCB6000A5FBC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D4BCC7A42ED47D9400895FED /* Loading */,
+				D4BCC7992ED41F9B00895FED /* Navigator */,
+				D4842BEE2ECCE57E005A03DF /* TrailAnimation */,
 				D4F02C3B2B1BDB490088C1D8 /* Trail */,
 				D4669C932B29F4BA006EE09A /* Settings */,
 				D48DDB9C2B1942BC00D6548E /* Storage */,
@@ -417,9 +496,7 @@
 				D4D28BF72AC2A4F5000A5FBC /* StartView.swift */,
 				D4D28C1F2AC2BA44000A5FBC /* MainView.swift */,
 				D4BE14272AD2AF0C0083E3E2 /* SignInView.swift */,
-				D4931D1D2AE6D574001CAC82 /* Waypoint_AddView.swift */,
 				D4DF32142AEFB5A700C84817 /* ActivitySelectorView.swift */,
-				D4DFA3162AF1448900326FBB /* Waypoint_ViewView.swift */,
 				D4FF05F22B63C2C9003A573D /* TEST_MAP.swift */,
 			);
 			path = Views;
@@ -449,6 +526,13 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		D4E599702EDB4D040054B117 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D4F02C3B2B1BDB490088C1D8 /* Trail */ = {
 			isa = PBXGroup;
 			children = (
@@ -456,6 +540,8 @@
 				D40D9F8F2ADC5A2900EF0A96 /* SaveTrailView.swift */,
 				D4F02C392B1BDA740088C1D8 /* EditTrailView.swift */,
 				D4FF05F02B638937003A573D /* MapWithTrailsSheet.swift */,
+				D4931D1D2AE6D574001CAC82 /* Waypoint_AddView.swift */,
+				D4DFA3162AF1448900326FBB /* Waypoint_ViewView.swift */,
 			);
 			path = Trail;
 			sourceTree = "<group>";
@@ -495,6 +581,11 @@
 				D4CBE1C52ADED18A0081B07D /* FirebaseFirestoreSwift */,
 				D45722A72AEA7AC400D8AA55 /* FirebaseStorage */,
 				D4DF32102AEF97A300C84817 /* SignalStrengthIndicator */,
+				D4E599642EDAB0360054B117 /* Geohash */,
+				D4E599662EDAB1740054B117 /* GeoFire */,
+				D4E599682EDAB1740054B117 /* GeoFireUtils */,
+				D4E5996C2EDB4CAA0054B117 /* FirebaseAuth */,
+				D4E5996E2EDB4CAA0054B117 /* FirebaseFirestore */,
 			);
 			productName = Acceleronus;
 			productReference = D4D28BF22AC2A4F5000A5FBC /* Acceleronus.app */;
@@ -584,6 +675,8 @@
 				D4ECA8222ACA713D00C028E0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D4CBE1BE2ADDB3EB0081B07D /* XCRemoteSwiftPackageReference "Polyline" */,
 				D4DF320F2AEF97A300C84817 /* XCRemoteSwiftPackageReference "SignalStrengthIndicator" */,
+				D4BCC7B32EDA3BD300895FED /* XCRemoteSwiftPackageReference "geofire-objc" */,
+				D4BCC7B42EDAAC4C00895FED /* XCRemoteSwiftPackageReference "swift-geohash" */,
 			);
 			productRefGroup = D4D28BF32AC2A4F5000A5FBC /* Products */;
 			projectDirPath = "";
@@ -647,18 +740,25 @@
 				D48DDB9A2B17930A00D6548E /* UserPhotoView.swift in Sources */,
 				D4A0B22E2B1FA03600883D23 /* BlurView.swift in Sources */,
 				D4BE142C2AD2B3E40083E3E2 /* MapViewModel.swift in Sources */,
+				D4BCC7AE2ED56DD900895FED /* ActiveTrackingButton.swift in Sources */,
+				D4BCC7AA2ED4BC0E00895FED /* AnyLanguageBundle.swift in Sources */,
+				D4842BFC2ED2D162005A03DF /* MapFloatingButton.swift in Sources */,
 				D48B641B2AED08E300D76648 /* PreviewView.swift in Sources */,
 				D4D554D42AFD843700043848 /* TextTemplates.swift in Sources */,
 				D4A0B23A2B1FA09B00883D23 /* nolosing.swift in Sources */,
+				D4842BED2ECBAFB1005A03DF /* SignInWithAppleButtonView.swift in Sources */,
 				D4D28BF82AC2A4F5000A5FBC /* StartView.swift in Sources */,
+				D4BCC7B02ED5898800895FED /* GPSSignalWarningView.swift in Sources */,
 				D4DF32192AF02E9800C84817 /* TrailRecordedStatus_2.swift in Sources */,
 				D4A0B2382B1FA07B00883D23 /* ScrollUpHeaderBehavior.swift in Sources */,
 				D4CBE1BD2ADD0A250081B07D /* TrailDetailedView.swift in Sources */,
 				D40D9F922ADC603100EF0A96 /* ButtonsStyle.swift in Sources */,
+				D4842BFA2ED218BD005A03DF /* AutocompleteMapSearchView.swift in Sources */,
 				D4F964BA2B040DDD00FD522C /* Friends_List.swift in Sources */,
 				D40E8DDF2AE2769E0066EA37 /* UserAccountView.swift in Sources */,
 				D4A0B22A2B1FA01100883D23 /* AppleMusicStyleScrollView.swift in Sources */,
 				D447A64E2AE76F8C001AB590 /* GridItemView.swift in Sources */,
+				D4BCC79D2ED41FE400895FED /* MainNavigatorView.swift in Sources */,
 				D48DDB982B17867F00D6548E /* LabelTemplates.swift in Sources */,
 				D4DFA3172AF1448900326FBB /* Waypoint_ViewView.swift in Sources */,
 				D447A64D2AE76F8C001AB590 /* PhotoPicker.swift in Sources */,
@@ -670,11 +770,14 @@
 				D4A0B2302B1FA04300883D23 /* FancyScrollView.swift in Sources */,
 				D4DF32152AEFB5A700C84817 /* ActivitySelectorView.swift in Sources */,
 				D447A64B2AE76F8C001AB590 /* GridView.swift in Sources */,
+				D4842BF82ED18D06005A03DF /* GlobalConst.swift in Sources */,
 				D447A6482AE76F8C001AB590 /* ColumnStepper.swift in Sources */,
 				D4FF05EF2B630025003A573D /* Account_FriendTrails.swift in Sources */,
 				D4A0B2322B1FA05200883D23 /* HeaderScrollView.swift in Sources */,
 				D4FA6D972AC5624A0055CC68 /* GlobalFunctions.swift in Sources */,
+				D4BCC79F2ED428D700895FED /* NavigatorControlPanel.swift in Sources */,
 				D4FF05F12B638937003A573D /* MapWithTrailsSheet.swift in Sources */,
+				D4BCC7A32ED4797B00895FED /* LoadingScreen.swift in Sources */,
 				D4BE142A2AD2AF7D0083E3E2 /* SignInViewModel.swift in Sources */,
 				D447A6492AE76F8C001AB590 /* PhotoStorageModel.swift in Sources */,
 				D45722A62AEA359300D8AA55 /* UserData.swift in Sources */,
@@ -687,8 +790,10 @@
 				D48DDB962B17815500D6548E /* MapWithTrailSubView.swift in Sources */,
 				D40E8DE12AE29A970066EA37 /* GlobalTypes.swift in Sources */,
 				D4D554CF2AFBFEA500043848 /* Account_MyTrails.swift in Sources */,
+				D4842BF02ECCE59A005A03DF /* TrailAnimationView.swift in Sources */,
 				D40D9F902ADC5A2A00EF0A96 /* SaveTrailView.swift in Sources */,
 				D4D28BF62AC2A4F5000A5FBC /* AcceleronusApp.swift in Sources */,
+				D4E5996B2EDABA170054B117 /* FirestoreMigration.swift in Sources */,
 				D4EC00A42B6D090400591A2D /* DeleteAccountView.swift in Sources */,
 				D467D6472B0024B4000338D5 /* WayPointsList_SubView.swift in Sources */,
 				D4A0B2362B1FA06A00883D23 /* ScrollDownHeaderBehavior.swift in Sources */,
@@ -897,7 +1002,7 @@
 				CODE_SIGN_ENTITLEMENTS = Acceleronus/Acceleronus.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Acceleronus/Preview Content\"";
 				DEVELOPMENT_TEAM = 4J5F7S7US7;
 				ENABLE_APP_SANDBOX = NO;
@@ -927,11 +1032,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AcceleronusTools.AcceleronusTrails;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -949,13 +1058,14 @@
 				CODE_SIGN_ENTITLEMENTS = Acceleronus/Acceleronus.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Acceleronus/Preview Content\"";
 				DEVELOPMENT_TEAM = 4J5F7S7US7;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_CODE_COVERAGE = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				"EXCLUDED_ARCHS[sdk=*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Acceleronus/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Trails;
@@ -979,11 +1089,16 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				NEW_SETTING = "";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AcceleronusTools.AcceleronusTrails;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1114,6 +1229,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D4BCC7B32EDA3BD300895FED /* XCRemoteSwiftPackageReference "geofire-objc" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/geofire-objc";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		D4BCC7B42EDAAC4C00895FED /* XCRemoteSwiftPackageReference "swift-geohash" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/emilioschepis/swift-geohash.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 		D4CBE1BE2ADDB3EB0081B07D /* XCRemoteSwiftPackageReference "Polyline" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/raphaelmor/Polyline.git";
@@ -1162,6 +1293,29 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D4DF320F2AEF97A300C84817 /* XCRemoteSwiftPackageReference "SignalStrengthIndicator" */;
 			productName = SignalStrengthIndicator;
+		};
+		D4E599642EDAB0360054B117 /* Geohash */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4BCC7B42EDAAC4C00895FED /* XCRemoteSwiftPackageReference "swift-geohash" */;
+			productName = Geohash;
+		};
+		D4E599662EDAB1740054B117 /* GeoFire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4BCC7B32EDA3BD300895FED /* XCRemoteSwiftPackageReference "geofire-objc" */;
+			productName = GeoFire;
+		};
+		D4E599682EDAB1740054B117 /* GeoFireUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4BCC7B32EDA3BD300895FED /* XCRemoteSwiftPackageReference "geofire-objc" */;
+			productName = GeoFireUtils;
+		};
+		D4E5996C2EDB4CAA0054B117 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAuth;
+		};
+		D4E5996E2EDB4CAA0054B117 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseFirestore;
 		};
 		D4F315522ACAB87700275EB5 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

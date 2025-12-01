@@ -25,6 +25,7 @@
 "Pause" = "暫停";
 "Resume" = "恢復";
 "Stop" = "停止";
+"Finish" = "完成";
 "Yes" = "是";
 "Hello" = "你好";
 "Password" = "密碼";
@@ -187,7 +188,8 @@
 "ago" = "之前";
 "Yesterday" = "昨天";
 
-"Solo for now, friend-filled trails ahead." = "目前獨自一人，前方有充滿朋友的小徑。";
+"You're just getting started, friend-filled trails ahead." = "你才剛開始，前面有滿載朋友的道路等緊你。";
+
 "Step into your adventures – captured trails will be here." = "踏入你的冒險 – 捕捉的小徑將會在這裡。";
 "Empty for now, but not for long!" =  "暫時空白，但不會久！";
 
@@ -205,3 +207,9 @@
 "Waiting for server response" = "等待伺服器響應";
 "Unregistering" = "正在注銷";
 "Account successfully deleted!" = "帳戶已成功刪除！";
+
+"was %@" = "上次在線 %@";
+"Search city or place" = "中文 — 搜尋城市或地點";
+"Weak GPS Signal" = "GPS 信号弱";
+"Friends List" = "好友列表";
+"Global Search" = "全局搜索";

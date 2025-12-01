@@ -21,10 +21,20 @@ enum DifficultySteps: String,CaseIterable{
     case Standard
     case Hard
     case Master
+    
+    var localized: LocalizedStringKey {
+         LocalizedStringKey(self.rawValue)
+     }
+
+
 }
 
 enum TrailConfidentiality: String, CaseIterable {
     case Public, Private
+    
+    var localized: LocalizedStringKey {
+         LocalizedStringKey(self.rawValue)
+     }
     
 }
 
@@ -38,10 +48,14 @@ struct RecordingTrailSettings {
 struct MapAnnotationSelector {
 
     var isTrailSelected = false
-    var selectedTrailID = 0
+    var selectedTrailID = -1
     
     var isWayPointSelected = false
     var selectedWayPointID = UUID()
+    
+    var iscurrTrailWayPointSelected = false
+    var selectedCurrTrailWayPointID = UUID()
+    
 }
 
 
@@ -131,6 +145,7 @@ struct Trail : Identifiable {
     var TrailName : String = ""
     var TrailDesc = ""
     var activityType : ActivityType = .HIKING
+    var color : UIColor = UIColor.orange
     var StartTime : Date = Date()
     var EndTime : Date = Date()
     var lastUpdateTime : Date = Date()
@@ -177,6 +192,7 @@ struct Trail : Identifiable {
 
     
     var WayPoints = [WayPoint]()
+    
    
 
 }
@@ -189,7 +205,7 @@ struct Trail : Identifiable {
 
 
 enum AnnotationType {
-    case Default, StartRecording, StopRecording, TrailStartPoint, TrailEndPoint, WayPoint, FriendPosition
+    case Default, StartRecording, StopRecording, TrailStartPoint, TrailEndPoint, WayPoint, FriendPosition, TempPin
 }
 
 
@@ -213,6 +229,13 @@ class TrailAnnotation: BaseAnnotation {
      }
     
 }
+
+
+class TemporaryAnotation: BaseAnnotation {
+    var id : UUID = UUID()
+
+}
+
 
 class WayPointAnnotation: BaseAnnotation {
     var trailID : Int
@@ -249,6 +272,7 @@ class FriendTrailAnnotation: BaseAnnotation{
 class MyCustomPolyline : MKPolyline {
 
     var color: UIColor?
+    var trailID: Int?
     
    
 }
@@ -310,3 +334,34 @@ class MKAnnotationViewWithTitle: MKAnnotationView {
         frame = CGRect(x: 0, y: 0, width: image?.size.width ?? 0, height: image?.size.height ?? 0 + 25)
     }
 }
+
+
+
+
+struct BoundingBox {
+    let center: CLLocationCoordinate2D
+    let radius: Double
+    let minLat: Double
+    let maxLat: Double
+    let minLng: Double
+    let maxLng: Double
+    
+    init(center: CLLocationCoordinate2D = CLLocationCoordinate2D(),
+         radius: Double = 0,
+         minLat: Double = 0,
+         maxLat: Double = 0,
+         minLng: Double = 0,
+         maxLng: Double = 0)
+    {
+        // Default dummy values
+        self.center = center
+        self.radius = radius
+        self.minLat = minLat
+        self.maxLat = maxLat
+        self.minLng = minLng
+        self.maxLng = maxLng
+        
+        
+    }
+}
+

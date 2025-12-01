@@ -22,6 +22,8 @@ enum Tab: String, CaseIterable {
 
 
 struct CustomTabBar: View {
+    @EnvironmentObject var  userModel : UserModel
+    
     @Binding var selectedTab: Tab
    
 
@@ -72,6 +74,8 @@ struct CustomTabBar: View {
                     .onTapGesture {
                         withAnimation(.easeInOut(duration: 0.1)) {
                             selectedTab = .person
+                         //   userModel.navigationPath = NavigationPath()
+                          //  print("NavigationPath changed!")
                         }
                     }
                     

@@ -25,6 +25,7 @@
 "Pause" = "Пауза";
 "Resume" = "Продолжить";
 "Stop" = "Стоп";
+"Finish" = "Завершить";
 "Yes" = "Да";
 "Hello" = "Привет";
 "Password" = "Пароль";
@@ -190,7 +191,8 @@
 "ago" = "назад" ;
 "Yesterday" = "Вчера";
 
-"Solo for now, friend-filled trails ahead." = "На данный момент один, впереди тропы, полные друзей.";
+"You're just getting started, friend-filled trails ahead." = "Ты только начинаешь, впереди дороги, полные друзей.";
+
 "Step into your adventures – captured trails will be here." = "Вступай в свои приключения – записанные тропы будут здесь.";
 "Empty for now, but not for long!" = "Пока пусто, но не надолго!";
 
@@ -209,3 +211,10 @@
 "Unregistering" = "Отмена регистрации";
 "Account successfully deleted!" = "Аккаунт успешно удален!";
 
+"was %@" = "A fost %@";
+
+"was %@" = "Был(а) %@";
+"Search city or place" = "Найти город или место";
+"Weak GPS Signal" = "Слабый GPS‑сигнал";
+"Friends List" = "Список друзей";
+"Global Search" = "Глобальный поиск";

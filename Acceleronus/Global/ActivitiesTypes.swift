@@ -6,15 +6,16 @@
 //
 
 import Foundation
+import SwiftUICore
 
 struct Activity{
-    var name : String = ""
+    var name : LocalizedStringKey = "" // LocalizedStringKey - this is for corect multilanguare translation
     var image : String = ""
     var category : AcitivityCategory
    
 }
 
-enum AcitivityCategory: String, CaseIterable{
+enum AcitivityCategory: LocalizedStringKey, CaseIterable{
     case Walk,Bike,Drive,Winter,Water
 }
 

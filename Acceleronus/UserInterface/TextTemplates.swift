@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct TextCaptionWithDivider: View {
-    var text: String
+    var text: LocalizedStringKey
     var body: some View {
         VStack{
             Divider()
@@ -21,6 +21,10 @@ struct TextCaptionWithDivider: View {
     }
     
 }
+
+
+
+
 
 
 

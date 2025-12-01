@@ -8,6 +8,7 @@
 
 import SwiftUI
 import _MapKit_SwiftUI
+import StoreKit
 
 extension Font {
     static func avenirNext(size: Int) -> Font {
@@ -20,12 +21,11 @@ extension Font {
 }
 
 struct SaveTrailView: View {
-    private let imageHeight: CGFloat = 300
-    private let collapsedImageHeight: CGFloat = 75
+    @Environment(\.requestReview) private var requestReview
     
-   // @EnvironmentObject var userModel : UserModel
     @EnvironmentObject var userData : UserData
     @EnvironmentObject var dataStorage : DataStorage
+    
     @State var trail : Trail
     @Binding var showSaveTrailView : Bool
     
@@ -37,10 +37,12 @@ struct SaveTrailView: View {
     @State private var titleRect: CGRect = .zero
     @State private var headerImageRect: CGRect = .zero
     
+    private let imageHeight: CGFloat = 300
+    private let collapsedImageHeight: CGFloat = 75
   
     
     var body: some View {
-        NavigationView{
+        VStack{
             ScrollView {
                 VStack {
                     VStack(alignment: .leading, spacing: 10) {
@@ -51,16 +53,16 @@ struct SaveTrailView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.bottom,15)
                         
-                        TextField_WithTextLabel(title: "Trail Name".localized, inputText: $trail.TrailName)
+                        TextField_WithTextLabel(title: "Trail Name", inputText: $trail.TrailName)
                         // .padding(.bottom,10)
                         
-                        TextFiled_Multiline(title: "Description".localized, inputText: $trail.TrailDesc)
+                        TextFiled_Multiline(title: "Description", inputText: $trail.TrailDesc)
                         //.padding(.bottom,10)
                         //Trail info
-                        //  TrailInfoView(trail: trail)
+//                          TrailInfoView(trail: trail)
                         
                         //SELECT ACTIVITY
-                        TextCaptionWithDivider(text: "Activity:".localized)
+                        TextCaptionWithDivider(text: "Activity:")
                         Button(){withAnimation{selectActivitySheet.toggle()}
                         }label:{
                             VStack(alignment: .center, spacing: 0){
@@ -68,36 +70,36 @@ struct SaveTrailView: View {
                                     .resizable()
                                     .frame(width: 50, height: 50)
                                 
-                                Text(GetActivity(trail.activityType).name.localized).foregroundStyle(.black)
+                                Text(GetActivity(trail.activityType).name).foregroundStyle(.black)
                             }//.frame(maxWidth: .infinity, alignment: .leading).padding(.bottom,5)
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.bottom,15)
                         
                         //Difficulty
-                        TextCaptionWithDivider(text: "Difficulty:".localized)
+                        TextCaptionWithDivider(text: "Difficulty:")
                         //Text(dificulty.rawValue).fontWeight(.semibold)
                         DificultyView
                             .padding(.bottom,15)
                         
                         //Confidential
                         
-                        TextCaptionWithDivider(text: "Confidentiality:".localized)
+                        TextCaptionWithDivider(text: "Confidentiality:")
                         ConfidentialitySelectorView
                             .padding(.bottom,15)
                         
                         
                         //waypoints
-                        TextCaptionWithDivider(text: "WayPoints".localized).padding(.bottom,5)
+                        TextCaptionWithDivider(text: "WayPoints").padding(.bottom,5)
                         WayPointsList_SubView(wayPoints: $trail.WayPoints, editMode: true )
-                        .padding(.bottom,15)
+                            .padding(.bottom,15)
                         
                         
                         
                         //gallery
                         Divider()
                         GridView(storageID: trail.id.uuidString, EditingMode: true,labelFont: .caption)
-                        .frame(height: 600)
+                            .frame(height: 600)
                         //.padding(.bottom,300)
                         
                         
@@ -124,29 +126,32 @@ struct SaveTrailView: View {
                             .background(GeometryGetter(rect: self.$headerImageRect))
                         
                         // 4
-                        //                    Text("How to build a parallax scroll view")
-                        //                        .font(.avenirNext(size: 17))
-                        //                        .foregroundColor(.white)
-                        //                        .offset(x: 0, y: self.getHeaderTitleOffset())
+//                                            Text("How to build a parallax scroll view")
+//                                                .font(.avenirNext(size: 17))
+//                                                .foregroundColor(.white)
+//                                                .offset(x: 0, y: self.getHeaderTitleOffset())
                     }
                     .clipped()
                     .offset(x: 0, y: self.getOffsetForHeaderImage(geometry))
                 }.frame(height: imageHeight)
-                    .offset(x: 0, y: -(articleContent.startingRect?.maxY ?? UIScreen.main.bounds.height))
-            }.edgesIgnoringSafeArea(.all)
+                 .offset(x: 0, y: -(articleContent.startingRect?.maxY ?? UIScreen.main.bounds.height))
+                
+            }
+                
+                .edgesIgnoringSafeArea(.all)
                 .scrollDismissesKeyboard(.immediately)
-                .toolbar {
-                    
-                    ToolbarItemGroup(placement: .bottomBar) {
-                        DeleteTrailButton
-                    }
-                    
-                    ToolbarItem(placement: .bottomBar) {
-                        SaveTrailButton
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    }
-                    
-                }
+//                .toolbar {
+//                    
+//                    ToolbarItemGroup(placement: .bottomBar) {
+//                        DeleteTrailButton
+//                    }
+//                    
+//                    ToolbarItem(placement: .bottomBar) {
+//                        SaveTrailButton
+//                            .frame(maxWidth: .infinity, alignment: .trailing)
+//                    }
+//                    
+//                }
             
             //change activity type
             .sheet(isPresented: $selectActivitySheet, content: {
@@ -156,8 +161,29 @@ struct SaveTrailView: View {
                 .presentationDragIndicator(.visible)
             })
             
+            
+            VStack {
+          
+              HStack {
+                  DeleteTrailButton
+                Spacer()
+                  SaveTrailButton
+              }
+              .padding()
+              .background(Color(UIColor.systemBackground).shadow(radius: 2))
+              
+            }.padding(.bottom,2)
+            
         }
-        
+//        .safeAreaInset(edge: .bottom) {
+//          HStack {
+//              DeleteTrailButton
+//              Spacer()
+//              SaveTrailButton
+//          }
+//         // .padding()
+//          .background(.ultraThinMaterial)
+//        }
         .onAppear{
             print("SaveTrailView appear")
 //            if(dataStorage.getStorage(trail.id) == nil){
@@ -244,13 +270,40 @@ struct SaveTrailView: View {
         return .infinity
     }
     
+    private func headerHeight(from geo: GeometryProxy) -> CGFloat {
+           let offset = geo.frame(in: .named("parallaxScroll")).minY
+           if offset > 0 {
+               return imageHeight + offset
+           }
+           return imageHeight
+       }
+
+       private func headerOffset(from geo: GeometryProxy) -> CGFloat {
+           let offset = geo.frame(in: .named("parallaxScroll")).minY
+           if offset > 0 {
+               return -offset
+           } else {
+               return 0
+           }
+       }
+
+       private func blurRadius(from geo: GeometryProxy) -> CGFloat {
+           let offset = geo.frame(in: .named("parallaxScroll")).maxY
+           let height = geo.size.height
+           // Simple blur formula
+           let blur = (height - max(offset, 0)) / height
+           return blur * 6
+       }
+
+
+    
     
     var DificultyView: some View {
 
         Picker("Difficulty",
                selection: $trail.difficutly) {
             ForEach(DifficultySteps.allCases,id: \.self){ item in
-                Text(item.rawValue.localized).tag(item)
+                Text(item.localized).tag(item)
             }
            
          
@@ -268,7 +321,7 @@ struct SaveTrailView: View {
             Picker(//"Trail Confidentiality",
                 selection: $trail.confidentiality,label: Text("s")) {
                     ForEach(TrailConfidentiality.allCases,id: \.self){ item in
-                        Text(item.rawValue.localized).tag(item)
+                        Text(item.localized).tag(item)
                         
                     }
                     
@@ -305,51 +358,17 @@ struct SaveTrailView: View {
         
     }
     
-//
-//    var MapViewView: some View{
-//        //show trail preview
-//        Map{
-//            Annotation("Start Point",
-//                       coordinate: trail.StartLocation,
-//                       content: {
-//                ZStack {
-//                    Image(uiImage:
-//                            (UIImage(named: GetActivity(trail.activityType).image)?
-//                                .withBackground(color: UIColor.white)
-//                                .roundedImageWithBorder(width: 3, color: UIColor.orange))!
-//                    )
-//                }
-//            })
-//
-//            Annotation("End Point",
-//                       coordinate: trail.EndLocation,
-//                       content: {
-//                ZStack {
-//                    Image(uiImage:
-//                            (UIImage(named: "finish")?
-//                                .withBackground(color: UIColor.white)
-//                                .roundedImageWithBorder(width: 3, color: UIColor.orange))!
-//                    )
-//                }
-//            })
-//
-//            MapPolyline(coordinates: trail.coordinateRecorded)
-//                .stroke(.blue, lineWidth: 5)
-//
-//        }
-//        .mapStyle(.hybrid)
-//
-//    }
+
     
     
     var SaveTrailButton: some View{
         Button {
             //fill trail image struct from storage
             trail.images = dataStorage.getStorage(trail.id)?.items ?? []  //trailPhotoStorage.items
-
+            
             //upload images
             dataStorage.uploadTrailImages(trail: trail)
-
+            
             //first save to struct
             trail.DisplayName = userData.DisplayName  // add self display name for just saved trails,
             userData.SaveRecordedTrail(trail: trail)
@@ -359,10 +378,21 @@ struct SaveTrailView: View {
             userData.db_AddNewTrail(trail: trail)
             
             UserDefaults.standard.set(false,forKey: "trailNotSaved") //dont read trail from backup at next start
-           
             
-            userData.db_DEBUG_fillMyTrails(t: trail)
+            
+            //userData.db_DEBUG_fillMyTrails(t: trail)
             showSaveTrailView=false
+            
+            //request rewiew
+            if userData.myTrailsCount == 5 || userData.myTrailsCount == 10 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                withAnimation {
+                    requestReview()
+                }
+            }
+            
+        }
+            
         } label: {
             Text("Save Trail")
         }
@@ -404,9 +434,30 @@ struct SaveTrailView: View {
 }
 
 struct SaveTrailView_Previews: PreviewProvider {
+    
+    static var trailRecorded: Trail = {
+        var t = Trail()
+        t.TrailName = "Campulung"
+        t.DisplayName = "user2"
+        t.TrailDesc = "The Yosemite Wilderness …"
+        t.TrailDistance = 49968
+        t.StartTime = Date()
+        t.EndTime = Date()
+        t.TotalTime = 100000
+        t.coordinateRecorded.append(CLLocationCoordinate2D(latitude: 47.525039, longitude: 25.562707))
+        t.coordinateRecorded.append(CLLocationCoordinate2D(latitude: 47.64286, longitude: 26.24937))
+        t.WayPoints.append(WayPoint(name: "Test", desc: "desc1", coordonates: CLLocation(latitude: 47.64286, longitude: 25.84937)))
+        // ... add other waypoints similarly ...
+        return t
+    }()
+
+    
     static var previews: some View {
-        SaveTrailView(trail: Trail(), showSaveTrailView: .constant(true))
+
+        //
+        SaveTrailView(trail: trailRecorded, showSaveTrailView: .constant(true))
             .environmentObject(UserModel())
+            .environmentObject(DataStorage())
     }
 }
 
@@ -448,3 +499,8 @@ struct RectanglePreferenceKey: PreferenceKey {
         value = nextValue()
     }
 }
+
+
+
+
+

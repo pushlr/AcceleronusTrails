@@ -5,7 +5,7 @@
   Created by Françoise d'Aubigné on 29.12.2023.
   
 */
-"CFBundleDisplayName" = "Pfade";
+"CFBundleDisplayName" = "Trails";
 
 "NSLocationAlwaysUsageDescription" = "Wir nutzen Ihre Standortdaten, um Ihre Routen präzise aufzuzeichnen und Details wie Entfernung, Höhenänderungen und Wegpunkte zu erfassen.";
 "NSLocationUsageDescription" = "Wir nutzen Ihre Standortdaten, um Ihre Routen präzise aufzuzeichnen und Details wie Entfernung, Höhenänderungen und Wegpunkte zu erfassen.";

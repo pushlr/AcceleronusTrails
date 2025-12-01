@@ -31,25 +31,25 @@ struct DeleteAccountView: View {
     }
     
     var body: some View {
-            NavigationView {
+        NavigationStack {
                 VStack {
                     ScrollView{
-                    Text("Delete Account")
+                        Text("Delete Account")
                         .font(.title)
                         .padding()
                         .padding(.top,20)
                         
-                    Text("Are you sure you want to delete your account? This action is irreversible and will permanently delete all your data.")
+                        Text("Are you sure you want to delete your account? This action is irreversible and will permanently delete all your data.")
                         .multilineTextAlignment(.center)
                         .foregroundColor(.secondary)
                         .padding()
                     
-                    Text("All recorded trails will be permanently deleted. This action cannot be undone.")
+                        Text("All recorded trails will be permanently deleted. This action cannot be undone.")
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
                         .padding()
                     
-                    SecureField("Enter your password", text: $password)
+                        SecureField("Enter your password", text: $password)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
                         .disabled(deletingIsStarted)
@@ -131,8 +131,8 @@ struct DeleteAccountView: View {
     func performAccountDeletion() async  {
         Task{
             deletingIsStarted = true
-            addLog("Initializing account deletion".localized)
-            addLog("Getting trails list".localized + " : ")
+            addLog("Initializing account deletion")
+            addLog("Getting trails list" + " : ")
             userData.db_GetMyTrailsCount()
             await Task.sleep(1 * 1_000_000_000) // wait to myTrailsIsLoading be setted
             while(userData.myTrailsCountIsLoading){print("waiting myTrailsCountIsLoading")}
@@ -149,7 +149,7 @@ struct DeleteAccountView: View {
             appendLog("OK")
             
             if(userData.mytrails.count>0){
-                addLog("Removing".localized + " " + String(userData.mytrails.count) + " trails : ")
+                addLog("Removing" + " " + String(userData.mytrails.count) + " trails : ")
                 for i in 0...userData.mytrails.count - 1 {
                     dataStorage.removeTrailImages(trail: userData.mytrails[i])
                     userData.db_RemoveTrail(trailID: userData.mytrails[i].id)
@@ -158,7 +158,7 @@ struct DeleteAccountView: View {
             }
             
                         
-            addLog("Deleting Account Info".localized + " : ")
+            addLog("Deleting Account Info" + " : ")
             if(userData.friendsList.list.count>0){
                 for i in 0...userData.friendsList.list.count - 1 {
                     userData.db_deleteFriend(friend: userData.friendsList.list[i])
@@ -167,11 +167,11 @@ struct DeleteAccountView: View {
             userData.db_removeAccountInfo()
             appendLog("OK")
             
-            addLog("Waiting for server response".localized + " : ")
+            addLog("Waiting for server response" + " : ")
             await userData.waitForFinish()
             appendLog("OK")
             
-            addLog("Unregistering".localized + " : ")
+            addLog("Unregistering" + " : ")
             auth.unregister()
             appendLog("OK")
             

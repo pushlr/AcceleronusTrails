@@ -10,6 +10,8 @@ import MapKit
 import FirebaseFirestore
 import Polyline
 import SwiftUI
+import GeoFireUtils
+
 
 struct Listener{
     var id : String
@@ -29,9 +31,10 @@ class UserData : ObservableObject  {
 
     
     @Published var mytrails = [Trail]()
+    @Published var trailsOnMap = [Trail]()
     @Published var trailsInArea = [Trail]()
     @Published var favoriteTrails = [Trail]()
-
+//trailsInArea
         
     @Published var friendsSearchList = [FriendInfo]() //searchable list
     @Published var friendsList = Friends()    //friends list, loaded integral
@@ -56,6 +59,8 @@ class UserData : ObservableObject  {
     @Published var trailsInAreaisLoading = false
     @Published var trailsInAreaCount = 0
     @Published var trailsInAreaNeedToSelect : UUID? = nil
+    
+    var tasksCounter = 0
     
     
     //myTrails temp variables
@@ -82,7 +87,7 @@ class UserData : ObservableObject  {
         DisplayPhoto = ""
         
         mytrails.removeAll()
-        trailsInArea.removeAll()
+        trailsOnMap.removeAll()
         favoriteTrails.removeAll()
         
         friendsSearchList.removeAll()
@@ -101,11 +106,11 @@ class UserData : ObservableObject  {
     }
     
     init(){
-        print("UserModel Object is innited")
-    //    DisplayName = "Dorin Popescu"
- //       CreationDate = Date()
-   //     LastActivity = Date()
-        
+        print("UserData Object is innited")
+//        DisplayName = "Dorin Popescu"
+//        CreationDate = Date()
+//        LastActivity = Date()
+//        
 //        var trailRecorded = Trail()
 //        trailRecorded.TrailName = "Campulung"
 //        trailRecorded.DisplayName = "user2"
@@ -116,6 +121,7 @@ class UserData : ObservableObject  {
 //        trailRecorded.TotalTime = 100000
 //        trailRecorded.coordinateRecorded.insert(CLLocationCoordinate2D(latitude: 47.525039, longitude: 25.562707), at: trailRecorded.coordinateRecorded.count)
 //        trailRecorded.coordinateRecorded.insert(CLLocationCoordinate2D(latitude: 47.64286, longitude: 26.24937), at: trailRecorded.coordinateRecorded.count)
+//        trailRecorded.confidentiality = .Private
 //        
 //        trailRecorded.WayPoints.append(WayPoint(name: "Test",desc: "desc1", coordonates: CLLocation(latitude: 47.64286, longitude:  25.84937)))
 //        trailRecorded.WayPoints.append(WayPoint(name: "Test2",desc: "desc2", coordonates: CLLocation(latitude: 47.64286, longitude:  25.84937)))
@@ -123,12 +129,13 @@ class UserData : ObservableObject  {
 //        trailRecorded.WayPoints.append(WayPoint(name: "Test4",desc: "desc4", coordonates: CLLocation(latitude: 47.64286, longitude:  25.84937)))
 //        trailRecorded.WayPoints.append(WayPoint(name: "Test5",desc: "desc5", coordonates: CLLocation(latitude: 47.64286, longitude:  25.84937)))
 //        trailRecorded.WayPoints.append(WayPoint(name: "Test6",desc: "desc6", coordonates: CLLocation(latitude: 47.64286, longitude:  25.84937)))
-//        trailsInArea.append(trailRecorded)
+//        trailsOnMap.append(trailRecorded)
 //        mytrails.append(trailRecorded)
+//        mytrailsSearch.append(trailRecorded)
 //        myTrailsCount = 1
 //        trailsInAreaCount = 1 
-////
-        
+//////
+//        
 //        for i in 0...5 {
 //            var trailRecorded2 = Trail()
 //            trailRecorded2.TrailName = "Campulung2"+String(i)
@@ -147,7 +154,7 @@ class UserData : ObservableObject  {
         
         
 //        
-//        
+////        
 //        var fr = FriendInfo(userID: "1", DisplayName: "Valera2",friendStatus: .requestAccepted)
 //        fr.LastActivity = Date()
 //        fr.CreationDate = Date()
@@ -162,11 +169,17 @@ class UserData : ObservableObject  {
 //        fr.mytrails.append(trailRecorded2)
 //        fr.myTrailsCount = 1
 //        fr.dataLoaded = true
-//       friendsList.list.append(fr)
+//        fr.recordingStatus = .isStarted
+//        friendsList.list.append(fr)
+//        friendsList.list.append(fr)
+//        friendsList.list.append(fr)
+//
+//        var fr2 = FriendInfo(userID: "1", DisplayName: "Valera2",friendStatus: .requestObtained)
+//        fr2.LastActivity = Date()
+//        fr2.CreationDate = Date()
+//        friendsList.list.append(fr2)
 //        
 //        
-        
-        
 //        friendsList.list.append(FriendInfo(userID: "2", DisplayName: "John",friendStatus: .requestAccepted))
 //        friendsList.list.append(FriendInfo(userID: "3", DisplayName: "Rambo",friendStatus: .requestAccepted))
 //        friendsList.list.append(FriendInfo(userID: "4", DisplayName: "Ionel",friendStatus: .requestNotSent))
@@ -223,10 +236,23 @@ class UserData : ObservableObject  {
       
     }
     
+    func saveLanguageToUserDefaults(lang: String){
+        UserDefaults.standard.set(lang, forKey: "app_language")
+    }
+    
+    func getLanguageFromUserDefaults(app_language: inout String){
+        let defaults = UserDefaults.standard
+        
+        if(defaults.string(forKey: "app_language") != nil){
+            app_language = defaults.string(forKey: "app_language") ?? ""
+        }
+    }
+    
+    
     func loadTrailRecordingSettings(trailSettings: inout RecordingTrailSettings) -> Bool {
         let defaults = UserDefaults.standard
        
-      //  trailSettings.activeTracking = defaults.bool(forKey: "tr_settings_activeTracking")
+        trailSettings.activeTracking = defaults.bool(forKey: "tr_settings_activeTracking")
         if(defaults.string(forKey: "tr_settings_lineColor") != nil){
             trailSettings.lineColor = Color(rawValue: defaults.string(forKey: "tr_settings_lineColor") ?? "") ?? RecordingTrailSettings().lineColor
         }
@@ -373,25 +399,27 @@ class UserData : ObservableObject  {
     }
     
     
-    func db_DEBUG_fillMyTrails(t: Trail){
-        return
-        var trail = t
-        for i in 0...100 {
-            trail.id = UUID()
-            trail.TrailDesc = "test2" + randomString(Int.random(in: 0..<50))
-            trail.TrailName = "test2" + randomString(Int.random(in: 2..<15))
-            trail.StartTime = randomDate()
-            trail.EndTime = Calendar.current.date(byAdding: .hour, value: 1, to:  trail.StartTime)!
-            
-            db_AddNewTrail(trail: trail)
-        }
-        
-    }
+//    func db_DEBUG_fillMyTrails(t: Trail){
+//        return
+//        var trail = t
+//        for i in 0...100 {
+//            trail.id = UUID()
+//            trail.TrailDesc = "test2" + randomString(Int.random(in: 0..<50))
+//            trail.TrailName = "test2" + randomString(Int.random(in: 2..<15))
+//            trail.StartTime = randomDate()
+//            trail.EndTime = Calendar.current.date(byAdding: .hour, value: 1, to:  trail.StartTime)!
+//            
+//            db_AddNewTrail(trail: trail)
+//        }
+//        
+//    }
     
     func db_AddNewTrail(trail: Trail){
         print("􀧒 db_AddNewTrail")
       //  let TrailName = trail.TrailName.replacingOccurrences(of: " ", with: "_") + String(format: "%d",trail.coordinateRecorded.count)
         let trailFolder = "users/\(userID)/Trails/\(trail.id.uuidString)"
+        
+        let hash = GFGeoHash(location: CLLocationCoordinate2D(latitude: trail.StartLocation.latitude, longitude: trail.StartLocation.longitude))
         
         db.document(trailFolder).setData(
           ["UserID"          : userID,
@@ -418,7 +446,9 @@ class UserData : ObservableObject  {
            "Start Location latitude" : trail.StartLocation.latitude,
            "Start Location longitude" : trail.StartLocation.longitude,
            "End Location latitude" : trail.EndLocation.latitude,
-           "End Location longitude" : trail.EndLocation.longitude
+           "End Location longitude" : trail.EndLocation.longitude,
+           "geohash"        : hash?.geoHashValue ?? ""
+           
           
 
           ]
@@ -446,7 +476,7 @@ class UserData : ObservableObject  {
         
       }
                             
-    @MainActor func db_getTrails(query: Query, type: Int, param1: Int = 0){
+    @MainActor func db_getTrails(query: Query, type: Int, param1: Int = 0,boundingBox:BoundingBox = BoundingBox(),tasksCount: Int = 0){
         // #1 trailsInArea
         // #2 myTrails
         
@@ -482,7 +512,10 @@ class UserData : ObservableObject  {
                 try await documents = query.getDocuments()
                 print("􀧒 Obtained from server \(documents.count) Trails")
                 
-                if(type == 1 ){trailsInAreaCount = 0}
+                if(type == 1 ){
+                    trailsInAreaCount = 0
+                    trailsInArea.removeAll()
+                }
                 
             
                 //add new trails to existing
@@ -504,7 +537,7 @@ class UserData : ObservableObject  {
                     for i in 0...documents.count-1 {
                                                 
                         let data = documents.documents[i].data()
-                        print("􀧒 Creating trail : \(data["TrailName"])")
+                        print("􀧒 Creating trail : \(data["TrailName"])  Type \(type)")
                         
                         var tempTrail = Trail()
                         tempTrail.id = UUID(uuidString: documents.documents[i].documentID) ?? UUID()
@@ -578,21 +611,40 @@ class UserData : ObservableObject  {
                    
                         if(type == 1 ){
                             //check if is not private trail
-                            if(tempTrail.confidentiality == .Public){
-                                trailsInAreaCount += 1; //show trails in area count on the navigation tab
-                                //if not already added - add it
-                                if(trailsInArea.first(where: {$0.id == tempTrail.id}) == nil ) {
-                                    trailsInArea.append(tempTrail)
+                            if(tempTrail.confidentiality == .Public || tempTrail.UserID == self.userID){ // is public or is my trail
+                                // check bounding area, and add to trails in area
+                                if (tempTrail.StartLocation.latitude >= boundingBox.minLat &&
+                                    tempTrail.StartLocation.latitude <= boundingBox.maxLat &&
+                                    tempTrail.StartLocation.longitude >= boundingBox.minLng &&
+                                    tempTrail.StartLocation.longitude <= boundingBox.maxLng
+                                ) || (boundingBox.minLat==0){
+                                    
+                                    trailsInAreaCount += 1; //show trails in area count on the navigation tab
+                                    
+                                    if(trailsInArea.first(where: {$0.id == tempTrail.id}) == nil ) {
+                                        trailsInArea.append(tempTrail)
+                                    }
+                                } else {print("Not in selected aread!")}
+                                
+                                //if not already added - add it to trailsOnMap
+                                if(trailsOnMap.first(where: {$0.id == tempTrail.id}) == nil ) {
+                                    trailsOnMap.append(tempTrail)
                                 }
+                                    
                             }
                         }
                         
                         if(type == 2){
-                            mytrails.append(tempTrail)
+                            if(mytrails.first(where: {$0.id == tempTrail.id}) == nil ) {
+                                mytrails.append(tempTrail)
+                            }else{
+                                print("Dublicate Trail Name \(tempTrail.TrailName)")
+                            }
                         }
                         
                         if(type == 3){
                             if(taskID != myTrailsSearchTaskID){break} //end task if new search task was run
+                            
                             mytrailsSearch.append(tempTrail)
                         }
                         
@@ -609,7 +661,7 @@ class UserData : ObservableObject  {
                     }
                 }
                 
-                if(type == 1){trailsInAreaisLoading = false}
+                if(type == 1){tasksCounter+=1;if tasksCounter >= tasksCount {trailsInAreaisLoading = false}}
                 if(type == 2){myTrailsIsLoading = false}
                 if(type == 3){myTrailsSearchIsLoading = false}
                 if(type == 4){friendsList.list[param1].myTrailsIsLoading = false}
@@ -619,6 +671,7 @@ class UserData : ObservableObject  {
                 
             } catch {
                 print("CANCELED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                print(error.localizedDescription)
                 trailsInAreaisLoading = false
                 myTrailsIsLoading = false
                 myTrailsSearchIsLoading = false
@@ -639,19 +692,45 @@ class UserData : ObservableObject  {
         guard btLeft != nil else {return}
         guard tpRight != nil else {return}
         
-        
         var query = db.collectionGroup("Trails")
         .whereField("Start Location longitude",  isGreaterThan: btLeft!.longitude)
         .whereField("Start Location longitude",  isLessThan: tpRight!.longitude)
-     //   .whereField("Start Location latitude",  isGreaterThan: btLeft!.latitude)
+      //  .whereField("Start Location latitude",  isGreaterThan: btLeft!.latitude)
       //  .whereField("Start Location latitude",  isLessThan: tpRight!.latitude)
         .limit(to: 50)
         
         
         db_getTrails(query: query,type: 1)
-        
-       
     }
+    
+    
+
+    
+    @MainActor func db_GetCurrentAreaTrailsNew(region: MKCoordinateRegion) {
+        print("􀧒 loading Trails in area: \(userID)")
+        guard userID.isEmpty==false else {return}
+     
+        
+        
+        let bounds = region.boundingBox(for: region)
+        let queries = GFUtils.queryBounds(
+            forLocation: CLLocationCoordinate2D(latitude: bounds.center.latitude, longitude: bounds.center.longitude),
+            withRadius: bounds.radius
+        )
+        
+        tasksCounter = 0
+        for (index,query) in queries.enumerated() {
+            var query = db.collectionGroup("Trails")
+                .whereField("geohash", isGreaterThanOrEqualTo: query.startValue)
+                .whereField("geohash", isLessThanOrEqualTo: query.endValue)
+                .limit(to: 50)
+            
+            
+            db_getTrails(query: query, type: 1, boundingBox : bounds, tasksCount : queries.count)
+            
+        }
+    }
+    
     
 
     @MainActor func db_GetMyTrails(limit: Int = 10) {
@@ -742,7 +821,7 @@ class UserData : ObservableObject  {
                 myTrailsCount = Int(snapshot.count)
                 myTrailsCountIsLoading = false
 
-                print("􀧒 Obtained from server Trails Count : \(snapshot.count) Trails")
+                print("􀧒 Obtained from server Trails Count : \(snapshot.count) Trails (db_GetMyTrailsCount)")
             }catch{
                 print("db_GetMyTrailsCount Error Catched")
                 myTrailsCountIsLoading = false
@@ -761,7 +840,7 @@ class UserData : ObservableObject  {
                 let snapshot = try await countQuery.getAggregation(source: .server)
                 
                 myTrailsSearchCount = Int(snapshot.count)
-                print("􀧒 Obtained from server Trails Count : \(snapshot.count) Trails")
+                print("􀧒 Obtained from server Trails Count : \(snapshot.count) Trails (db_GetMyTrailsSearchCount)")
                 
             }catch{
                 
@@ -962,7 +1041,7 @@ class UserData : ObservableObject  {
             self.friendsList.list[friendIndex].isLoading = false
             self.friendsList.list[friendIndex].dataLoaded = true
             
-            print("􀧒 Obtained from server Trails Count : \(snapshot.count) Trails")
+            print("􀧒 Obtained from server Trails Count : \(snapshot.count) Trails (db_GetFriendInfo)")
         }
         
         
@@ -980,6 +1059,12 @@ class UserData : ObservableObject  {
                 return
             }
             
+            // 🛑 Ignore local writes
+            if documents.metadata.hasPendingWrites {
+                print("􀧒 db_ListenToUserData : Ignoring local pending write")
+                return
+            }
+            
             if let err = err {
                 print("􀧒 Error getting documents: \(err)")
             } else {
@@ -987,6 +1072,9 @@ class UserData : ObservableObject  {
                 
                 print("name: \(documents.get("DisplayName"))")
                 print("photo: \(documents.get("DisplayPhoto"))")
+              
+//                print("isFromCache:", querySnapshot?.metadata.isFromCache ?? false)
+//                print("hasPendingWrites:", querySnapshot?.metadata.hasPendingWrites ?? false)
                 
                 self.DisplayName = documents.get("DisplayName") as? String ?? ""
                 self.DisplayPhoto = documents.get("DisplayPhoto") as? String ?? ""
@@ -1138,6 +1226,7 @@ class UserData : ObservableObject  {
     }
     
     
+    
     func db_SaveUserData(){
         print("􀧒 db_SaveUserData")
         guard userID.isEmpty==false else {return}
@@ -1152,6 +1241,19 @@ class UserData : ObservableObject  {
         
     }
     
+    
+
+
+    func db_UpdateLastActivity(){//saved at each start
+        print("􀧒 db_UpdateLastActivity")
+        guard userID.isEmpty==false else {return}
+        
+        db.document("users/\(userID)").setData(
+            [
+             "LastActivity" : LastActivity,
+            ], merge: true
+        )
+    }
     
     
     

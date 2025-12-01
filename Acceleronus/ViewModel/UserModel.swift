@@ -18,6 +18,7 @@ class UserModel: ObservableObject  {
     //@Published var userData = UserData()
  //   @EnvironmentObject var userData : UserData
     @Published var map = MKMapView()
+ 
     
   //  var dbd = DataBaseManager(userData: &userData)
 
@@ -28,10 +29,12 @@ class UserModel: ObservableObject  {
     @Published var lastLocation: CLLocation
     @Published var lastSpeed: CLLocationSpeed
     @Published var lastGPSStrenght: CLLocationAccuracy
+    @Published var weakGPSSignal = false
     
         
     var coordinateBottomLeft : CLLocationCoordinate2D?
     var coordinateTopRight : CLLocationCoordinate2D?
+    var region : MKCoordinateRegion?
 
     @Published var recordingStatus : RecordingStatus = RecordingStatus.isStoped
     
@@ -48,8 +51,12 @@ class UserModel: ObservableObject  {
     @Published var userAverageColor : UIColor = .purple
     
     @Published var tabSelected: Tab = .navigator
+//    @Published var navigationPath = NavigationPath()
     
-    var selectTrailAfterWaypointDeselect = false
+    @Published var language : String = ""
+    
+    
+  
     var tempWayPoint : WayPoint
     
     
@@ -189,6 +196,7 @@ class UserModel: ObservableObject  {
     }
     
     func centerMap_toLocation(location : CLLocationCoordinate2D){
+        print("Center map to location")
         let viewRegion = MKCoordinateRegion(center: location, latitudinalMeters: 2000, longitudinalMeters: 2000)
         map.setRegion(viewRegion, animated: true)
     }
@@ -234,7 +242,7 @@ class UserModel: ObservableObject  {
     func drawStartLocation(){
         trailRecorded.StartPin = TrailAnnotation(trailID: 0, activityType: trailRecorded.activityType)
         trailRecorded.StartPin.coordinate = trailRecorded.StartLocation
-        trailRecorded.StartPin.title = "Start Point".localized
+        trailRecorded.StartPin.title = "Start Point"
         trailRecorded.StartPin.annotationType = AnnotationType.StartRecording
         map.addAnnotation(trailRecorded.StartPin)
     }
@@ -295,7 +303,7 @@ class UserModel: ObservableObject  {
     }
     
     func DrawTrailsInArea(trails: inout [Trail]){
-        
+        print("")
                     //show user trails
         if(trails.count>0){
             //    delete old pins
@@ -312,7 +320,7 @@ class UserModel: ObservableObject  {
                     //print("add point with trailID \(i) and name: \(trails[i].TrailName)")
                     trails[i].StartPin = TrailAnnotation(trailID: i,activityType: trails[i].activityType)
                     trails[i].StartPin.coordinate = trails[i].StartLocation
-                    trails[i].StartPin.title = "Start Point".localized
+                    trails[i].StartPin.title = "Start Point"
                     trails[i].StartPin.annotationType  = .TrailStartPoint
                     map.addAnnotation(trails[i].StartPin)
                     } else

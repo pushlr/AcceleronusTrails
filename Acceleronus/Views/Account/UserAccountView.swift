@@ -34,8 +34,12 @@ import _PhotosUI_SwiftUI
 struct UserAccountView: View {
     @EnvironmentObject var  auth : SignInViewModel
     @EnvironmentObject var userData : UserData
+    @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var dataStorage: DataStorage
+
   
+   // @State private var path = NavigationPath()
+    
     @State var isShowingConfirmationDialog = false
     @State var showPhotoPicker = false
     @State var photoChanged = false
@@ -44,7 +48,7 @@ struct UserAccountView: View {
     @State var testString = "acceleronus"
     @State var directorySize : UInt64 = 0
     init(){
-        // print("INITED2")
+//        print("User Account View : Inited!")
         // self.recordingStatus = recordingStatus
         
     }
@@ -52,6 +56,7 @@ struct UserAccountView: View {
     
     
     private func loadDisplayPhoto(){
+        print("UserAccountView: Loading photo ")
         if(dataStorage.getStorage(userData.userID) != nil ){
             if(dataStorage.getStorage(userData.userID)!.items.count != 1){
                 dataStorage.getStorage(userData.userID)!.removeAllExceptFirst(localyOnly: true)
@@ -166,7 +171,7 @@ struct UserAccountView: View {
     
     
     var body: some View {
-        NavigationView{
+        NavigationStack() { //path: $userModel.navigationPath
             
             FancyScrollView(title: AnyView(
                                     ZStack{
@@ -193,6 +198,11 @@ struct UserAccountView: View {
                     }
                 }
                 .clipped()
+                .onChange(of: userData.DisplayPhoto){
+                    print("Display Phone Changed!")
+                    loadDisplayPhoto()
+                }
+                
             }
                             
             ) {
@@ -219,7 +229,7 @@ struct UserAccountView: View {
                                     
                                     EditableLabel(text: $userData.DisplayName, editing: $displayNameEditing)
                                         .onChange(of: userData.DisplayName, {
-                                            print("userName changed")
+                                            print("Changing UserName")
                                             auth.ChangeDisplayName(DisplayName: userData.DisplayName)
                                             userData.db_SaveUserData()
                                         })
@@ -235,8 +245,9 @@ struct UserAccountView: View {
                             
                             if(userData.LastActivity != nil){
                                 HStack{
+//                                    Text("Last activity %@".localized(with:  (FormatTimeLastActivity(userData.LastActivity!))))
                                     Text("Last activity \(FormatTimeLastActivity(userData.LastActivity!))")
-                                        .font(.avenirNextRegular(size: 12))
+                                    .font(.avenirNextRegular(size: 12))
                                         .foregroundColor(.gray)
                                     
                                     Text(" • ")
@@ -340,6 +351,7 @@ struct UserAccountView: View {
                 .fullScreenCover(isPresented: $deleteAccountView){
                     DeleteAccountView(deleteAccountView: $deleteAccountView)
                 }
+           
                 
                 .onAppear{
                     self.loadDisplayPhoto()}
@@ -349,6 +361,7 @@ struct UserAccountView: View {
                 
             }
         }
+       
     }}
 
 

@@ -42,7 +42,7 @@ struct TextField_Small: TextFieldStyle {
 
 
 struct TextField_WithTextLabel: View {
-    var title : String
+    var title : LocalizedStringKey
     @Binding var inputText : String
     @FocusState private var fieldIsFocused: Bool  // new
     
@@ -68,7 +68,7 @@ struct TextField_WithTextLabel: View {
 }
 
 struct TextFiled_Multiline: View {
-    var title : String
+    var title : LocalizedStringKey
     @Binding var inputText : String
     @FocusState private var fieldIsFocused: Bool
     var body: some View {

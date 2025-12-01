@@ -42,25 +42,25 @@ func TimeDifference(from: Date,to: Date) -> String{
     
     if let days = diffs.day {if days>0 {
         result += String(format: "%d", days) + " ";
-        if(days>1){result+="days".localized}else{result+="day".localized}
+        if(days>1){result+="days"}else{result+="day"}
     }}
     if let hours = diffs.hour {
         if hours>0 {
             if(!result.isEmpty){result+=" "};
             result += String(format: "%d", hours) + " ";
-            if(hours>1){result+="hours".localized}else{result+="hour".localized}
+            if(hours>1){result+="hours"}else{result+="hour"}
         }}
     if let minutes = diffs.minute {
         if minutes>0 {
             if(!result.isEmpty){result+=" "};
             result += String(format: "%d", minutes) + " ";
-            if(minutes>1){result+="minutes".localized}else{result+="minute".localized}
+            if(minutes>1){result+="minutes"}else{result+="minute"}
         }}
     if(result == ""){
         if let seconds = diffs.second {
             if seconds>0 {
                 result = String(format: "%d", seconds) + " ";
-                if(seconds>1){result+="seconds".localized}else{result+="second".localized}
+                if(seconds>1){result+="seconds"}else{result+="second"}
             }}
     }
     
@@ -68,6 +68,7 @@ func TimeDifference(from: Date,to: Date) -> String{
     return result
     
 }
+
 
 
 func formatBytesSize(_ bytes: UInt64 ) -> String {
@@ -103,26 +104,26 @@ func FormatTime(seconds: UInt32) -> String {
     
     if days>0 {
         result += String(format: "%d", days) + " ";
-        if(days>1){result+="days".localized}else{result+="day".localized}
+        if(days>1){result+="days"}else{result+="day"}
     }
     
     if hours>0 {
             if(!result.isEmpty){result+=" "};
             result += String(format: "%d", hours) + " ";
-            if(hours>1){result+="hours".localized}else{result+="hour".localized}
+            if(hours>1){result+="hours"}else{result+="hour"}
         }
     
         if minutes>0 {
             if(!result.isEmpty){result+=" "};
             result += String(format: "%d", minutes) + " ";
-            if(minutes>1){result+="minutes".localized}else{result+="minute".localized}
+            if(minutes>1){result+="minutes"}else{result+="minute"}
         }
     
     if(result == ""){
         
             if seconds>0 {
                 result = String(format: "%d", seconds) + " ";
-                if(seconds>1){result+="seconds".localized}else{result+="second".localized}
+                if(seconds>1){result+="seconds"}else{result+="second"}
             }
     }
     
@@ -131,6 +132,7 @@ func FormatTime(seconds: UInt32) -> String {
     return result
         
 }
+
 
 
 func FormatTimeMonthYear(_ date: Date) -> String{
@@ -157,17 +159,17 @@ func FormatTimeLastActivity(_ date: Date) -> String {
     //is few days ago
     if let days = diffs.day {if days>0 {
         result += String(format: "%d", days) + " ";
-        if(days>1){result+="days".localized}else{result+="day".localized}
-        result = result + " " + "ago".localized
+        if(days>1){result+="days"}else{result+="day"}
+        result = result + " " + "ago"
     }}
     
     
     //is in last 24 hours, yesterday or today
     if(result == ""){
         if Calendar.current.isDateInToday(date){
-            result += "Today".localized
+            result += "Today"
         }else {
-            result += "Yesterday".localized
+            result += "Yesterday"
         }
         
         let dateFormatter = DateFormatter()
@@ -178,6 +180,7 @@ func FormatTimeLastActivity(_ date: Date) -> String {
     
     return result
 }
+
 
 
 func PointIsInRegion(point: CLLocationCoordinate2D, BottomLeft: CLLocationCoordinate2D?, TopRight: CLLocationCoordinate2D?) -> Bool {
@@ -273,11 +276,11 @@ func distanceToStringKM(_ s: Double) -> String{
 }
 
 func SignalStrenghtText(signal: CLLocationAccuracy) -> String {
-    if(signal < 10.0){return "Excellent".localized}
-    if(signal > 10.0 && signal < 15.0) {return "Good".localized}
-    if(signal > 15.0 && signal < 25.0) {return "Poor".localized}
-    if(signal > 30.0 && signal < 100.0) {return "Bad".localized}
-    if(signal > 100.0) {return "lost".localized}
+    if(signal < 10.0){return "Excellent"}
+    if(signal > 10.0 && signal < 15.0) {return "Good"}
+    if(signal > 15.0 && signal < 25.0) {return "Poor"}
+    if(signal > 30.0 && signal < 100.0) {return "Bad"}
+    if(signal > 100.0) {return "lost"}
     return "-"
 }
 
@@ -288,6 +291,41 @@ func SignalStrenght_to5Bar(signal: CLLocationAccuracy) -> Int {
     if(signal > 30.0 && signal < 100.0) {return 2}
     if(signal > 100.0) {return 1}
     return 0
+}
+
+
+
+
+import CryptoKit
+import SwiftUICore
+
+
+func sha256(_ input: String) -> String {
+    let inputData = Data(input.utf8)
+    let hashed = SHA256.hash(data: inputData)
+    return hashed.compactMap { String(format: "%02x", $0) }.joined()
+}
+
+func randomNonceString(length: Int = 32) -> String {
+    let charset: [Character] =
+    Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+
+    var result = ""
+    var remaining = length
+
+    while remaining > 0 {
+        let randoms = (0 ..< 16).map { _ in UInt8.random(in: 0...255) }
+
+        randoms.forEach { random in
+            if remaining == 0 { return }
+            if random < charset.count {
+                result.append(charset[Int(random)])
+                remaining -= 1
+            }
+        }
+    }
+
+    return result
 }
 
 

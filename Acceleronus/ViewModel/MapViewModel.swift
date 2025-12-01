@@ -13,7 +13,12 @@ struct MapView: UIViewRepresentable {
         @EnvironmentObject var userModel : UserModel
         @EnvironmentObject var userData: UserData
         @EnvironmentObject var dataStorage: DataStorage
-    
+
+        @Binding var trailSheetDismissed: Bool
+        @Binding var wayPointSheetDismissed: Bool
+        @Binding var trailColorChanged: Bool
+        @Binding var selectedTrailUUID: UUID?
+     
      
     
         func makeUIView(context: UIViewRepresentableContext<MapView>) -> MKMapView {
@@ -26,31 +31,60 @@ struct MapView: UIViewRepresentable {
             if(userModel.recordingStatus == .isStoped){ //if not recording, start with current position, else show unfinished trail
                 userModel.map.userTrackingMode = .follow
             }
-        
+            
+            
+            //tap gesture
+            let tap = UITapGestureRecognizer(target: context.coordinator,
+                                              action: #selector(Coordinator.didTapMap(_:)))
+            userModel.map.addGestureRecognizer(tap)
+
+            //long tap gesture
+            let longtap = UILongPressGestureRecognizer(target: context.coordinator,
+                                              action: #selector(Coordinator.didLongTapMap(_:)))
+            longtap.minimumPressDuration = 0.5  // adjust as needed
+            longtap.delaysTouchesBegan = true
+            userModel.map.addGestureRecognizer(longtap)
+            
+            
             return userModel.map
         }
 
     
         func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
-        //    print("updateUIView")
-//            uiView.removeAnnotations(uiView.annotations)
-//
-//            for mapItem in mapItems {
-//                let annotation = MKPointAnnotation()
-//                annotation.coordinate = mapItem.placemark.coordinate
-//                annotation.title = mapItem.name
-//                uiView.addAnnotation(annotation)
-//            }
-
-//            if let firstMapItem = mapItems.first {
-//                let region = MKCoordinateRegion(
-//                    center: firstMapItem.placemark.coordinate,
-//                    span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-//                )
-//                uiView.setRegion(region, animated: true)
-//                mapItems.removeAll()
-//            }
+            if ((selectedTrailUUID) != nil){
+                context.coordinator.selectTrail(trailUUID: selectedTrailUUID!)
+                DispatchQueue.main.async {
+                    self.selectedTrailUUID = nil
+                }
+            }
             
+            if trailSheetDismissed {
+                context.coordinator.sheetTrailWasDismissed()
+                
+                // Reset so you don't trigger it repeatedly
+                DispatchQueue.main.async {
+                    self.trailSheetDismissed = false
+                }
+            }
+            
+            if wayPointSheetDismissed {
+                context.coordinator.sheetWayPointWasDismissed()
+                // Reset so you don't trigger it repeatedly
+                DispatchQueue.main.async {
+                    self.wayPointSheetDismissed = false
+                }
+            }
+            
+            if trailColorChanged {
+                context.coordinator.trailColorChangedAction()
+                // Reset so you don't trigger it repeatedly
+                DispatchQueue.main.async {
+                    self.trailColorChanged = false
+                }
+            }
+            
+            
+
         }
     
     
@@ -60,6 +94,25 @@ struct MapView: UIViewRepresentable {
     
     
     func getAnnotationImage(annotation: BaseAnnotation, isSelected : Bool = false) -> UIImage? {
+        
+        var color = UIColor.orange
+        if let trailAnnotation = annotation as? TrailAnnotation {
+            let trailID = trailAnnotation.trailID
+            print("Trails on map count: \(userData.trailsOnMap.count)")
+            if trailID>=0 && userData.trailsOnMap.count > trailID{
+                color = userData.trailsOnMap[trailID].color
+            }
+           
+        }
+        
+        
+        if let trailAnnotation = annotation as? WayPointAnnotation {
+            let trailID = trailAnnotation.trailID
+            if trailID>=0 && userData.trailsOnMap.count > trailID{
+                color = userData.trailsOnMap[trailID].color
+            }
+        }
+        
         
          switch annotation.annotationType {
                 
@@ -80,12 +133,12 @@ struct MapView: UIViewRepresentable {
             case .TrailStartPoint:
              return UIImage(named: GetActivity((annotation as! TrailAnnotation).activityType).image)?
                    // .withBackground(color: UIColor.white)
-                    .roundedImageWithBorder(width: 3, color: isSelected ? UIColor.orange : UIColor.brown)
+                    .roundedImageWithBorder(width: 3, color: isSelected ? color: UIColor.brown)
                 
             case .TrailEndPoint:
                 return UIImage(named: "finish")?
                   //  .withBackground(color: UIColor.white)
-                    .roundedImageWithBorder(width: 3, color: isSelected ? UIColor.orange : UIColor.brown)
+                    .roundedImageWithBorder(width: 3, color: isSelected ? color: color) // finish always is selected
                 
                 
             case .FriendPosition:
@@ -103,13 +156,18 @@ struct MapView: UIViewRepresentable {
                     .resizeImageTo(size: CGSize(width: 25, height: 25))?
                  
                    // .withBackground(color: UIColor.white)
-                    .roundedImageWithBorder(width: 2, color: UIColor.orange)
+                    .roundedImageWithBorder(width: 2, color: color)
                  :
                 UIImage(named: "waypoint")?
                     .resizeImageTo(size: CGSize(width: 20, height: 20))?
                    // .withBackground(color: UIColor.white)
                     .roundedImageWithBorder(width: 2, color: UIColor.brown)
                    
+             
+         case .TempPin:
+             return UIImage(systemName: "pin.fill")?
+                // .withBackground(color: UIColor.white)
+                 .roundedImageWithBorder(width: 2, color: .pastelOrange)
                 
              }
         }
@@ -123,18 +181,77 @@ struct MapView: UIViewRepresentable {
 
 class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
     var parent: MapView
-    
+    var tempAnnotations: [TemporaryAnotation] = []
+
+  
     
     init(_ parent: MapView) {
         self.parent = parent
         super.init()
         parent.userModel.locationManager.delegate = self
-        parent.userModel.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        parent.userModel.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters  // check this for better battery performance
         parent.userModel.locationManager.requestWhenInUseAuthorization()
         parent.userModel.locationManager.allowsBackgroundLocationUpdates = true
+        parent.userModel.locationManager.pausesLocationUpdatesAutomatically = false //!!
+        parent.userModel.locationManager.activityType = .otherNavigation
+        print("ABCD \(parent.userModel.locationManager.activityType)")
+      
         //parent.userModel.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
         //parent.userModel.locationManager.distanceFilter = 100
     }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        //parent.userModel.locationManager.startUpdatingLocation()
+        print("Application become alive!")
+    }
+    
+    func isCoordinate(_ coord: CLLocationCoordinate2D,
+                      nearPolyline polyline: MKPolyline,
+                      tolerance: CGFloat,
+                      in mapView: MKMapView) -> Bool {
+
+        let tapPoint = mapView.convert(coord, toPointTo: mapView)
+
+        // Get all screen points of the polyline
+        var points: [CGPoint] = []
+        for i in 0..<polyline.pointCount {
+            let mapPoint = polyline.points()[i]
+            points.append(mapView.convert(mapPoint.coordinate, toPointTo: mapView))
+        }
+
+        // Check tap distance to each segment
+        for i in 0..<(points.count - 1) {
+            let p1 = points[i]
+            let p2 = points[i + 1]
+
+            let distance = distanceFrom(tapPoint, toSegment: (p1, p2))
+
+            if distance <= tolerance {     // usually 10–20 px
+                return true
+            }
+        }
+
+        return false
+    }
+    
+    func distanceFrom(_ point: CGPoint, toSegment segment: (CGPoint, CGPoint)) -> CGFloat {
+        let (p1, p2) = segment
+
+        let dx = p2.x - p1.x
+        let dy = p2.y - p1.y
+
+        if dx == 0 && dy == 0 {
+            return hypot(point.x - p1.x, point.y - p1.y)
+        }
+
+        let t = max(0, min(1, ((point.x - p1.x) * dx + (point.y - p1.y) * dy) / (dx*dx + dy*dy)))
+        let proj = CGPoint(x: p1.x + t * dx,
+                           y: p1.y + t * dy)
+
+        return hypot(point.x - proj.x, point.y - proj.y)
+    }
+
+    
     
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
@@ -168,7 +285,7 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("LocationManager : didUpdateLocations")
+//        print("LocationManager : didUpdateLocations")
         guard let location = locations.last else { return }
         //guard let location = locations.last(where: { $0.horizontalAccuracy >= 0 }) else { return }
         var lastDistance : Double = 0
@@ -187,11 +304,21 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         {parent.userModel.trailRecorded.AltitudeMax = location.altitude}
         
         
+        //is good GPS signal?
+        if(parent.userModel.lastGPSStrenght>20){
+            print("low GPS Signal : \(parent.userModel.lastGPSStrenght)")
+            parent.userModel.weakGPSSignal = true
+            return
+        }else{
+            parent.userModel.weakGPSSignal = false
+        }
+        
+        
         //is good location?
         if(parent.userModel.trailRecorded.coordinateRecorded.count>=1){
             if(parent.userModel.trailRecorded.coordinateRecorded[parent.userModel.trailRecorded.coordinateRecorded.endIndex-1]
                 .distance(to:parent.userModel.lastLocation.coordinate)>5){
-                print("isGoodLocation")
+//                print("isGoodLocation")
             }else
             {
                 print("isNotGoodLocation")
@@ -199,41 +326,20 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
             }
         }
         
-        //is good GPS signal
-        if(parent.userModel.lastGPSStrenght>20){
-            print("low GPS Signal : \(parent.userModel.lastGPSStrenght)")
-            return
-        }
+
+        
         
         if(parent.userModel.recordingStatus == RecordingStatus.isStarted){
-            
-            
-         
-            
             
             //store coordinates
             parent.userModel.trailRecorded.coordinateRecorded.insert(location.coordinate, at: parent.userModel.trailRecorded.coordinateRecorded.endIndex)
             
             //draw lines
             parent.userModel.drawPolyline(trail: &parent.userModel.trailRecorded)
-//            parent.userModel.map.removeOverlay(parent.userModel.trailRecorded.polyline)
-//            parent.userModel.trailRecorded.polyline =
-//            MyCustomPolyline(coordinates: parent.userModel.trailRecorded.coordinateRecorded,
-//                             count: parent.userModel.trailRecorded.coordinateRecorded.count)
-//            parent.userModel.trailRecorded.polyline.color = UIColor(parent.userModel.trailRecordedSettings.lineColor)
-//            parent.userModel.map.addOverlay(parent.userModel.trailRecorded.polyline)
-            
-            
             
             //add Start place
             if(parent.userModel.trailRecorded.coordinateRecorded.count==1){
                 parent.userModel.drawStartLocation()
-//                parent.userModel.trailRecorded.StartPin = TrailAnnotation(trailID: 0, activityType: self.parent.userModel.trailRecorded.activityType)
-//                parent.userModel.trailRecorded.StartPin.coordinate = self.parent.userModel.trailRecorded.StartLocation
-//                parent.userModel.trailRecorded.StartPin.title = "Start Point".localized
-//                parent.userModel.trailRecorded.StartPin.annotationType = AnnotationType.StartRecording
-//                
-//                parent.userModel.map.addAnnotation(parent.userModel.trailRecorded.StartPin)
                 
                 //center map to lastlocation
                 parent.userModel.centerMap_toLastLocation()
@@ -246,11 +352,9 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
                 lastDistance = parent.userModel.trailRecorded.coordinateRecorded[parent.userModel.trailRecorded.coordinateRecorded.endIndex-2]
                                    .distance(to: parent.userModel.trailRecorded.coordinateRecorded[parent.userModel.trailRecorded.coordinateRecorded.endIndex-1]) as Double
                 parent.userModel.trailRecorded.TrailDistance += lastDistance
-                
             }
-            
         }
-        
+                
         //save to UserDefault
         parent.userData.saveTrailUserDefaults(trail: parent.userModel.trailRecorded)
         
@@ -264,6 +368,8 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
                 parent.userData.db_storeTrailRecorded(trail: parent.userModel.trailRecorded, recordingStatus: parent.userModel.recordingStatus)
                 parent.userModel.trailRecordedSettings.lastStoredCoordinates =
                 parent.userModel.trailRecorded.coordinateRecorded[parent.userModel.trailRecorded.coordinateRecorded.endIndex-1]
+            }else{
+                print("TrailRecording: Distance < 40")
             }
         }
         
@@ -294,92 +400,7 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         return MKOverlayRenderer()
     }
     
-    
-//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-//        if let polyline = overlay as? MyCustomPolyline {
-//            print("rendering...")
-////            let renderer = MKPolylineRenderer(polyline: overlay as! MyCustomPolyline )
-////            renderer.strokeColor = .red
-////            renderer.lineWidth = 6
-//            let customRenderer = CustomPolylineRenderer(overlay: overlay as! MyCustomPolyline)
-//          
-//            return customRenderer
-//        }
-//        return MKOverlayRenderer(overlay: overlay)
-//    }
-//    
-    
-    
-    
-    
-    
-//
-//    class Callout: UIView {
-//      private let titleLabel = UILabel(frame: .zero)
-//      private let subtitleLabel = UILabel(frame: .zero)
-//    
-//   //   private let imageView = UIImageView(frame: .zero)
-//      private let annotation: FriendTrailAnnotation
-//      private let DisplayName : String
-//    
-//        
-//        init(annotation: FriendTrailAnnotation, DisplayName: String) {
-//            self.annotation = annotation
-//            self.DisplayName = DisplayName
-//          
-//            super.init(frame: .zero)
-//            setupView()
-//      }
-//      
-//      required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//      }
-//      
-//      private func setupView() {
-//        translatesAutoresizingMaskIntoConstraints = false
-//        setupTitle()
-//        setupSubtitle()
-//     //   setupImageView()
-//      }
-//      
-//      private func setupTitle() {
-//        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-//        titleLabel.text = DisplayName
-//        addSubview(titleLabel)
-//        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        titleLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
-//        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-//        titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-//      }
-//      
-//      private func setupSubtitle() {
-//        subtitleLabel.font = UIFont.systemFont(ofSize: 14)
-//        subtitleLabel.textColor = .gray
-//        subtitleLabel.text = "trail.TotalTimeFormatted"
-//        addSubview(subtitleLabel)
-//        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
-//        subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-//        subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-//        subtitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-//        subtitleLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
-//        subtitleLabel.widthAnchor.constraint(equalToConstant: 280).isActive = true
-//      }
-//      
-////      private func setupImageView() {
-////        imageView.image = UIImage(named: "Image 1")//"annotation.image"
-////        imageView.contentMode = .scaleAspectFill
-////        imageView.clipsToBounds = true
-////        addSubview(imageView)
-////        imageView.translatesAutoresizingMaskIntoConstraints = false
-////        imageView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 8).isActive = true
-////        imageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-////        imageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-////        imageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-////        imageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-////        imageView.widthAnchor.constraint(equalToConstant: 280).isActive = true
-////      }
-//    }
+
     
     //custom anotations
     func mapView(_ mapView: MKMapView, viewFor annotation:MKAnnotation)->MKAnnotationView?
@@ -390,24 +411,15 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
             let view = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
             view.image = parent.getAnnotationImage(annotation: myannotation)
             return view
-            
         }
        
         if annotation is WayPointAnnotation {
             let myannotation = (annotation as! WayPointAnnotation)
             let view = MKAnnotationViewWithTitle(annotation: annotation, reuseIdentifier: nil)
-            
-            //Waypoint title, currentRecorded trail or trailsInArea ?
-//            if(myannotation.trailID>=0){
-//                view.title = parent.userData.trailsInArea[myannotation.trailID].WayPoints.first(where: {$0.id == myannotation.wayPointID})?.name ?? "unknown"
-//            } else{
-//                view.title = parent.userModel.trailRecorded.WayPoints.first(where: {$0.id == myannotation.wayPointID})?.name ?? "unknown"
-//            }
+
             view.title = myannotation.title ?? ""
             view.image = parent.getAnnotationImage(annotation: myannotation)
             return view
-
-            
         }
         
         if annotation is FriendTrailAnnotation {
@@ -432,6 +444,16 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
      
             return view
         }
+        
+        
+        if annotation is TemporaryAnotation {
+             let myannotation = (annotation as! TemporaryAnotation)
+             let view = MKAnnotationViewWithTitle(annotation: annotation, reuseIdentifier: nil)
+
+             view.title = myannotation.title ?? ""
+             view.image = parent.getAnnotationImage(annotation: myannotation)
+             return view
+         }
     
         
         print("FATAL: Nill Annotation")
@@ -439,95 +461,368 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     
+    func selectTrail(trailUUID: UUID) {
+        print("Selecting trail by UUID")
+        // Find the index of the trail with this UUID
+        guard let index = parent.userData.trailsOnMap.firstIndex(where: { $0.id == trailUUID }) else {
+            print("Trail with UUID \(trailUUID) not found")
+            return
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+              guard let self = self else { return }
+                let prevSelectedTrailID = parent.userModel.annotationSelector.selectedTrailID
+                //deselect previous
+                deselectTrail(trailID: prevSelectedTrailID)
+                selectTrail(trailID: index)
+          }
+        
+      
+    }
+           
+    func selectTrail(trailID: Int,forceSelect: Bool = false){
+        print("Selecting trail")
+        //Generate Polyline
+        if (!parent.userData.trailsOnMap[trailID].isPinned || forceSelect){
+            //Draw poliline for selected trail
+            parent.userData.trailsOnMap[trailID].polyline =
+            MyCustomPolyline(coordinates: parent.userData.trailsOnMap[trailID].coordinateRecorded, count: parent.userData.trailsOnMap[trailID].coordinateRecorded.count)
+            //Draw polyline arrwows
+            parent.userData.trailsOnMap[trailID].polylineArrows =
+            MyCustomPolylineArrows(coordinates: parent.userData.trailsOnMap[trailID].coordinateRecorded, count: parent.userData.trailsOnMap[trailID].coordinateRecorded.count)
+            
+            parent.userData.trailsOnMap[trailID].polyline.color = parent.userData.trailsOnMap[trailID].color
+            parent.userData.trailsOnMap[trailID].polyline.trailID = trailID
+            
+            
+            //loading trail images
+            parent.dataStorage.loadTrailImages(trail: parent.userData.trailsOnMap[trailID])
+            
+            
+            
+            //draw trail on map
+            parent.userModel.map.addOverlay(parent.userData.trailsOnMap[trailID].polyline)
+            parent.userModel.map.addOverlay(parent.userData.trailsOnMap[trailID].polylineArrows)
+            
+            parent.userData.trailsOnMap[trailID].EndPin = TrailAnnotation(trailID: trailID,activityType: self.parent.userData.trailsOnMap[trailID].activityType)
+            parent.userData.trailsOnMap[trailID].EndPin.coordinate = self.parent.userData.trailsOnMap[trailID].EndLocation
+            parent.userData.trailsOnMap[trailID].EndPin.title = "finish"
+            parent.userData.trailsOnMap[trailID].EndPin.annotationType = .TrailEndPoint
+            self.parent.userModel.map.addAnnotation(parent.userData.trailsOnMap[trailID].EndPin)
+            
+            
+            //WayPoints
+            print("Selected annotation have \(parent.userData.trailsOnMap[trailID].WayPoints.count) WayPoints")
+            if(parent.userData.trailsOnMap[trailID].WayPoints.count>0){
+                //draw each waypoint
+                for i in 0...parent.userData.trailsOnMap[trailID].WayPoints.count - 1 {
+                    //print("Adding WayPoint Annotation \(parent.userData.trailsInArea[trailID].WayPoints[i].name)")
+                    
+                    parent.userData.trailsOnMap[trailID].WayPoints[i].annotation = WayPointAnnotation(trailID: trailID, wayPointID: parent.userData.trailsOnMap[trailID].WayPoints[i].id)
+                    parent.userData.trailsOnMap[trailID].WayPoints[i].annotation.coordinate = parent.userData.trailsOnMap[trailID].WayPoints[i].coordonates.coordinate
+                    parent.userData.trailsOnMap[trailID].WayPoints[i].annotation.title = parent.userData.trailsOnMap[trailID].WayPoints[i].name
+                    parent.userData.trailsOnMap[trailID].WayPoints[i].annotation.annotationType = .WayPoint
+                    self.parent.userModel.map.addAnnotation(parent.userData.trailsOnMap[trailID].WayPoints[i].annotation)
+                    
+                }
+            }
+        }
+        
+        //change start pin image
+        if let annotationView = parent.userModel.map.view(for: parent.userData.trailsOnMap[trailID].StartPin) {
+            annotationView.image = parent.getAnnotationImage(
+                annotation: parent.userData.trailsOnMap[trailID].StartPin,
+                isSelected: true
+            )
+        }
+        
+        
+        print("selectedTrailID set \(trailID)")
+        parent.userModel.annotationSelector.selectedTrailID = trailID
+        parent.userModel.annotationSelector.isTrailSelected = true;
+        print("selectedTrailID seteed to \(parent.userModel.annotationSelector.selectedTrailID)")
+    }
+    
+    
+    func deselectTrail(trailID:Int,forceDeselect:Bool = false){
+        print("Deselecting trail")
+        if trailID<0 {
+            print("Wrong trailID \(trailID)")
+            return
+        }
+        if parent.userData.trailsOnMap[trailID].isPinned && !forceDeselect{
+            print("Trail is pinned, skip deselect")
+            return
+        }
+        
+        parent.userModel.map.removeOverlay(parent.userData.trailsOnMap[trailID].polyline)
+        parent.userModel.map.removeOverlay(parent.userData.trailsOnMap[trailID].polylineArrows)
+        parent.userModel.map.removeAnnotation(parent.userData.trailsOnMap[trailID].EndPin)
+        
+        //remove waypoints
+        if(!parent.userData.trailsOnMap[trailID].WayPoints.isEmpty){
+            for i in 0...parent.userData.trailsOnMap[trailID].WayPoints.count-1{
+                parent.userModel.map.removeAnnotation(parent.userData.trailsOnMap[trailID].WayPoints[i].annotation)
+            }
+        }
+              
+         
+        //change start pin image
+        if let annotationView = parent.userModel.map.view(for: parent.userData.trailsOnMap[trailID].StartPin) {
+            annotationView.image = parent.getAnnotationImage(
+                annotation: parent.userData.trailsOnMap[trailID].StartPin,
+                isSelected: false
+            )
+        }
+    }
+    
+    
+    
+    
+    func sheetTrailWasDismissed() {
+        print("Coordinator: Trail sheet dismissed!")
+        let trailID = parent.userModel.annotationSelector.selectedTrailID
 
+        deselectTrail(trailID: trailID)
+        
+        parent.userModel.map.deselectAnnotation(parent.userData.trailsOnMap[trailID].StartPin, animated: true)
+     
+       
+
+    }
+    
+    
+    func sheetWayPointWasDismissed(){
+        print("Coordinator: Waypoint sheet dismissed!")
+        let trailID = parent.userModel.annotationSelector.selectedTrailID
+        
+        parent.userModel.map.deselectAnnotation(parent.userData.trailsOnMap[trailID].WayPoints.first(where: {$0.id == parent.userModel.annotationSelector.selectedWayPointID})?.annotation, animated: true)
+     
+        
+        
+        
+    }
+    
+    
+    func trailColorChangedAction(){
+        print("Coordinator: Trail Color Changed!")
+        let trailID = parent.userModel.annotationSelector.selectedTrailID
+        
+        DispatchQueue.main.async { [weak self] in
+              guard let self = self else { return }
+              deselectTrail(trailID: trailID,forceDeselect: true)
+              selectTrail(trailID: trailID, forceSelect: true)
+          }
+    }
+    
+    
+    
+    
+
+    
+    @objc func didLongTapMap(_ sender: UITapGestureRecognizer) {
+            print("Did long tap on map")
+        
+        
+        let map = parent.userModel.map
+        let point = sender.location(in: map)
+        let coordinate = map.convert(point, toCoordinateFrom: map)
+
+       
+        var tappedOnAnnotation = false
+        
+        // Check if tap is on an annotation
+        for annotation in map.annotations {
+            let annotationView = map.view(for: annotation)
+            if let view = annotationView {
+                let frame = view.frame.insetBy(dx: -10, dy: -10) // tolerance
+                if frame.contains(point) {
+                    print("Tapped on annotation – do NOT create temp mark")
+                    tappedOnAnnotation = true
+                }
+            }
+        }
+        
+        
+        if !tappedOnAnnotation {
+            addTempAnnotation(at: coordinate)
+            //            let generator = UIImpactFeedbackGenerator(style: .medium)
+            //            generator.prepare()
+            //            generator.impactOccurred()
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
+        }
+        
+    }
+    
+    // Tapping on map
+    @objc func didTapMap(_ sender: UITapGestureRecognizer) {
+        print("Tap on map")
+
+        
+        let map = parent.userModel.map
+        let point = sender.location(in: map)
+        let coordinate = map.convert(point, toCoordinateFrom: map)
+
+        var tappedOnTrail = false
+        var tappedOnAnnotation = false
+        
+        
+        // Check if type on polyline
+        for overlay in map.overlays {
+            guard let polyline = overlay as? MyCustomPolyline else { continue }
+
+            if isCoordinate(coordinate, nearPolyline: polyline, tolerance: 10, in: map) {
+                print("Polyline tapped!")
            
-           
+                print(polyline.trailID)
+                if let trailID = polyline.trailID{
+                    
+                    //deselect previous
+                    let prevSelectedTrailID = parent.userModel.annotationSelector.selectedTrailID
+                    if(prevSelectedTrailID >= 0  && prevSelectedTrailID != trailID){
+                        deselectTrail(trailID: prevSelectedTrailID)
+                    }
+                    
+                    print("taponmap: settings selectedTrailID \(trailID)")
+                    parent.userModel.annotationSelector.selectedTrailID = trailID
+                    parent.userModel.annotationSelector.isTrailSelected = true;
+                }
+                tappedOnTrail  = true
+                break
+            }
+        }
+        
+        
+//        // Check if tap is on an annotation
+//        for annotation in map.annotations {
+//            let annotationView = map.view(for: annotation)
+//            if let view = annotationView {
+//                let frame = view.frame.insetBy(dx: -10, dy: -10) // tolerance
+//                if frame.contains(point) {
+//                    print("Tapped on annotation – do NOT create temp mark")
+//                    tappedOnAnnotation = true
+//                }
+//            }
+//        }
+//        
+//        
+//        if !tappedOnTrail && !tappedOnAnnotation {
+//            addTempAnnotation(at: coordinate)
+//        }
+        
+//        if parent.userModel.annotationSelector.isWayPointSelected{
+//            
+//            parent.userModel.map.deselectAnnotation(parent.userData.trailsInArea[parent.userModel.annotationSelector.selectedTrailID].WayPoints.first(where: {$0.id == parent.userModel.annotationSelector.selectedWayPointID})?.annotation, animated: true)
+//            parent.userModel.annotationSelector.isWayPointSelected  = false
+//        }
+//        if(!tappedOnTrail){
+//            // when click anywhere on map, if trail is selected - deselect it
+//            print("Tapped outside of trail")
+//            print("Is trail selected: \(parent.userModel.annotationSelector.isTrailSelected)")
+//            
+//            // if is Waypoint selected, close only WayPoint
+//            // if is Trail selected, close trail
+//            if(parent.userModel.annotationSelector.isWayPointSelected){
+//                parent.userModel.annotationSelector.isWayPointSelected = false;
+//            }else
+//            if(parent.userModel.annotationSelector.isTrailSelected){
+//                //parent.userModel.annotationSelector.isTrailSelected = false;
+//                
+//                DispatchQueue.main.async {[self] in
+//                    parent.userModel.annotationSelector.isTrailSelected = false
+//                }
+//                
+//                
+//                if(!parent.userData.trailsInArea[parent.userModel.annotationSelector.selectedTrailID].isPinned){
+//                    print("Deselect trail on tap ")
+//                    deselectTrail(trailID: parent.userModel.annotationSelector.selectedTrailID)
+//                    print("Deselect trail on tap Done")
+//                }
+//            }
+//            
+//        }
+        
+    }
+    
+    
+    func addTempAnnotation(at coordinate: CLLocationCoordinate2D) {
+
+
+        // Create new annotation
+        let annotation = TemporaryAnotation(annotationType: .TempPin)
+        annotation.coordinate = coordinate
+        annotation.title = "Pin"
+
+        // Save reference
+        tempAnnotations.append(annotation)
+
+        // Add to map
+        parent.userModel.map.addAnnotation(annotation)
+
+        print("Added temp annotation at \(coordinate.latitude), \(coordinate.longitude)")
+    }
+
+    
     
     //select annotation
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("Select Annotation");
       //  guard let selectedAnnotation = view.annotation as? TrailAnnotation else{return}
-        
+       
         
         if let selectedAnnotation = (view.annotation as? TrailAnnotation){
             if((selectedAnnotation as TrailAnnotation).annotationType == .TrailStartPoint) {
-            guard selectedAnnotation.trailID<parent.userData.trailsInArea.count else{return}
-            print("Trail StartPoint Selected")
+                guard selectedAnnotation.trailID<parent.userData.trailsOnMap.count else{return}
+                let prevSelectedTrailID = parent.userModel.annotationSelector.selectedTrailID
+                print("Trail StartPoint Selected")
+                    
+                print("previous selected trail \(prevSelectedTrailID)")
+                //deselect previous
+                deselectTrail(trailID: prevSelectedTrailID)
+                     
                 
-            //change annotation image when select
-                view.image  = parent.getAnnotationImage(annotation: selectedAnnotation, isSelected: true)
+//                //change annotation image when select
+//                view.image  = parent.getAnnotationImage(annotation: selectedAnnotation, isSelected: true)
+                    
                 
-            
-            //draw polylines if not already exist
-            if(!parent.userData.trailsInArea[selectedAnnotation.trailID].isPinned) && (!parent.userModel.selectTrailAfterWaypointDeselect){
-                //Draw poliline for selected trail
-                parent.userData.trailsInArea[selectedAnnotation.trailID].polyline =
-                MyCustomPolyline(coordinates: parent.userData.trailsInArea[selectedAnnotation.trailID].coordinateRecorded, count: parent.userData.trailsInArea[selectedAnnotation.trailID].coordinateRecorded.count)
-                //Draw polyline arrwows
-                parent.userData.trailsInArea[selectedAnnotation.trailID].polylineArrows =
-                MyCustomPolylineArrows(coordinates: parent.userData.trailsInArea[selectedAnnotation.trailID].coordinateRecorded, count: parent.userData.trailsInArea[selectedAnnotation.trailID].coordinateRecorded.count)
+                selectTrail(trailID: selectedAnnotation.trailID)
                 
-                parent.userData.trailsInArea[selectedAnnotation.trailID].polyline.color = UIColor.orange
-                parent.userModel.map.addOverlay(parent.userData.trailsInArea[selectedAnnotation.trailID].polyline)
-                parent.userModel.map.addOverlay(parent.userData.trailsInArea[selectedAnnotation.trailID].polylineArrows)
-                
-                
-                //add end point for selected trail
-                let idx = selectedAnnotation.trailID
-                
-                parent.userData.trailsInArea[idx].EndPin = TrailAnnotation(trailID: 0,activityType: self.parent.userData.trailsInArea[idx].activityType)
-                parent.userData.trailsInArea[idx].EndPin.coordinate = self.parent.userData.trailsInArea[idx].EndLocation
-                parent.userData.trailsInArea[idx].EndPin.title = "finish"
-                parent.userData.trailsInArea[idx].EndPin.annotationType = .TrailEndPoint
-                self.parent.userModel.map.addAnnotation(parent.userData.trailsInArea[idx].EndPin)
-                
-                
-                //WayPoints
-                print("Selected annotation have \(parent.userData.trailsInArea[idx].WayPoints.count) WayPoints")
-                if(parent.userData.trailsInArea[idx].WayPoints.count>0){
-                    //draw each waypoint
-                    for i in 0...parent.userData.trailsInArea[idx].WayPoints.count - 1 {
-                        print("Adding WayPoint Annotation \(parent.userData.trailsInArea[idx].WayPoints[i].name)")
-                        
-                        parent.userData.trailsInArea[idx].WayPoints[i].annotation = WayPointAnnotation(trailID: idx, wayPointID: parent.userData.trailsInArea[idx].WayPoints[i].id)
-                        parent.userData.trailsInArea[idx].WayPoints[i].annotation.coordinate = parent.userData.trailsInArea[idx].WayPoints[i].coordonates.coordinate
-                        parent.userData.trailsInArea[idx].WayPoints[i].annotation.title = parent.userData.trailsInArea[idx].WayPoints[i].name
-                        parent.userData.trailsInArea[idx].WayPoints[i].annotation.annotationType = .WayPoint
-                        self.parent.userModel.map.addAnnotation(parent.userData.trailsInArea[idx].WayPoints[i].annotation)
-                        
-                    }
-                }
-            }
-            
-            print("setting AnnotationSelected to true")
-            parent.dataStorage.loadTrailImages(trail: parent.userData.trailsInArea[selectedAnnotation.trailID])
-                
-                
-            parent.userModel.annotationSelector.selectedTrailID = selectedAnnotation.trailID
-            parent.userModel.annotationSelector.isTrailSelected = true;
-                
-        } //TrailStartPoint select end
-    }
+            } //TrailStartPoint select end
+        }
         
         
         if let selectedAnnotation = (view.annotation as? WayPointAnnotation){
             if(selectedAnnotation.annotationType == .WayPoint) {
                 print("Selected WayPoint:  trailID \(selectedAnnotation.trailID), wayPointID: \(selectedAnnotation.wayPointID)")
                 
-                
                 //change annotation image when select
                 view.image  = parent.getAnnotationImage(annotation: selectedAnnotation,isSelected: true)
-        
-                parent.userModel.annotationSelector.selectedTrailID = selectedAnnotation.trailID
-                parent.userModel.annotationSelector.selectedWayPointID = selectedAnnotation.wayPointID
-                parent.userModel.annotationSelector.isWayPointSelected = true;
                 
-                if (selectedAnnotation.trailID>=0 && selectedAnnotation.trailID < parent.userData.trailsInArea.count){
-                    //parent.userData.trailsInArea[selectedAnnotation.trailID].isPinned = true
-                    parent.userModel.selectTrailAfterWaypointDeselect = true
+                
+                if selectedAnnotation.trailID>=0{
+                    print("wp selectedTrailID set to \(selectedAnnotation.trailID)")
+                    parent.userModel.annotationSelector.selectedTrailID = selectedAnnotation.trailID
+                    parent.userModel.annotationSelector.selectedWayPointID = selectedAnnotation.wayPointID
+                    parent.userModel.annotationSelector.isWayPointSelected = true;
+                } else{
+                    parent.userModel.annotationSelector.iscurrTrailWayPointSelected = true
+                    parent.userModel.annotationSelector.selectedCurrTrailWayPointID = selectedAnnotation.wayPointID
                 }
-                
+             
             }
+        }
+        
+        if let selectedAnnotation = (view.annotation as? TemporaryAnotation){
+                print("Temporarry anotation selected")
+                guard let index = tempAnnotations.firstIndex(where: { $0.id == selectedAnnotation.id }) else {
+                    print("TempAnnotation not found in array")
+                    return
+                }
+            
+                parent.userModel.map.removeAnnotation(tempAnnotations[index])
+              
+                
         }
         
     }
@@ -536,38 +831,17 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
     //deSelect annotation
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         //guard let deseletectedAnnotation = view.annotation as? MyCustomPointAnnotation else{return}
-        
-     
-            if let deseletectedAnnotation = (view.annotation as? TrailAnnotation){
-                guard deseletectedAnnotation.trailID<parent.userData.trailsInArea.count else{return}
-                let trailID = deseletectedAnnotation.trailID
-                print("Deselect Trail with trailID \(deseletectedAnnotation.trailID)");
-                //set selected to false
-                parent.userModel.annotationSelector.isTrailSelected = false;
-                
-                let secondsToDelay = 0.1
-                DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) { [self] in
-                    //deselect trail if is not pinned
-                    if(!parent.userData.trailsInArea[trailID].isPinned) && (!parent.userModel.selectTrailAfterWaypointDeselect){
-                        parent.userModel.map.removeOverlay(parent.userData.trailsInArea[trailID].polyline)
-                        parent.userModel.map.removeOverlay(parent.userData.trailsInArea[trailID].polylineArrows)
-                        parent.userModel.map.removeAnnotation(parent.userData.trailsInArea[trailID].EndPin)
-                        
-                        //remove waypoints
-                        if(!parent.userData.trailsInArea[trailID].WayPoints.isEmpty){
-                            for i in 0...parent.userData.trailsInArea[trailID].WayPoints.count-1{
-                                parent.userModel.map.removeAnnotation(parent.userData.trailsInArea[trailID].WayPoints[i].annotation)
-                            }
-                        }
-                        
-                        //change annotation image when select
-                        view.image  = parent.getAnnotationImage(annotation: deseletectedAnnotation,isSelected: false)
-                        
-                    }
-                  
-                }
-            }
-            
+
+//            print("Manual Deselect")
+//            if let deseletectedAnnotation = (view.annotation as? TrailAnnotation){
+//                guard deseletectedAnnotation.trailID<parent.userData.trailsInArea.count else{print("invalid trailID");return}
+//                let trailID = deseletectedAnnotation.trailID
+//                print("Deselect Trail with trailID \(deseletectedAnnotation.trailID)");
+//                //change annotation image when select
+//                view.image  = parent.getAnnotationImage(annotation: deseletectedAnnotation,isSelected: false)
+//             
+//                
+//            }
             
             
             if let deselectedAnnotation = (view.annotation as? WayPointAnnotation){
@@ -575,25 +849,12 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
                     print("deSelected WayPoint:  trailID \(deselectedAnnotation.trailID), wayPointID: \(deselectedAnnotation.wayPointID)")
                     //change annotation image when select
                     view.image  = parent.getAnnotationImage(annotation: deselectedAnnotation, isSelected: false)
+//                    parent.userModel.annotationSelector.isWayPointSelected = false;
                     
-                    parent.userModel.annotationSelector.isWayPointSelected = false;
-                    
-                    //need to show trail sheet back ?
-                    if (parent.userModel.selectTrailAfterWaypointDeselect) && (deselectedAnnotation.trailID>=0 && deselectedAnnotation.trailID < parent.userData.trailsInArea.count){
-                        //if not another waypoint selected then select the trail
-                        let secondsToDelay = 0.1
-                        DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) { [self] in
-                            if(!parent.userModel.annotationSelector.isWayPointSelected){
-                                parent.userModel.map.selectAnnotation(parent.userData.trailsInArea[deselectedAnnotation.trailID].StartPin, animated: true)
-                                parent.userModel.selectTrailAfterWaypointDeselect = false
-                            }
-                        }
-                    }
                     
                 }
             }
-            
-      //  }
+
     }
     
     
@@ -605,7 +866,7 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
     
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        print(" finish loading map ")
+        //print(" finish loading map ")
     }
     
     
@@ -613,6 +874,7 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         print(" finish rendering map ")
         guard parent.userModel.coordinateBottomLeft != nil else {return}
         guard parent.userModel.coordinateTopRight != nil else {return}
+        guard parent.userModel.region != nil else {return}
         
         //loading trails in area
         if(!parent.userData.trailsInAreaisLoading) && (parent.userModel.recordingStatus != .isStarted){ //load trail if not another load task is started, or not recording trail now
@@ -632,9 +894,9 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
                     parent.userModel.searchAreTooBig = false
                 }
             
-                parent.userData.db_GetCurrentAreaTrails(btLeft: parent.userModel.coordinateBottomLeft,
-                                                        tpRight: parent.userModel.coordinateTopRight)
-                //wait while complete
+               // parent.userData.db_GetCurrentAreaTrails(btLeft: parent.userModel.coordinateBottomLeft,tpRight: parent.userModel.coordinateTopRight)
+                parent.userData.db_GetCurrentAreaTrailsNew(region: parent.userModel.region!)
+            //wait while complete
               //  print("wait while complete")
               //  while(parent.userData.loadingTrails){}
                 
@@ -649,7 +911,8 @@ class MapCoordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
     
     
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-       
+  
+        self.parent.userModel.region = mapView.region
         self.parent.userModel.coordinateBottomLeft = CLLocationCoordinate2D(
             latitude: mapView.centerCoordinate.latitude - (mapView.region.span.latitudeDelta / 2),
             longitude: mapView.centerCoordinate.longitude - (mapView.region.span.longitudeDelta / 2))
